@@ -239,6 +239,48 @@
             <ul class="project-tags">
               <li>Playwright</li><li>TypeScript</li><li>Cucumber</li><li>POM</li><li>GitHub Actions</li>
             </ul>
+            <details class="project-sample">
+              <summary>View a real scenario from the suite</summary>
+              <div class="project-sample-body">
+                <div class="code-block">
+                  <span class="code-lang">features/cart.feature</span>
+<pre><code>Feature: Shopping cart
+
+  Background:
+    Given I am on the login page
+    And I sign in as "standard_user" with password "secret_sauce"
+    Then I see the inventory page
+
+  Scenario: Add multiple items to the cart
+    When I add "Sauce Labs Backpack" to the cart
+    And I add "Sauce Labs Bike Light" to the cart
+    Then the cart badge shows 2
+    When I open the cart
+    Then the cart contains "Sauce Labs Backpack"
+    And the cart contains "Sauce Labs Bike Light"</code></pre>
+                </div>
+                <div class="code-block">
+                  <span class="code-lang">src/steps/cart.steps.ts</span>
+<pre><code>import { When, Then } from '@cucumber/cucumber';
+import { strict as assert } from 'node:assert';
+import { TestWorld } from '../support/world';
+import { InventoryPage } from '../pages/InventoryPage';
+import { CartPage } from '../pages/CartPage';
+
+When('I add {string} to the cart', async function (this: TestWorld, item: string) {
+  await new InventoryPage(this.page).addItemToCart(item);
+});
+
+Then('the cart badge shows {int}', async function (this: TestWorld, count: number) {
+  assert.equal(await new InventoryPage(this.page).cartCount(), count);
+});
+
+Then('the cart contains {string}', async function (this: TestWorld, name: string) {
+  assert.equal(await new CartPage(this.page).hasItem(name), true);
+});</code></pre>
+                </div>
+              </div>
+            </details>
           </article>
 
           <article class="project-card">
@@ -250,6 +292,57 @@
             <ul class="project-tags">
               <li>Selenium</li><li>Java</li><li>Cucumber</li><li>TestNG</li><li>Rest-Assured</li><li>Maven</li>
             </ul>
+            <details class="project-sample">
+              <summary>View a real scenario from the suite</summary>
+              <div class="project-sample-body">
+                <div class="code-block">
+                  <span class="code-lang">src/test/resources/features/cart.feature</span>
+<pre><code>Feature: Shopping cart
+
+  Background:
+    Given I am on the login page
+    When I sign in as "standard_user" with password "secret_sauce"
+    Then I see the inventory page
+
+  Scenario: Add multiple items to the cart
+    When I add "Sauce Labs Backpack" to the cart
+    And I add "Sauce Labs Bike Light" to the cart
+    Then the cart badge shows 2
+    When I open the cart
+    Then the cart contains "Sauce Labs Backpack"</code></pre>
+                </div>
+                <div class="code-block">
+                  <span class="code-lang">src/test/java/com/fahimalam/qa/steps/CartSteps.java</span>
+<pre><code>package com.fahimalam.qa.steps;
+
+import com.fahimalam.qa.pages.CartPage;
+import com.fahimalam.qa.pages.InventoryPage;
+import com.fahimalam.qa.support.DriverFactory;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class CartSteps {
+
+    @When("I add {string} to the cart")
+    public void iAddToTheCart(String item) {
+        new InventoryPage(DriverFactory.get()).addItemToCart(item);
+    }
+
+    @Then("the cart badge shows {int}")
+    public void theCartBadgeShows(int expected) {
+        assertThat(new InventoryPage(DriverFactory.get()).cartCount()).isEqualTo(expected);
+    }
+
+    @Then("the cart contains {string}")
+    public void theCartContains(String name) {
+        assertThat(new CartPage(DriverFactory.get()).hasItem(name)).isTrue();
+    }
+}</code></pre>
+                </div>
+              </div>
+            </details>
           </article>
 
           <article class="project-card">
@@ -261,6 +354,57 @@
             <ul class="project-tags">
               <li>Playwright .NET</li><li>C#</li><li>ReqnRoll</li><li>NUnit</li><li>Azure DevOps</li>
             </ul>
+            <details class="project-sample">
+              <summary>View a real scenario from the suite</summary>
+              <div class="project-sample-body">
+                <div class="code-block">
+                  <span class="code-lang">Features/Cart.feature</span>
+<pre><code>Feature: Shopping cart
+
+  Background:
+    Given I am on the login page
+    When I sign in as "standard_user" with password "secret_sauce"
+    Then I see the inventory page
+
+  Scenario: Add multiple items to the cart
+    When I add "Sauce Labs Backpack" to the cart
+    And I add "Sauce Labs Bike Light" to the cart
+    Then the cart badge shows 2
+    When I open the cart
+    Then the cart contains "Sauce Labs Backpack"</code></pre>
+                </div>
+                <div class="code-block">
+                  <span class="code-lang">Steps/CartSteps.cs</span>
+<pre><code>using FluentAssertions;
+using PlaywrightReqnRoll.Drivers;
+using PlaywrightReqnRoll.Pages;
+using Reqnroll;
+
+namespace PlaywrightReqnRoll.Steps;
+
+[Binding]
+public sealed class CartSteps
+{
+    private readonly PlaywrightDriver _driver;
+    public CartSteps(PlaywrightDriver driver) => _driver = driver;
+
+    [When("I add {string} to the cart")]
+    public Task WhenIAddToTheCart(string item) =>
+        new InventoryPage(_driver.Page).AddItemAsync(item);
+
+    [Then("the cart badge shows {int}")]
+    public async Task ThenTheCartBadgeShows(int expected) =>
+        (await new InventoryPage(_driver.Page).CartCountAsync())
+            .Should().Be(expected);
+
+    [Then("the cart contains {string}")]
+    public async Task ThenTheCartContains(string name) =>
+        (await new CartPage(_driver.Page).HasItemAsync(name))
+            .Should().BeTrue();
+}</code></pre>
+                </div>
+              </div>
+            </details>
           </article>
 
           <article class="project-card">
@@ -272,6 +416,24 @@
             <ul class="project-tags">
               <li>TypeScript</li><li>CLI</li><li>CI ops</li><li>Vitest</li>
             </ul>
+            <details class="project-sample">
+              <summary>View real CLI output</summary>
+              <div class="project-sample-body">
+                <div class="code-block terminal">
+                  <span class="code-lang">$ flaky tests/fixtures/junit-run-*.xml</span>
+<pre><code>Detected 5 flaky tests:
+
+SCORE     FLAKE         P / F      HISTORY       AVG MS     TEST
+--------------------------------------------------------------------------------
+<span class="t-red">0.89      █████████░    1/2        F.F           847        checkout.apply-coupon
+0.89      █████████░    2/1        .F.           2200       checkout.place-order
+0.89      █████████░    2/1        .F.           483        login.locked-user</span>
+<span class="t-green">0.00      ░░░░░░░░░░    3/0        ...           1250       checkout.add-to-cart
+0.00      ░░░░░░░░░░    3/0        ...           917        login.standard-user</span></code></pre>
+                </div>
+                <p class="sample-note">Score peaks at 1.0 when a test fails exactly half the time (a real flake) and falls to 0 when a test is consistently passing or consistently failing. Three runs above show <code>apply-coupon</code> failing twice, <code>place-order</code> failing once — both genuine flakes — while <code>add-to-cart</code> stayed solid at 3/3.</p>
+              </div>
+            </details>
           </article>
 
           <article class="project-card">
@@ -283,9 +445,28 @@
             <ul class="project-tags">
               <li>TypeScript</li><li>LLM evals</li><li>Zod</li><li>OpenAI</li><li>Anthropic</li>
             </ul>
+            <details class="project-sample">
+              <summary>View a real evaluation report</summary>
+              <div class="project-sample-body">
+                <div class="code-block terminal">
+                  <span class="code-lang">$ llm-tcg eval generated.json --story shopping-cart.story.md</span>
+<pre><code>──────────────── <span class="t-bold">Evaluation — score <span class="t-green">91</span></span> ────────────────
+Test cases       6
+AC coverage      5 / 5 (100%)
+Hallucinations   1
+Coverage gaps    0
+Format issues    0
+
+<span class="t-yellow t-bold">Possible hallucinations:</span>
+  • <span class="t-cyan">TC-006</span> 'Negative: surface a clear error on bad input'
+    suspect: <span class="t-red">audit_log</span></code></pre>
+                </div>
+                <p class="sample-note">The 91/100 reflects perfect AC coverage (60%) and one flagged hallucination — the model invented an <code>audit_log</code> tag that doesn't appear anywhere in the user story. The eval harness caught it before a human ever opened the file.</p>
+              </div>
+            </details>
           </article>
 
-          <article class="project-card">
+          <article class="project-card project-card-wide">
             <header class="project-head">
               <h3><a href="https://github.com/fahimalamwork/test-report-dashboard" target="_blank" rel="noopener">test-report-dashboard</a></h3>
               <span class="project-stars" aria-hidden="true">↗</span>
@@ -294,6 +475,22 @@
             <ul class="project-tags">
               <li>TypeScript</li><li>Reporting</li><li>Static HTML</li><li>CI artifacts</li>
             </ul>
+            <details class="project-sample" open>
+              <summary>Live demo — generated from three sample CI runs</summary>
+              <div class="project-sample-body">
+                <p class="sample-note">
+                  This is real output from the tool — three fake JUnit runs fed into the CLI,
+                  rendered to a single self-contained HTML file. Same rendering you'd attach
+                  to a Slack message after a deploy.
+                </p>
+                <div class="dashboard-frame">
+                  <iframe src="demo/dashboard.html" title="Sample test report dashboard" loading="lazy"></iframe>
+                </div>
+                <p class="sample-note">
+                  <a class="btn btn-secondary btn-sm" href="demo/dashboard.html" target="_blank" rel="noopener">Open the dashboard in a new tab ↗</a>
+                </p>
+              </div>
+            </details>
           </article>
         </div>
       </div>
