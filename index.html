@@ -31,6 +31,7 @@
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -219,7 +220,86 @@
       </div>
     </section>
 
-    <section id="contact" class="section section-alt">
+    <section id="projects" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Selected projects</h2>
+        <p class="prose section-lede">
+          Open-source repos that mirror the way I build at work — frameworks I'd
+          actually drop into a real codebase, plus a few QA-engineering tools I
+          wanted to exist. Every one is reproducible: clone, install, run.
+        </p>
+
+        <div class="projects-grid">
+          <article class="project-card">
+            <header class="project-head">
+              <h3><a href="https://github.com/fahimalamwork/playwright-bdd-ts" target="_blank" rel="noopener">playwright-bdd-ts</a></h3>
+              <span class="project-stars" aria-hidden="true">↗</span>
+            </header>
+            <p>End-to-end framework on Playwright + TypeScript + Cucumber-JS. POM, per-scenario browser context, screenshot-on-failure, and a Chromium / Firefox / WebKit GitHub Actions matrix. Runs against saucedemo.com.</p>
+            <ul class="project-tags">
+              <li>Playwright</li><li>TypeScript</li><li>Cucumber</li><li>POM</li><li>GitHub Actions</li>
+            </ul>
+          </article>
+
+          <article class="project-card">
+            <header class="project-head">
+              <h3><a href="https://github.com/fahimalamwork/selenium-java-cucumber" target="_blank" rel="noopener">selenium-java-cucumber</a></h3>
+              <span class="project-stars" aria-hidden="true">↗</span>
+            </header>
+            <p>Selenium 4 + Java 17 + Cucumber + TestNG + Rest-Assured. Thread-local DriverFactory for parallel scenarios, Maven profiles for Chrome/Firefox/API-only, and a TestNG suite XML that runs UI + API in one pass.</p>
+            <ul class="project-tags">
+              <li>Selenium</li><li>Java</li><li>Cucumber</li><li>TestNG</li><li>Rest-Assured</li><li>Maven</li>
+            </ul>
+          </article>
+
+          <article class="project-card">
+            <header class="project-head">
+              <h3><a href="https://github.com/fahimalamwork/playwright-dotnet-reqnroll" target="_blank" rel="noopener">playwright-dotnet-reqnroll</a></h3>
+              <span class="project-stars" aria-hidden="true">↗</span>
+            </header>
+            <p>Playwright .NET + C# 12 + ReqnRoll + NUnit — the BDD stack I migrated to from SpecFlow at Hitachi. Ships with an Azure DevOps YAML pipeline alongside a public GitHub Actions matrix.</p>
+            <ul class="project-tags">
+              <li>Playwright .NET</li><li>C#</li><li>ReqnRoll</li><li>NUnit</li><li>Azure DevOps</li>
+            </ul>
+          </article>
+
+          <article class="project-card">
+            <header class="project-head">
+              <h3><a href="https://github.com/fahimalamwork/flaky-test-detector" target="_blank" rel="noopener">flaky-test-detector</a></h3>
+              <span class="project-stars" aria-hidden="true">↗</span>
+            </header>
+            <p>CLI that ingests JUnit XML / Playwright JSON across multiple CI runs and ranks tests by a binomial-variance flake score — so a test that fails 10/10 times (broken) isn't conflated with one that fails 5/10 (actually flaky).</p>
+            <ul class="project-tags">
+              <li>TypeScript</li><li>CLI</li><li>CI ops</li><li>Vitest</li>
+            </ul>
+          </article>
+
+          <article class="project-card">
+            <header class="project-head">
+              <h3><a href="https://github.com/fahimalamwork/llm-test-case-generator" target="_blank" rel="noopener">llm-test-case-generator</a></h3>
+              <span class="project-stars" aria-hidden="true">↗</span>
+            </header>
+            <p>Generates test cases from a user story with an LLM, then evaluates the output for hallucinations and acceptance-criteria coverage. Pluggable Stub / OpenAI / Anthropic backends. Built from lessons learned validating an internal AI-powered QA assistant.</p>
+            <ul class="project-tags">
+              <li>TypeScript</li><li>LLM evals</li><li>Zod</li><li>OpenAI</li><li>Anthropic</li>
+            </ul>
+          </article>
+
+          <article class="project-card">
+            <header class="project-head">
+              <h3><a href="https://github.com/fahimalamwork/test-report-dashboard" target="_blank" rel="noopener">test-report-dashboard</a></h3>
+              <span class="project-stars" aria-hidden="true">↗</span>
+            </header>
+            <p>Parses JUnit XML / Playwright JSON across one or many runs and renders a self-contained static HTML dashboard — pass-rate trend, slowest tests, suite breakdown, recent failures — that you can drop into a CI artifact or Slack message.</p>
+            <ul class="project-tags">
+              <li>TypeScript</li><li>Reporting</li><li>Static HTML</li><li>CI artifacts</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
       <div class="container contact">
         <h2 class="section-title">Let's talk</h2>
         <p class="prose">
