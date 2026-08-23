@@ -3,153 +3,526 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fahim Alam — Notes from the trail</title>
-  <meta name="description" content="Photographer, hiker, and traveler — a climb through some of the places I've been." />
+  <title>Fahim Alam — Senior QA / SDET</title>
+  <meta name="description" content="Fahim Alam is a Senior QA / SDET with 7+ years building scalable test automation in Playwright, Selenium, and Leapwork across healthcare and financial platforms." />
   <meta name="author" content="Fahim Alam" />
-  <meta name="theme-color" content="#2c3e6b" />
-  <meta property="og:title" content="Fahim Alam — Notes from the trail" />
-  <meta property="og:description" content="A scroll up the mountain, told through photos from the road." />
+  <meta name="theme-color" content="#0b1220" />
+
+  <meta property="og:title" content="Fahim Alam — Senior QA / SDET" />
+  <meta property="og:description" content="7+ years architecting test automation frameworks and CI/CD pipelines across healthcare and financial platforms." />
   <meta property="og:type" content="website" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10 82 L38 40 L52 58 L66 32 L92 82 Z' fill='%23f5a578' stroke='%232c3e6b' stroke-width='4' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <meta property="og:image" content="assets/headshot.jpg" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231e3a8a'/%3E%3Ctext x='50' y='66' font-family='Inter,Arial' font-size='52' font-weight='700' text-anchor='middle' fill='white'%3EF%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://rsms.me/" />
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div id="loading" class="loading" aria-hidden="true">
-    <svg class="loading-mark" viewBox="0 0 100 100" width="52" height="52">
-      <path d="M10 82 L38 40 L52 58 L66 32 L92 82 Z" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" />
-    </svg>
-    <div class="loading-bar" role="progressbar"><span></span></div>
-    <p class="loading-pct">0%</p>
-  </div>
-
-  <canvas id="scene" aria-hidden="true"></canvas>
+  <a href="#main" class="skip-link">Skip to content</a>
 
   <header class="site-header">
-    <a href="#" class="brand">
-      <svg viewBox="0 0 100 100" width="24" height="24" aria-hidden="true">
-        <path d="M10 82 L38 40 L52 58 L66 32 L92 82 Z" fill="currentColor" />
-      </svg>
-      <span>Fahim Alam</span>
-    </a>
-    <a href="#summit" class="summit-link">To the summit ↑</a>
+    <div class="container header-row">
+      <a href="#" class="brand" aria-label="Fahim Alam — Home">
+        <span class="brand-mark" aria-hidden="true">F</span>
+        <span class="brand-name">Fahim Alam</span>
+      </a>
+      <nav aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <div class="hud" aria-hidden="true">
-    <p class="hud-alt"><span id="alt-value">2,540</span> ft</p>
-    <p class="hud-label">altitude</p>
-  </div>
-
-  <main>
-    <section class="chapter chapter-hero">
-      <div class="chapter-inner">
-        <p class="eyebrow">Base camp · 40.7128° N, 74.0060° W</p>
-        <h1>Notes from the trail.</h1>
-        <p class="lede">
-          A photographer, hiker, and wanderer based in New York. This is a climb — scroll to ascend and see a few of the places I've been.
-        </p>
-        <p class="scroll-cue"><span>Scroll</span> <span class="arrow">↓</span></p>
-      </div>
-    </section>
-
-    <section class="chapter" data-alt="4,120">
-      <div class="chapter-inner align-right">
-        <p class="chapter-num">01 / 07</p>
-        <h2>Torres del Paine</h2>
-        <p class="chapter-loc">Patagonia, Chile</p>
-        <p class="chapter-note">
-          Four days on the W trek. The wind pinned us against the ridge on the second morning and I still framed the shot before ducking behind a boulder.
-        </p>
-      </div>
-    </section>
-
-    <section class="chapter" data-alt="5,680">
-      <div class="chapter-inner">
-        <p class="chapter-num">02 / 07</p>
-        <h2>Zermatt at first light</h2>
-        <p class="chapter-loc">Valais, Switzerland</p>
-        <p class="chapter-note">
-          The Matterhorn shows up for about eleven minutes before the fog closes in. Set an alarm; be outside; forget the coffee.
-        </p>
-      </div>
-    </section>
-
-    <section class="chapter" data-alt="7,410">
-      <div class="chapter-inner align-right">
-        <p class="chapter-num">03 / 07</p>
-        <h2>Route Napoléon</h2>
-        <p class="chapter-loc">Alpes-Maritimes, France</p>
-        <p class="chapter-note">
-          A cycle-and-hike loop through mountain villages that time forgot. Stopped for a two-hour lunch that turned into three.
-        </p>
-      </div>
-    </section>
-
-    <section class="chapter" data-alt="9,200">
-      <div class="chapter-inner">
-        <p class="chapter-num">04 / 07</p>
-        <h2>Nusa Penida</h2>
-        <p class="chapter-loc">Bali, Indonesia</p>
-        <p class="chapter-note">
-          The road to Kelingking Beach isn't a road. Went for the cliff photograph everyone takes. Stayed for the walk down that no one talks about.
-        </p>
-      </div>
-    </section>
-
-    <section class="chapter" data-alt="10,720">
-      <div class="chapter-inner align-right">
-        <p class="chapter-num">05 / 07</p>
-        <h2>Old Man of Storr</h2>
-        <p class="chapter-loc">Isle of Skye, Scotland</p>
-        <p class="chapter-note">
-          It rained the whole time. I don't have a single photo where the lens is dry. Would go again next weekend.
-        </p>
-      </div>
-    </section>
-
-    <section class="chapter" data-alt="12,150">
-      <div class="chapter-inner">
-        <p class="chapter-num">06 / 07</p>
-        <h2>Jotunheimen</h2>
-        <p class="chapter-loc">Innlandet, Norway</p>
-        <p class="chapter-note">
-          Two nights in a mountain hut. Zero cell signal. The best sleep I've had in three years.
-        </p>
-      </div>
-    </section>
-
-    <section class="chapter" data-alt="13,480">
-      <div class="chapter-inner align-right">
-        <p class="chapter-num">07 / 07</p>
-        <h2>Cascade Range</h2>
-        <p class="chapter-loc">Oregon, USA</p>
-        <p class="chapter-note">
-          Learned that "moderate" on a Pacific Northwest trail sign means you should have brought poles. Also, don't skip the pancakes in Sisters.
-        </p>
-      </div>
-    </section>
-
-    <section class="chapter chapter-summit" id="summit" data-alt="14,410">
-      <div class="chapter-inner">
-        <p class="eyebrow">Summit · 14,410 ft</p>
-        <h2>The view from here.</h2>
-        <p class="lede">
-          Thanks for climbing with me. If you want to swap trail notes, camera talk, or just say hi:
-        </p>
-        <div class="summit-actions">
-          <a class="btn btn-primary" href="mailto:fahimalam.work@gmail.com">Say hi</a>
-          <a class="btn" href="https://www.linkedin.com/in/fahimalamwork/" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="btn" href="https://github.com/fahimalamwork" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn btn-ghost" href="assets/Fahim_Alam_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
+  <main id="main">
+    <section class="hero">
+      <canvas class="hero-scene" id="hero-scene" aria-hidden="true"></canvas>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Senior QA / SDET — New York, NY</p>
+          <h1>Test architecture, CI/CD, and the relentless pursuit of green builds.</h1>
+          <p class="lede">
+            I'm a Senior QA / SDET with 7+ years architecting scalable automation
+            frameworks in <strong>Playwright</strong>, <strong>Selenium</strong>,
+            and <strong>Leapwork</strong> — integrated into Azure DevOps CI/CD
+            across enterprise healthcare and financial platforms.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Get in touch</a>
+            <a class="btn btn-secondary" href="assets/Fahim_Alam_Resume.pdf" target="_blank" rel="noopener">
+              Download résumé
+            </a>
+          </div>
+          <ul class="hero-meta" aria-label="Quick facts">
+            <li><span aria-hidden="true">📍</span> New York, NY</li>
+            <li><span aria-hidden="true">✉️</span> <a href="mailto:fahimalam.work@gmail.com">fahimalam.work@gmail.com</a></li>
+            <li><span aria-hidden="true">🔗</span> <a href="https://www.linkedin.com/in/fahimalamwork/" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><span aria-hidden="true">💻</span> <a href="https://github.com/fahimalamwork" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
         </div>
-        <p class="footer-line">
-          © <span id="year">2026</span> Fahim Alam · <a href="#">Back to base camp</a>
+        <div class="hero-photo">
+          <img src="assets/headshot.jpg" alt="Portrait of Fahim Alam" width="320" height="320" />
+          <div class="photo-bg" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container reveal">
+        <h2 class="section-title">About</h2>
+        <div class="prose">
+          <p>
+            I'm a Software Quality and Automation professional with over seven years
+            of experience building automation frameworks that teams actually trust.
+            My focus has been on reducing regression cycles, surfacing defects early,
+            and giving engineering organizations the confidence to release on shorter
+            cadences.
+          </p>
+          <p>
+            Most recently at <strong>Hitachi Solutions America</strong>, I led the
+            migration from SpecFlow to ReqnRoll, architected a hybrid Playwright BDD
+            framework with multi-browser parallel execution, and built 300+ Leapwork
+            regression tests that cut manual effort by 60% and release cycle time by
+            30%. I've also validated LLM-generated test cases for an internal AI-powered
+            QA assistant — identifying hallucination patterns and refining prompt
+            templates during alpha rollout.
+          </p>
+          <p>
+            Before that I spent two years at <strong>Capital One</strong> hardening
+            Selenium frameworks and SQL validation pipelines for the home loans
+            platform, increasing regression coverage by 40%.
+          </p>
+          <p class="aside">
+            Outside of work, I'm a photographer — the same eye that notices a misaligned
+            button in a UI tends to notice the light at the end of a long avenue.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section section-alt">
+      <div class="container reveal">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+          <div class="skill-group">
+            <h3>Automation &amp; Frameworks</h3>
+            <ul class="chips">
+              <li>Playwright</li>
+              <li>Selenium WebDriver</li>
+              <li>Leapwork</li>
+              <li>ReqnRoll</li>
+              <li>SpecFlow</li>
+              <li>Cucumber</li>
+              <li>TestNG</li>
+              <li>Page Object Model</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>CI/CD &amp; DevOps</h3>
+            <ul class="chips">
+              <li>Azure DevOps</li>
+              <li>Jenkins</li>
+              <li>Git</li>
+              <li>Maven</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>API &amp; Testing Tools</h3>
+            <ul class="chips">
+              <li>Postman</li>
+              <li>Rest-Assured</li>
+              <li>BDD strategy</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>Languages &amp; Databases</h3>
+            <ul class="chips">
+              <li>Java</li>
+              <li>C#</li>
+              <li>TypeScript</li>
+              <li>Microsoft SQL Server</li>
+              <li>Oracle</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="section">
+      <div class="container reveal">
+        <h2 class="section-title">Experience</h2>
+
+        <article class="role">
+          <header class="role-header">
+            <div>
+              <h3>Senior Consultant — QA (SDET)</h3>
+              <p class="role-company">Hitachi Solutions America · Irvine, CA</p>
+            </div>
+            <p class="role-dates">Jan 2022 – Apr 2026</p>
+          </header>
+
+          <div class="role-track">
+            <h4>Health Plans &amp; Providers</h4>
+            <ul>
+              <li>Led migration from SpecFlow to ReqnRoll, modernizing the BDD framework and improving long-term test maintainability.</li>
+              <li>Architected a hybrid Playwright framework using POM and BDD, supporting parallel execution and multi-browser testing.</li>
+              <li>Partnered with developers and product owners to define automation strategy for SIT and UAT phases.</li>
+              <li>Drove cross-functional defect triage sessions, accelerating issue resolution and improving sprint predictability.</li>
+              <li>Implemented .NET project builds, Git for code management, and Azure DevOps CI/CD for continuous integration.</li>
+            </ul>
+          </div>
+
+          <div class="role-track">
+            <h4>Professional Services</h4>
+            <ul>
+              <li>Designed and implemented 300+ automated regression tests in Leapwork, reducing manual testing effort by 60% and release cycle time by 30%.</li>
+              <li>Integrated automated tests into Azure DevOps pipelines, enabling nightly regression execution and early defect detection.</li>
+              <li>Collaborated with cross-functional teams to devise test strategies leveraging Leapwork's low-code capabilities.</li>
+            </ul>
+          </div>
+
+          <div class="role-track">
+            <h4>Manufacturing</h4>
+            <ul>
+              <li>Enhanced test automation framework using Cucumber and Selenium to support parallel and multi-browser test execution.</li>
+              <li>Wrote and maintained SQL validation scripts to verify data transformation outputs against expected results.</li>
+              <li>Worked within Agile teams to align QA deliverables with sprint goals and release schedules.</li>
+            </ul>
+          </div>
+
+          <div class="role-track">
+            <h4>Internal Innovation — AI-Powered QA Assistant</h4>
+            <ul>
+              <li>Validated LLM-generated test cases for accuracy, completeness, and alignment with acceptance criteria during alpha rollout.</li>
+              <li>Identified hallucination patterns, edge cases, and formatting inconsistencies in generated outputs and provided feedback to refine prompt templates.</li>
+              <li>Verified Azure DevOps extension workflow, ensuring correct linking of generated test cases to parent user stories.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="role">
+          <header class="role-header">
+            <div>
+              <h3>Software QA Analyst</h3>
+              <p class="role-company">Capital One · New York, NY</p>
+            </div>
+            <p class="role-dates">Nov 2019 – Dec 2021</p>
+          </header>
+          <ul>
+            <li>Enhanced Selenium-based framework, enabling parallel execution and increasing regression coverage by 40%.</li>
+            <li>Developed test cases, scenarios, and test data from user-story analysis and integrated them into the automation suite.</li>
+            <li>Authored SQL validation scripts to verify data outputs across the loan-processing pipeline; executed manual functional, regression, and exploratory testing across the home loans platform.</li>
+            <li>Documented detailed bug reports with steps to reproduce, severity, and expected vs. actual results, enabling faster developer turnaround.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="section section-alt">
+      <div class="container reveal">
+        <h2 class="section-title">Selected projects</h2>
+        <p class="prose section-lede">
+          Open-source repos that mirror the way I build at work — frameworks I'd
+          actually drop into a real codebase, plus a few QA-engineering tools I
+          wanted to exist. Every one is reproducible: clone, install, run.
         </p>
+
+        <div class="projects-grid">
+          <article class="project-card">
+            <header class="project-head">
+              <h3><a href="https://github.com/fahimalamwork/playwright-bdd-ts" target="_blank" rel="noopener">playwright-bdd-ts</a></h3>
+              <span class="project-stars" aria-hidden="true">↗</span>
+            </header>
+            <p>End-to-end framework on Playwright + TypeScript + Cucumber-JS. POM, per-scenario browser context, screenshot-on-failure, and a Chromium / Firefox / WebKit GitHub Actions matrix. Runs against saucedemo.com.</p>
+            <ul class="project-tags">
+              <li>Playwright</li><li>TypeScript</li><li>Cucumber</li><li>POM</li><li>GitHub Actions</li>
+            </ul>
+            <details class="project-sample">
+              <summary>View a real scenario from the suite</summary>
+              <div class="project-sample-body">
+                <div class="code-block">
+                  <span class="code-lang">features/cart.feature</span>
+<pre><code>Feature: Shopping cart
+
+  Background:
+    Given I am on the login page
+    And I sign in as "standard_user" with password "secret_sauce"
+    Then I see the inventory page
+
+  Scenario: Add multiple items to the cart
+    When I add "Sauce Labs Backpack" to the cart
+    And I add "Sauce Labs Bike Light" to the cart
+    Then the cart badge shows 2
+    When I open the cart
+    Then the cart contains "Sauce Labs Backpack"
+    And the cart contains "Sauce Labs Bike Light"</code></pre>
+                </div>
+                <div class="code-block">
+                  <span class="code-lang">src/steps/cart.steps.ts</span>
+<pre><code>import { When, Then } from '@cucumber/cucumber';
+import { strict as assert } from 'node:assert';
+import { TestWorld } from '../support/world';
+import { InventoryPage } from '../pages/InventoryPage';
+import { CartPage } from '../pages/CartPage';
+
+When('I add {string} to the cart', async function (this: TestWorld, item: string) {
+  await new InventoryPage(this.page).addItemToCart(item);
+});
+
+Then('the cart badge shows {int}', async function (this: TestWorld, count: number) {
+  assert.equal(await new InventoryPage(this.page).cartCount(), count);
+});
+
+Then('the cart contains {string}', async function (this: TestWorld, name: string) {
+  assert.equal(await new CartPage(this.page).hasItem(name), true);
+});</code></pre>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <article class="project-card">
+            <header class="project-head">
+              <h3><a href="https://github.com/fahimalamwork/selenium-java-cucumber" target="_blank" rel="noopener">selenium-java-cucumber</a></h3>
+              <span class="project-stars" aria-hidden="true">↗</span>
+            </header>
+            <p>Selenium 4 + Java 17 + Cucumber + TestNG + Rest-Assured. Thread-local DriverFactory for parallel scenarios, Maven profiles for Chrome/Firefox/API-only, and a TestNG suite XML that runs UI + API in one pass.</p>
+            <ul class="project-tags">
+              <li>Selenium</li><li>Java</li><li>Cucumber</li><li>TestNG</li><li>Rest-Assured</li><li>Maven</li>
+            </ul>
+            <details class="project-sample">
+              <summary>View a real scenario from the suite</summary>
+              <div class="project-sample-body">
+                <div class="code-block">
+                  <span class="code-lang">src/test/resources/features/cart.feature</span>
+<pre><code>Feature: Shopping cart
+
+  Background:
+    Given I am on the login page
+    When I sign in as "standard_user" with password "secret_sauce"
+    Then I see the inventory page
+
+  Scenario: Add multiple items to the cart
+    When I add "Sauce Labs Backpack" to the cart
+    And I add "Sauce Labs Bike Light" to the cart
+    Then the cart badge shows 2
+    When I open the cart
+    Then the cart contains "Sauce Labs Backpack"</code></pre>
+                </div>
+                <div class="code-block">
+                  <span class="code-lang">src/test/java/com/fahimalam/qa/steps/CartSteps.java</span>
+<pre><code>package com.fahimalam.qa.steps;
+
+import com.fahimalam.qa.pages.CartPage;
+import com.fahimalam.qa.pages.InventoryPage;
+import com.fahimalam.qa.support.DriverFactory;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class CartSteps {
+
+    @When("I add {string} to the cart")
+    public void iAddToTheCart(String item) {
+        new InventoryPage(DriverFactory.get()).addItemToCart(item);
+    }
+
+    @Then("the cart badge shows {int}")
+    public void theCartBadgeShows(int expected) {
+        assertThat(new InventoryPage(DriverFactory.get()).cartCount()).isEqualTo(expected);
+    }
+
+    @Then("the cart contains {string}")
+    public void theCartContains(String name) {
+        assertThat(new CartPage(DriverFactory.get()).hasItem(name)).isTrue();
+    }
+}</code></pre>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <article class="project-card">
+            <header class="project-head">
+              <h3><a href="https://github.com/fahimalamwork/playwright-dotnet-reqnroll" target="_blank" rel="noopener">playwright-dotnet-reqnroll</a></h3>
+              <span class="project-stars" aria-hidden="true">↗</span>
+            </header>
+            <p>Playwright .NET + C# 12 + ReqnRoll + NUnit — the BDD stack I migrated to from SpecFlow at Hitachi. Ships with an Azure DevOps YAML pipeline alongside a public GitHub Actions matrix.</p>
+            <ul class="project-tags">
+              <li>Playwright .NET</li><li>C#</li><li>ReqnRoll</li><li>NUnit</li><li>Azure DevOps</li>
+            </ul>
+            <details class="project-sample">
+              <summary>View a real scenario from the suite</summary>
+              <div class="project-sample-body">
+                <div class="code-block">
+                  <span class="code-lang">Features/Cart.feature</span>
+<pre><code>Feature: Shopping cart
+
+  Background:
+    Given I am on the login page
+    When I sign in as "standard_user" with password "secret_sauce"
+    Then I see the inventory page
+
+  Scenario: Add multiple items to the cart
+    When I add "Sauce Labs Backpack" to the cart
+    And I add "Sauce Labs Bike Light" to the cart
+    Then the cart badge shows 2
+    When I open the cart
+    Then the cart contains "Sauce Labs Backpack"</code></pre>
+                </div>
+                <div class="code-block">
+                  <span class="code-lang">Steps/CartSteps.cs</span>
+<pre><code>using FluentAssertions;
+using PlaywrightReqnRoll.Drivers;
+using PlaywrightReqnRoll.Pages;
+using Reqnroll;
+
+namespace PlaywrightReqnRoll.Steps;
+
+[Binding]
+public sealed class CartSteps
+{
+    private readonly PlaywrightDriver _driver;
+    public CartSteps(PlaywrightDriver driver) => _driver = driver;
+
+    [When("I add {string} to the cart")]
+    public Task WhenIAddToTheCart(string item) =>
+        new InventoryPage(_driver.Page).AddItemAsync(item);
+
+    [Then("the cart badge shows {int}")]
+    public async Task ThenTheCartBadgeShows(int expected) =>
+        (await new InventoryPage(_driver.Page).CartCountAsync())
+            .Should().Be(expected);
+
+    [Then("the cart contains {string}")]
+    public async Task ThenTheCartContains(string name) =>
+        (await new CartPage(_driver.Page).HasItemAsync(name))
+            .Should().BeTrue();
+}</code></pre>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <article class="project-card">
+            <header class="project-head">
+              <h3><a href="https://github.com/fahimalamwork/flaky-test-detector" target="_blank" rel="noopener">flaky-test-detector</a></h3>
+              <span class="project-stars" aria-hidden="true">↗</span>
+            </header>
+            <p>CLI that ingests JUnit XML / Playwright JSON across multiple CI runs and ranks tests by a binomial-variance flake score — so a test that fails 10/10 times (broken) isn't conflated with one that fails 5/10 (actually flaky).</p>
+            <ul class="project-tags">
+              <li>TypeScript</li><li>CLI</li><li>CI ops</li><li>Vitest</li>
+            </ul>
+            <details class="project-sample">
+              <summary>View real CLI output</summary>
+              <div class="project-sample-body">
+                <div class="code-block terminal">
+                  <span class="code-lang">$ flaky tests/fixtures/junit-run-*.xml</span>
+<pre><code>Detected 5 flaky tests:
+
+SCORE     FLAKE         P / F      HISTORY       AVG MS     TEST
+--------------------------------------------------------------------------------
+<span class="t-red">0.89      █████████░    1/2        F.F           847        checkout.apply-coupon
+0.89      █████████░    2/1        .F.           2200       checkout.place-order
+0.89      █████████░    2/1        .F.           483        login.locked-user</span>
+<span class="t-green">0.00      ░░░░░░░░░░    3/0        ...           1250       checkout.add-to-cart
+0.00      ░░░░░░░░░░    3/0        ...           917        login.standard-user</span></code></pre>
+                </div>
+                <p class="sample-note">Score peaks at 1.0 when a test fails exactly half the time (a real flake) and falls to 0 when a test is consistently passing or consistently failing. Three runs above show <code>apply-coupon</code> failing twice, <code>place-order</code> failing once — both genuine flakes — while <code>add-to-cart</code> stayed solid at 3/3.</p>
+              </div>
+            </details>
+          </article>
+
+          <article class="project-card">
+            <header class="project-head">
+              <h3><a href="https://github.com/fahimalamwork/llm-test-case-generator" target="_blank" rel="noopener">llm-test-case-generator</a></h3>
+              <span class="project-stars" aria-hidden="true">↗</span>
+            </header>
+            <p>Generates test cases from a user story with an LLM, then evaluates the output for hallucinations and acceptance-criteria coverage. Pluggable Stub / OpenAI / Anthropic backends. Built from lessons learned validating an internal AI-powered QA assistant.</p>
+            <ul class="project-tags">
+              <li>TypeScript</li><li>LLM evals</li><li>Zod</li><li>OpenAI</li><li>Anthropic</li>
+            </ul>
+            <details class="project-sample">
+              <summary>View a real evaluation report</summary>
+              <div class="project-sample-body">
+                <div class="code-block terminal">
+                  <span class="code-lang">$ llm-tcg eval generated.json --story shopping-cart.story.md</span>
+<pre><code>──────────────── <span class="t-bold">Evaluation — score <span class="t-green">91</span></span> ────────────────
+Test cases       6
+AC coverage      5 / 5 (100%)
+Hallucinations   1
+Coverage gaps    0
+Format issues    0
+
+<span class="t-yellow t-bold">Possible hallucinations:</span>
+  • <span class="t-cyan">TC-006</span> 'Negative: surface a clear error on bad input'
+    suspect: <span class="t-red">audit_log</span></code></pre>
+                </div>
+                <p class="sample-note">The 91/100 reflects perfect AC coverage (60%) and one flagged hallucination — the model invented an <code>audit_log</code> tag that doesn't appear anywhere in the user story. The eval harness caught it before a human ever opened the file.</p>
+              </div>
+            </details>
+          </article>
+
+          <article class="project-card project-card-wide">
+            <header class="project-head">
+              <h3><a href="https://github.com/fahimalamwork/test-report-dashboard" target="_blank" rel="noopener">test-report-dashboard</a></h3>
+              <span class="project-stars" aria-hidden="true">↗</span>
+            </header>
+            <p>Parses JUnit XML / Playwright JSON across one or many runs and renders a self-contained static HTML dashboard — pass-rate trend, slowest tests, suite breakdown, recent failures — that you can drop into a CI artifact or Slack message.</p>
+            <ul class="project-tags">
+              <li>TypeScript</li><li>Reporting</li><li>Static HTML</li><li>CI artifacts</li>
+            </ul>
+            <details class="project-sample" open>
+              <summary>Live demo — generated from three sample CI runs</summary>
+              <div class="project-sample-body">
+                <p class="sample-note">
+                  This is real output from the tool — three fake JUnit runs fed into the CLI,
+                  rendered to a single self-contained HTML file. Same rendering you'd attach
+                  to a Slack message after a deploy.
+                </p>
+                <div class="dashboard-frame">
+                  <iframe src="demo/dashboard.html" title="Sample test report dashboard" loading="lazy"></iframe>
+                </div>
+                <p class="sample-note">
+                  <a class="btn btn-secondary btn-sm" href="demo/dashboard.html" target="_blank" rel="noopener">Open the dashboard in a new tab ↗</a>
+                </p>
+              </div>
+            </details>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container contact reveal">
+        <h2 class="section-title">Let's talk</h2>
+        <p class="prose">
+          I'm currently exploring new Senior QA / SDET roles. If you're hiring or
+          just want to chat about test architecture, CI/CD, or AI-assisted QA, I'd
+          love to hear from you.
+        </p>
+        <div class="contact-actions">
+          <a class="btn btn-primary" href="mailto:fahimalam.work@gmail.com">Email me</a>
+          <a class="btn btn-secondary" href="https://www.linkedin.com/in/fahimalamwork/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-secondary" href="https://github.com/fahimalamwork" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn btn-secondary" href="assets/Fahim_Alam_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
+        </div>
       </div>
     </section>
   </main>
 
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <p>© <span id="year">2026</span> Fahim Alam</p>
+      <p><a href="mailto:fahimalam.work@gmail.com">fahimalam.work@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <script src="interactive.js" defer></script>
   <script type="importmap">
     {
       "imports": {
@@ -157,30 +530,6 @@
       }
     }
   </script>
-  <script type="module" src="mountain.js"></script>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    // Live altitude readout in the HUD.
-    (function () {
-      var chapters = document.querySelectorAll('.chapter[data-alt], .chapter-hero, .chapter-summit');
-      var altEl = document.getElementById('alt-value');
-      if (!altEl) return;
-      function update() {
-        var y = window.scrollY;
-        var vh = window.innerHeight;
-        var best = 2540;
-        chapters.forEach(function (ch) {
-          var rect = ch.getBoundingClientRect();
-          if (rect.top < vh * 0.6) {
-            var alt = parseInt((ch.getAttribute('data-alt') || '2540').replace(/,/g, ''), 10);
-            if (!isNaN(alt)) best = alt;
-          }
-        });
-        altEl.textContent = best.toLocaleString();
-      }
-      window.addEventListener('scroll', update, { passive: true });
-      update();
-    })();
-  </script>
+  <script type="module" src="hero-scene.js"></script>
 </body>
 </html>
