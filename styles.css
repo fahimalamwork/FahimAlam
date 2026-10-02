@@ -622,9 +622,10 @@ a:hover { text-decoration: underline; }
   object-fit: cover;
   object-position: center;
   opacity: 0;
-  transition: opacity 0.9s ease;
+  transition: opacity 0.85s ease;
 }
-.page-video.ready { opacity: 1; }
+.page-video.is-active { opacity: 1; }
+.page-video.failed { display: none; }
 .page-vignette {
   position: absolute;
   inset: 0;

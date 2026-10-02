@@ -1,88 +1,149 @@
 (function () {
   'use strict';
 
-  var video = document.getElementById('hero-video');
-  if (!video) return;
-
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) {
-    // Reduced motion gets the poster image via CSS fallback; nothing to drive.
-    return;
+
+  var SECTIONS = ['hero', 'about', 'skills', 'experience', 'projects', 'contact'];
+  var videos = {};
+  var sectionEls = {};
+  var activeId = 'hero';
+  var rafId = 0;
+  var targetTime = 0;
+
+  SECTIONS.forEach(function (id) {
+    var vid = document.querySelector('.page-video[data-section="' + id + '"]');
+    var sec = document.getElementById(id);
+    if (!vid || !sec) return;
+    try { vid.muted = true; } catch (e) {}
+    try { vid.playsInline = true; vid.setAttribute('playsinline', ''); } catch (e) {}
+    vid.pause();
+    videos[id] = { el: vid, ready: false, failed: false, duration: 0, lastT: 0 };
+    sectionEls[id] = sec;
+
+    vid.addEventListener('loadedmetadata', function () {
+      videos[id].ready = true;
+      videos[id].duration = vid.duration;
+      kick();
+    });
+    vid.addEventListener('loadeddata', function () {
+      videos[id].ready = true;
+      kick();
+    });
+    vid.addEventListener('error', function () {
+      videos[id].failed = true;
+      vid.classList.add('failed');
+    });
+    // In case already cached when we attach
+    if (vid.readyState >= 1) {
+      videos[id].ready = true;
+      videos[id].duration = vid.duration || 0;
+    }
+  });
+
+  if (reduceMotion) return;
+
+  function pickActive() {
+    var vh = window.innerHeight;
+    var mid = window.scrollY + vh * 0.45;
+    var current = activeId;
+    for (var i = 0; i < SECTIONS.length; i++) {
+      var id = SECTIONS[i];
+      var sec = sectionEls[id];
+      if (!sec) continue;
+      var top = sec.offsetTop;
+      var bottom = top + sec.offsetHeight;
+      if (mid >= top && mid < bottom) {
+        if (videos[id] && videos[id].ready && !videos[id].failed) {
+          current = id;
+        } else {
+          // Keep the hero's alpine as the universal fallback.
+          current = (videos.hero && videos.hero.ready && !videos.hero.failed) ? 'hero' : current;
+        }
+        break;
+      }
+    }
+    return current;
   }
 
-  // Needed for scrubbing to work smoothly across browsers.
-  video.muted = true;
-  video.playsInline = true;
-  try { video.setAttribute('playsinline', ''); } catch (e) {}
-  try { video.setAttribute('webkit-playsinline', ''); } catch (e) {}
-  video.pause();
-
-  var scrollableRange = 0;
-  var targetTime = 0;
-  var currentTime = 0;
-  var revealed = false;
-  var rafId = 0;
-
-  function measure() {
-    scrollableRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  function sectionProgress(id) {
+    var sec = sectionEls[id];
+    if (!sec) return 0;
+    var vh = window.innerHeight;
+    var top = sec.offsetTop;
+    var h = sec.offsetHeight;
+    // Hero scrubs from the moment the page is at the top (progress 0 at scrollY 0).
+    // Later sections scrub from the moment their top reaches the top of the viewport.
+    var start = (id === 'hero') ? 0 : top;
+    var end = top + h;
+    var range = Math.max(1, end - start);
+    var p = (window.scrollY - start) / range;
+    if (p < 0) p = 0;
+    if (p > 1) p = 1;
+    return p;
   }
 
   function updateTarget() {
-    var progress = window.scrollY / scrollableRange;
-    if (progress < 0) progress = 0;
-    if (progress > 1) progress = 1;
-    var dur = video.duration;
+    var next = pickActive();
+    activeId = next;
+
+    // Cross-fade: only the active video has `is-active`
+    for (var i = 0; i < SECTIONS.length; i++) {
+      var id = SECTIONS[i];
+      if (!videos[id]) continue;
+      var shouldBeActive = (id === activeId);
+      var hasClass = videos[id].el.classList.contains('is-active');
+      if (shouldBeActive !== hasClass) {
+        videos[id].el.classList.toggle('is-active', shouldBeActive);
+      }
+    }
+
+    var v = videos[activeId];
+    if (!v || !v.ready) return;
+
+    // Which section drives the scrub?
+    // If the active video is a section-specific one, use that section's local progress.
+    // If we fell back to hero mid-page, scrub hero across the overall page progress
+    // so the alpine still drifts forward through the whole site.
+    var p;
+    var mid = window.scrollY + window.innerHeight * 0.45;
+    var currentSectionId = null;
+    for (var j = 0; j < SECTIONS.length; j++) {
+      var sid = SECTIONS[j];
+      var sec = sectionEls[sid];
+      if (!sec) continue;
+      if (mid >= sec.offsetTop && mid < sec.offsetTop + sec.offsetHeight) { currentSectionId = sid; break; }
+    }
+    if (activeId === 'hero' && currentSectionId && currentSectionId !== 'hero') {
+      // whole-page fallback for hero
+      var full = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      p = Math.max(0, Math.min(1, window.scrollY / full));
+    } else {
+      p = sectionProgress(activeId);
+    }
+    var dur = v.duration;
     if (!isFinite(dur) || dur <= 0) return;
-    // Hold back a tiny bit from the exact end so the frame doesn't go blank.
-    targetTime = progress * (dur - 0.05);
+    targetTime = p * (dur - 0.05);
   }
 
   function tick() {
     rafId = 0;
-    // Ease toward the scroll target for buttery scrubbing even over janky scroll.
-    currentTime += (targetTime - currentTime) * 0.18;
-    if (video.readyState >= 2 && Math.abs(video.currentTime - currentTime) > 0.03) {
-      try { video.currentTime = currentTime; } catch (e) {}
+    var v = videos[activeId];
+    if (!v || !v.ready) return;
+    v.lastT += (targetTime - v.lastT) * 0.2;
+    if (v.el.readyState >= 2 && Math.abs(v.el.currentTime - v.lastT) > 0.03) {
+      try { v.el.currentTime = v.lastT; } catch (e) {}
     }
-    if (Math.abs(targetTime - currentTime) > 0.001) {
+    if (Math.abs(targetTime - v.lastT) > 0.001) {
       rafId = requestAnimationFrame(tick);
     }
   }
 
-  function kickTick() {
+  function kick() {
+    updateTarget();
     if (!rafId) rafId = requestAnimationFrame(tick);
   }
 
-  function onScroll() {
-    updateTarget();
-    kickTick();
-  }
-
-  function reveal() {
-    if (revealed) return;
-    revealed = true;
-    video.classList.add('ready');
-  }
-
-  function onMeta() {
-    measure();
-    updateTarget();
-    currentTime = targetTime;
-    try { video.currentTime = targetTime; } catch (e) {}
-    reveal();
-    kickTick();
-  }
-
-  video.addEventListener('loadedmetadata', onMeta);
-  video.addEventListener('loadeddata', reveal);
-  // In case the metadata fired before this script attached (cached).
-  if (video.readyState >= 1) onMeta();
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', function () { measure(); updateTarget(); kickTick(); });
-  // Safety: if the video truly can't load (CORS, 404), fall back to the poster via CSS.
-  video.addEventListener('error', function () { video.style.display = 'none'; });
-
-  // Nudge once in case we're already partway down the page on reload.
-  requestAnimationFrame(function () { onScroll(); });
+  window.addEventListener('scroll', kick, { passive: true });
+  window.addEventListener('resize', kick);
+  requestAnimationFrame(kick);
 })();
