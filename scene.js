@@ -26,18 +26,21 @@ const PROJECTS = [
     tagline: 'AI quoting + docs for freight forwarders',
     description: "An AI-powered quoting and document automation platform for freight forwarders and customs brokers. Ingests inquiries, generates compliant quotes, drafts BLs and invoices.",
     position: [6, 2.6, 0.5], build: buildDocument,
+    rotation: [0, -0.25, 0], spinY: 0,
   },
   {
     id: 'tether', name: 'Tether', repo: 'Maria',
     tagline: 'A private space for two',
     description: "A couples companion PWA — shared modules, private per-user vaults, and a readable couple profile. Built for keeping two people in each other's pocket, especially over distance.",
     position: [-6, 0.5, 0.5], build: buildLinkedRings,
+    rotation: [-0.35, 0, 0], spinY: 0.0015,
   },
   {
     id: 'maria-closet', name: "Maria's Closet", repo: 'MariaCloset',
     tagline: 'Closet rental, muted jewel + gold',
     description: "A closet-rental concept with a restrained desi-luxe aesthetic — muted jewel tones, gold accents, and request-to-rent interactions on bespoke garments.",
     position: [-2, 0.5, -0.5], build: buildHanger,
+    rotation: [0, 0, 0], spinY: 0,
   },
   {
     id: 'okdoc', name: 'OkDoc', repo: 'OkDoc',
@@ -50,30 +53,35 @@ const PROJECTS = [
     tagline: 'For travelers standing hungry in a new city',
     description: "A mobile-first PWA for travelers: scan a menu or point at a storefront, get instant translations, allergy flags, and 'what to order here' from locals.",
     position: [6, 0.5, -1], build: buildPlateFork,
+    rotation: [Math.PI / 3.4, 0, 0], spinY: 0,
   },
   {
     id: 'stoopcast', name: 'StoopCast', repo: 'StoopCast',
     tagline: 'Free-stuff stoop alerts with karma',
     description: "Real-time alerts for free stuff left on neighborhood stoops. Photo-first posts, karma for the person who dropped it off, map view for the person running to grab it.",
     position: [-6, -1.5, 0.5], build: buildCardboardBox,
+    rotation: [-0.2, -0.25, 0], spinY: 0,
   },
   {
     id: 'geobinge', name: 'GeoBinge', repo: 'GeoBinge',
     tagline: 'Where in the world Netflix has your show',
     description: "Search any movie or TV show and instantly see every country where Netflix (or other services) have it. VPN hop planner included.",
     position: [-2, -1.5, -1], build: buildTV,
+    rotation: [0, -0.2, 0], spinY: 0,
   },
   {
     id: 'echo', name: 'Echo', repo: 'Echo',
     tagline: 'Voice messages locked to GPS coordinates',
     description: "Drop a 60-second audio memo at a location on the map. The next person who walks past can hear it. A quieter, more intimate location-based network.",
     position: [2, -1.5, 0.5], build: buildSpeakerPin,
+    rotation: [0, 0, 0], spinY: 0,
   },
   {
     id: 'bearing', name: 'Bearing', repo: 'Bearing',
     tagline: 'A personal decision engine',
     description: "Name a hard decision. Weigh it honestly against your own values. Watch the needle settle. Not a shortcut — a mirror.",
     position: [6, -1.5, -0.5], build: buildCompass,
+    rotation: [Math.PI / 3.4, 0, 0], spinY: 0,
   },
   {
     id: 'autotest', name: 'AutoTest', repo: 'AutoTest',
@@ -135,11 +143,15 @@ function init() {
   const objects = PROJECTS.map((p) => {
     const grp = p.build();
     grp.position.fromArray(p.position);
+    if (p.rotation) grp.rotation.set(p.rotation[0] || 0, p.rotation[1] || 0, p.rotation[2] || 0);
+    const spin = p.spinY !== undefined ? p.spinY : 0.004 + Math.random() * 0.006;
     grp.userData = {
       project: p,
       basePos: new THREE.Vector3(...p.position),
+      baseRotX: grp.rotation.x,
+      baseRotZ: grp.rotation.z,
       phase: Math.random() * Math.PI * 2,
-      spinY: 0.004 + Math.random() * 0.006,
+      spinY: spin,
       bob: 0.08 + Math.random() * 0.14,
       selectable: true,
     };
@@ -475,13 +487,17 @@ function buildDocument() {
 
 function buildLinkedRings() {
   const g = new THREE.Group();
-  const matA = new THREE.MeshStandardMaterial({ color: 0xe9b48a, roughness: 0.25, metalness: 0.85 });
-  const matB = new THREE.MeshStandardMaterial({ color: 0xd4a0e0, roughness: 0.25, metalness: 0.85 });
-  const r1 = new THREE.Mesh(new THREE.TorusGeometry(0.45, 0.08, 12, 36), matA);
-  const r2 = new THREE.Mesh(new THREE.TorusGeometry(0.45, 0.08, 12, 36), matB);
-  r1.rotation.y = Math.PI / 2;
-  r2.position.x = 0.5;
-  r2.rotation.x = Math.PI / 2;
+  const matA = new THREE.MeshStandardMaterial({ color: 0xe9b48a, roughness: 0.25, metalness: 0.9 });
+  const matB = new THREE.MeshStandardMaterial({ color: 0xd4a0e0, roughness: 0.25, metalness: 0.9 });
+  const geo = new THREE.TorusGeometry(0.42, 0.09, 14, 36);
+  const r1 = new THREE.Mesh(geo, matA);
+  const r2 = new THREE.Mesh(geo, matB);
+  // Both rings face the camera (hole along +Z) with a slight outward tilt
+  // and horizontal offset so they overlap in the middle.
+  r1.position.set(-0.3, 0, 0);
+  r1.rotation.y = -0.45;
+  r2.position.set(0.3, 0, 0.05);
+  r2.rotation.y = 0.45;
   g.add(r1, r2);
   return g;
 }
