@@ -21,6 +21,17 @@
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
 
+  <div class="page-backdrop" aria-hidden="true">
+    <video id="hero-video"
+           class="page-video"
+           src="assets/video/hero.mp4"
+           poster="assets/video/hero-poster.jpg"
+           muted
+           playsinline
+           preload="auto"></video>
+    <div class="page-vignette"></div>
+  </div>
+
   <header class="site-header">
     <div class="container header-row">
       <a href="#" class="brand" aria-label="Fahim Alam — Home">
@@ -40,17 +51,7 @@
 
   <main id="main">
     <section class="hero" id="hero">
-      <div class="hero-sticky">
-        <video id="hero-video"
-               class="hero-video"
-               src="assets/video/hero.mp4"
-               poster="assets/video/hero-poster.jpg"
-               muted
-               playsinline
-               preload="auto"
-               aria-hidden="true"></video>
-        <div class="hero-vignette" aria-hidden="true"></div>
-        <div class="container hero-grid">
+      <div class="container hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">Senior QA / SDET — New York, NY</p>
           <h1>Test architecture, CI/CD, and the relentless pursuit of green builds.</h1>
@@ -81,7 +82,6 @@
         <div class="hero-photo">
           <img src="assets/headshot.jpg" alt="Portrait of Fahim Alam" width="320" height="320" />
           <div class="photo-bg" aria-hidden="true"></div>
-        </div>
         </div>
       </div>
     </section>

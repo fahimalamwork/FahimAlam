@@ -2,8 +2,7 @@
   'use strict';
 
   var video = document.getElementById('hero-video');
-  var hero = document.getElementById('hero');
-  if (!video || !hero) return;
+  if (!video) return;
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) {
@@ -19,20 +18,17 @@
   video.pause();
 
   var scrollableRange = 0;
-  var heroTop = 0;
   var targetTime = 0;
   var currentTime = 0;
   var revealed = false;
   var rafId = 0;
 
   function measure() {
-    var rect = hero.getBoundingClientRect();
-    heroTop = rect.top + window.scrollY;
-    scrollableRange = Math.max(1, hero.offsetHeight - window.innerHeight);
+    scrollableRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
   }
 
   function updateTarget() {
-    var progress = (window.scrollY - heroTop) / scrollableRange;
+    var progress = window.scrollY / scrollableRange;
     if (progress < 0) progress = 0;
     if (progress > 1) progress = 1;
     var dur = video.duration;
