@@ -73,7 +73,7 @@ const PROJECTS = [
     id: 'stoopcast', name: 'StoopCast', repo: 'StoopCast',
     tagline: 'Free-stuff stoop alerts with karma',
     description: "Real-time alerts for free stuff left on neighborhood stoops. Photo-first posts, karma for the person who dropped it off, map view for the person running to grab it.",
-    palette: { bgA: '#2a2004', bgB: '#8a6418', ink: '#1a1a1a', accent: '#2a2004', glow: 0xffd54a },
+    palette: { bgA: '#2a1f04', bgB: '#6a4810', ink: '#ffe066', accent: '#ffd54a', glow: 0xffd54a },
     motif: 'tape',
   },
   {
@@ -101,7 +101,7 @@ const PROJECTS = [
     id: 'autotest', name: 'AutoTest', repo: 'AutoTest',
     tagline: 'Jira issue → test cases, automatically',
     description: "A production-leaning MVP that reads a Jira issue and generates relevant test cases with the right templates, acceptance-criteria mapping, and Gherkin where it fits.",
-    palette: { bgA: '#0a1a2a', bgB: '#1a3a4a', ink: '#eaffea', accent: '#55d070', glow: 0x55d070 },
+    palette: { bgA: '#06182e', bgB: '#1b5a4a', ink: '#f4fff6', accent: '#5aff8a', glow: 0x55d070 },
     motif: 'check',
   },
   {
@@ -122,7 +122,7 @@ const PROJECTS = [
     id: 'mozumder', name: 'Mozumder', repo: 'Mozumder',
     tagline: 'A handcrafted site for a diversified business',
     description: "A static site for Mozumder — a modern, handcrafted presence for a diversified family business, written in the kind of HTML that opens in 300ms on any phone.",
-    palette: { bgA: '#e8d7b4', bgB: '#b8a075', ink: '#1a1a1a', accent: '#1a1a1a', glow: 0xeadcc2 },
+    palette: { bgA: '#ead4a8', bgB: '#8c6d3a', ink: '#1a1206', accent: '#5a3a1a', glow: 0xeadcc2 },
     motif: 'serifA',
   },
 ];
@@ -705,8 +705,8 @@ function drawMotif(ctx, motif, W, H, pal) {
       break;
 
     case 'serifA':
-      ctx.fillStyle = hexWithAlpha(pal.ink, 0.14);
-      ctx.font = '900 320px "Times New Roman", Georgia, serif';
+      ctx.fillStyle = hexWithAlpha(pal.ink, 0.08);
+      ctx.font = '400 240px "Times New Roman", Georgia, serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('M', 0, 10);
