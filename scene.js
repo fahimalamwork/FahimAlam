@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { createAmbient } from './audio.js';
 
 const GITHUB_USER = 'fahimalamwork';
 
@@ -272,6 +273,16 @@ function init() {
   document.getElementById('panel-close').addEventListener('click', closeProject);
   document.getElementById('index-close').addEventListener('click', hideIndex);
   document.getElementById('index-btn').addEventListener('click', showIndex);
+
+  // Ambient audio toggle (default off, remember preference)
+  const ambient = createAmbient();
+  const soundBtn = document.getElementById('sound-btn');
+  const soundLabel = soundBtn.querySelector('.sound-state');
+  soundBtn.addEventListener('click', async () => {
+    const on = await ambient.toggle();
+    soundBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    soundLabel.textContent = on ? 'On' : 'Off';
+  });
   indexList.addEventListener('click', (e) => {
     const btn = e.target.closest('.index-item');
     if (!btn) return;
