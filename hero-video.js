@@ -43,26 +43,39 @@
   if (reduceMotion) return;
 
   function pickActive() {
-    var vh = window.innerHeight;
-    var mid = window.scrollY + vh * 0.45;
-    var current = activeId;
+    // The most-recently-crossed section wins. This correctly handles short
+    // last sections (contact) that would otherwise never contain the viewport
+    // midpoint since you can't scroll past them.
+    var mid = window.scrollY + window.innerHeight * 0.5;
+    var found = 'hero';
+    var bestTop = -Infinity;
     for (var i = 0; i < SECTIONS.length; i++) {
       var id = SECTIONS[i];
       var sec = sectionEls[id];
       if (!sec) continue;
-      var top = sec.offsetTop;
-      var bottom = top + sec.offsetHeight;
-      if (mid >= top && mid < bottom) {
-        if (videos[id] && videos[id].ready && !videos[id].failed) {
-          current = id;
-        } else {
-          // Keep the hero's alpine as the universal fallback.
-          current = (videos.hero && videos.hero.ready && !videos.hero.failed) ? 'hero' : current;
-        }
-        break;
+      if (sec.offsetTop <= mid && sec.offsetTop > bestTop) {
+        bestTop = sec.offsetTop;
+        found = id;
       }
     }
-    return current;
+    if (videos[found] && videos[found].ready && !videos[found].failed) return found;
+    return (videos.hero && videos.hero.ready && !videos.hero.failed) ? 'hero' : found;
+  }
+
+  function currentSectionId() {
+    var mid = window.scrollY + window.innerHeight * 0.5;
+    var found = 'hero';
+    var bestTop = -Infinity;
+    for (var i = 0; i < SECTIONS.length; i++) {
+      var id = SECTIONS[i];
+      var sec = sectionEls[id];
+      if (!sec) continue;
+      if (sec.offsetTop <= mid && sec.offsetTop > bestTop) {
+        bestTop = sec.offsetTop;
+        found = id;
+      }
+    }
+    return found;
   }
 
   function sectionProgress(id) {
@@ -105,15 +118,8 @@
     // If we fell back to hero mid-page, scrub hero across the overall page progress
     // so the alpine still drifts forward through the whole site.
     var p;
-    var mid = window.scrollY + window.innerHeight * 0.45;
-    var currentSectionId = null;
-    for (var j = 0; j < SECTIONS.length; j++) {
-      var sid = SECTIONS[j];
-      var sec = sectionEls[sid];
-      if (!sec) continue;
-      if (mid >= sec.offsetTop && mid < sec.offsetTop + sec.offsetHeight) { currentSectionId = sid; break; }
-    }
-    if (activeId === 'hero' && currentSectionId && currentSectionId !== 'hero') {
+    var currentSid = currentSectionId();
+    if (activeId === 'hero' && currentSid !== 'hero') {
       // whole-page fallback for hero
       var full = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       p = Math.max(0, Math.min(1, window.scrollY / full));
