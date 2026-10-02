@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fahim Alam — Things I've built</title>
+  <meta name="description" content="A constellation of 16 projects. Hover anything, click to open." />
+  <meta name="author" content="Fahim Alam" />
+  <meta name="theme-color" content="#0a0b1e" />
+  <meta property="og:title" content="Fahim Alam — Things I've built" />
+  <meta property="og:description" content="16 projects floating in space. Hover anything, click to open." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23ffd54a' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='9' fill='%23ffd54a'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://rsms.me/" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="loader" class="loader" role="status" aria-label="Loading">
+    <div class="loader-inner">
+      <span class="loader-dot" aria-hidden="true"></span>
+      <h1 class="loader-name">Fahim Alam</h1>
+      <p class="loader-sub">Loading 16 things I've built</p>
+    </div>
+  </div>
+
+  <canvas id="scene" aria-label="Interactive 3D project constellation"></canvas>
+
+  <header class="top">
+    <a href="../" class="brand" aria-label="Back to the main site">
+      <span class="brand-back" aria-hidden="true">←</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span class="brand-name">Fahim Alam</span>
+    </a>
+    <nav class="top-actions" aria-label="Primary">
+      <button id="sound-btn" class="chip chip-sound" type="button" aria-pressed="false" aria-label="Toggle ambient sound">
+        <span class="sound-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path class="sound-speaker" d="M4 9h4l5-4v14l-5-4H4z" />
+            <path class="sound-wave sound-wave-1" d="M16 9c1.3 1 1.3 5 0 6" />
+            <path class="sound-wave sound-wave-2" d="M19 6.5c2.5 2 2.5 9 0 11" />
+            <line class="sound-slash" x1="3" y1="21" x2="21" y2="3" />
+          </svg>
+        </span>
+        <span>Sound · <span class="sound-state">Off</span></span>
+      </button>
+      <button id="index-btn" class="chip" type="button">Index · 16</button>
+      <a href="https://github.com/fahimalamwork" target="_blank" rel="noopener" class="chip">GitHub <span class="arr">↗</span></a>
+    </nav>
+  </header>
+
+  <aside class="hint" aria-hidden="true">
+    <p><span class="hint-dot"></span> Hover anything</p>
+    <p class="hint-sub">Click to open · Esc to close</p>
+  </aside>
+
+  <section id="info-panel" class="panel info-panel" role="dialog" aria-labelledby="panel-name" aria-hidden="true">
+    <button id="panel-close" class="panel-close" aria-label="Close panel" type="button">×</button>
+    <p class="panel-tagline">—</p>
+    <h2 class="panel-name" id="panel-name">—</h2>
+    <p class="panel-desc">—</p>
+    <a class="panel-github panel-link" href="#" target="_blank" rel="noopener">
+      View on GitHub <span class="arr">↗</span>
+    </a>
+  </section>
+
+  <section id="index-panel" class="panel index-panel" role="dialog" aria-labelledby="index-title" aria-hidden="true">
+    <header class="index-head">
+      <h2 id="index-title">Everything, in a list</h2>
+      <button id="index-close" class="panel-close" aria-label="Close index" type="button">×</button>
+    </header>
+    <ul id="index-list" class="index-list"></ul>
+  </section>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.163.0/build/three.module.js"
+    }
+  }
+  </script>
+  <script type="module" src="scene.js"></script>
+</body>
+</html>
