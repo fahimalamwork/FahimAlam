@@ -28,6 +28,73 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 
+/* Loading overlay — visible until the scene signals ready */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  background:
+    radial-gradient(ellipse at 70% 10%, rgba(255, 170, 110, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 85%, rgba(140, 110, 255, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 50%, var(--bg-top) 0%, var(--bg-mid) 55%, var(--bg-bot) 100%);
+  color: var(--ink);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.9s ease 0.25s, visibility 0.9s ease 0.25s;
+}
+.scene-ready .loader {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-inner {
+  text-align: center;
+  animation: loader-in 1.0s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes loader-in {
+  0%   { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: none; }
+}
+.loader-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(255, 213, 74, 0.6);
+  margin-bottom: 28px;
+  animation: breathe 2s ease-in-out infinite;
+}
+.loader-name {
+  margin: 0;
+  font-size: clamp(3rem, 10vw, 7.5rem);
+  font-weight: 100;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  color: var(--ink);
+}
+.loader-sub {
+  margin: 28px 0 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  animation: loader-sub-pulse 1.8s ease-in-out infinite;
+}
+@keyframes loader-sub-pulse {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader-inner { animation: none; }
+  .loader-dot, .loader-sub { animation: none; }
+}
+
 #scene {
   position: fixed;
   inset: 0;
