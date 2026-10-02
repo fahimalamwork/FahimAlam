@@ -2,114 +2,149 @@ import * as THREE from 'three';
 
 const GITHUB_USER = 'fahimalamwork';
 
+const CARD_W = 2.4;
+const CARD_H = 1.5;
+
+/* Palette convention per project:
+ * palette.bgA / bgB — gradient stops for the card background
+ * palette.ink      — body/display text color (hex string)
+ * palette.accent   — eyebrow + motif color (hex string)
+ * palette.glow     — the color of the back-light behind the panel (hex int)
+ * motif            — a short label letting the texture draw a signature shape
+ */
 const PROJECTS = [
   {
     id: 'open-meteo', name: 'Open-Meteo', repo: 'Open-Meteo',
     tagline: 'A living 3D globe of real weather',
     description: "Earth's actual weather rendered as a living, animated low-poly world. Pulls open weather data and visualizes it as waves, cloud bands, and temperature gradients across a stylized globe.",
-    position: [-6, 2.6, 0], build: buildGlobe,
+    palette: { bgA: '#06234a', bgB: '#1b5fa8', ink: '#ffffff', accent: '#ffd166', glow: 0x4a9bff },
+    motif: 'orbit',
   },
   {
     id: 'near-coffee', name: 'Near Coffee', repo: 'near-coffee-visual',
     tagline: 'A mountain coffee shop, open in a browser tab',
     description: "A converted homestead barn below the Tetons, rendered as an atmospheric visual front door for a mountain coffee shop dream.",
-    position: [-2, 3, 1], build: buildCoffeeMug,
+    palette: { bgA: '#2a1810', bgB: '#8c5a2f', ink: '#f5e8d6', accent: '#f0b86e', glow: 0xc07a3a },
+    motif: 'ring',
   },
   {
     id: 'livescanner', name: 'LiveScanner', repo: 'LiveScanner',
     tagline: 'Air-traffic + emergency feeds, in one place',
     description: "Stream live air-traffic control audio from LiveATC and emergency/scanner feeds, with quick-switch between frequencies and favorites you can save.",
-    position: [2, 3, -1], build: buildRadarDish,
+    palette: { bgA: '#021a2a', bgB: '#0e4a4a', ink: '#eafff2', accent: '#5aff9a', glow: 0x40ffa0 },
+    motif: 'wave',
   },
   {
     id: 'quotex-ai', name: 'QuotexAI', repo: 'QuotexAi',
     tagline: 'AI quoting + docs for freight forwarders',
     description: "An AI-powered quoting and document automation platform for freight forwarders and customs brokers. Ingests inquiries, generates compliant quotes, drafts BLs and invoices.",
-    position: [6, 2.6, 0.5], build: buildDocument,
-    rotation: [0, -0.25, 0], spinY: 0,
+    palette: { bgA: '#0a0f24', bgB: '#2a2050', ink: '#f5f0e4', accent: '#ffd54a', glow: 0x6060ff },
+    motif: 'grid',
   },
   {
     id: 'tether', name: 'Tether', repo: 'Maria',
     tagline: 'A private space for two',
     description: "A couples companion PWA — shared modules, private per-user vaults, and a readable couple profile. Built for keeping two people in each other's pocket, especially over distance.",
-    position: [-6, 0.5, 0.5], build: buildLinkedRings,
-    rotation: [-0.35, 0, 0], spinY: 0.0015,
+    palette: { bgA: '#2a0a2a', bgB: '#7a2a5a', ink: '#fff0e6', accent: '#ffb87c', glow: 0xe07aa0 },
+    motif: 'rings',
   },
   {
     id: 'maria-closet', name: "Maria's Closet", repo: 'MariaCloset',
     tagline: 'Closet rental, muted jewel + gold',
     description: "A closet-rental concept with a restrained desi-luxe aesthetic — muted jewel tones, gold accents, and request-to-rent interactions on bespoke garments.",
-    position: [-2, 0.5, -0.5], build: buildHanger,
-    rotation: [0, 0, 0], spinY: 0,
+    palette: { bgA: '#1a0520', bgB: '#5a1a30', ink: '#f4e2b6', accent: '#d4a054', glow: 0xa4482c },
+    motif: 'arch',
   },
   {
     id: 'okdoc', name: 'OkDoc', repo: 'OkDoc',
     tagline: 'Doctors near you who actually take your insurance',
     description: "Answers the question other apps dodge: which doctors near me actually take my insurance? Cross-references provider directories and plan networks to surface real matches.",
-    position: [2, 0.5, 1], build: buildMedicalCross,
+    palette: { bgA: '#f3f6fa', bgB: '#cfe0ea', ink: '#0a1a2a', accent: '#e03848', glow: 0xff8080 },
+    motif: 'cross',
   },
   {
     id: 'dishcover', name: 'Dishcover', repo: 'dishcover',
     tagline: 'For travelers standing hungry in a new city',
     description: "A mobile-first PWA for travelers: scan a menu or point at a storefront, get instant translations, allergy flags, and 'what to order here' from locals.",
-    position: [6, 0.5, -1], build: buildPlateFork,
-    rotation: [Math.PI / 3.4, 0, 0], spinY: 0,
+    palette: { bgA: '#09263a', bgB: '#2d6a7f', ink: '#fff4df', accent: '#ffb552', glow: 0x3a9fb0 },
+    motif: 'plate',
   },
   {
     id: 'stoopcast', name: 'StoopCast', repo: 'StoopCast',
     tagline: 'Free-stuff stoop alerts with karma',
     description: "Real-time alerts for free stuff left on neighborhood stoops. Photo-first posts, karma for the person who dropped it off, map view for the person running to grab it.",
-    position: [-6, -1.5, 0.5], build: buildCardboardBox,
-    rotation: [-0.2, -0.25, 0], spinY: 0,
+    palette: { bgA: '#2a2004', bgB: '#8a6418', ink: '#1a1a1a', accent: '#2a2004', glow: 0xffd54a },
+    motif: 'tape',
   },
   {
     id: 'geobinge', name: 'GeoBinge', repo: 'GeoBinge',
     tagline: 'Where in the world Netflix has your show',
     description: "Search any movie or TV show and instantly see every country where Netflix (or other services) have it. VPN hop planner included.",
-    position: [-2, -1.5, -1], build: buildTV,
-    rotation: [0, -0.2, 0], spinY: 0,
+    palette: { bgA: '#0a0a0f', bgB: '#2a0a12', ink: '#ffe4e6', accent: '#e50914', glow: 0xff2040 },
+    motif: 'map',
   },
   {
     id: 'echo', name: 'Echo', repo: 'Echo',
     tagline: 'Voice messages locked to GPS coordinates',
     description: "Drop a 60-second audio memo at a location on the map. The next person who walks past can hear it. A quieter, more intimate location-based network.",
-    position: [2, -1.5, 0.5], build: buildSpeakerPin,
-    rotation: [0, 0, 0], spinY: 0,
+    palette: { bgA: '#1f0a2a', bgB: '#3a1a4a', ink: '#fff2a0', accent: '#ffd54a', glow: 0xffe066 },
+    motif: 'wave',
   },
   {
     id: 'bearing', name: 'Bearing', repo: 'Bearing',
     tagline: 'A personal decision engine',
     description: "Name a hard decision. Weigh it honestly against your own values. Watch the needle settle. Not a shortcut — a mirror.",
-    position: [6, -1.5, -0.5], build: buildCompass,
-    rotation: [Math.PI / 3.4, 0, 0], spinY: 0,
+    palette: { bgA: '#20160a', bgB: '#6a4a1a', ink: '#f4e4c2', accent: '#f4b85a', glow: 0xd4a054 },
+    motif: 'needle',
   },
   {
     id: 'autotest', name: 'AutoTest', repo: 'AutoTest',
     tagline: 'Jira issue → test cases, automatically',
     description: "A production-leaning MVP that reads a Jira issue and generates relevant test cases with the right templates, acceptance-criteria mapping, and Gherkin where it fits.",
-    position: [-6, -3.5, -0.5], build: buildGear,
+    palette: { bgA: '#0a1a2a', bgB: '#1a3a4a', ink: '#eaffea', accent: '#55d070', glow: 0x55d070 },
+    motif: 'check',
   },
   {
     id: 'vela', name: 'Vela', repo: 'Vela',
     tagline: 'SaaS for private logistics around Chittagong',
     description: "Workflow and visibility tooling for the private logistics ecosystem around Chittagong port. The wedge is operational; the roadmap is long.",
-    position: [-2, -3.5, 1], build: buildContainer,
+    palette: { bgA: '#1a0a0a', bgB: '#5a1a1a', ink: '#f4e2d6', accent: '#ff8a5a', glow: 0xff5a3a },
+    motif: 'route',
   },
   {
     id: 'seams-of-safa', name: 'Seams of Safa', repo: 'Seamsofsafa',
     tagline: "A storefront for my sister's label",
     description: "Replacing a Shopify storefront with a custom Next.js build tuned for how my sister actually operates her label day to day.",
-    position: [2, -3.5, -1], build: buildSpool,
+    palette: { bgA: '#3a0a4a', bgB: '#8a2a90', ink: '#f4e4c2', accent: '#f4b85a', glow: 0xd4a054 },
+    motif: 'thread',
   },
   {
     id: 'mozumder', name: 'Mozumder', repo: 'Mozumder',
     tagline: 'A handcrafted site for a diversified business',
     description: "A static site for Mozumder — a modern, handcrafted presence for a diversified family business, written in the kind of HTML that opens in 300ms on any phone.",
-    position: [6, -3.5, 0.5], build: buildPillar,
+    palette: { bgA: '#e8d7b4', bgB: '#b8a075', ink: '#1a1a1a', accent: '#1a1a1a', glow: 0xeadcc2 },
+    motif: 'serifA',
   },
 ];
 
-init();
+/* Deterministic 4x4 grid layout with slight jitter for life */
+const COLS = [-7.3, -2.5, 2.5, 7.3];
+const ROWS = [3.0, 1.0, -1.0, -3.0];
+PROJECTS.forEach((p, i) => {
+  const col = i % 4;
+  const row = Math.floor(i / 4);
+  const seed = i * 1.3;
+  const jx = (Math.sin(seed) * 0.4);
+  const jy = (Math.cos(seed * 1.7) * 0.3);
+  const jz = (Math.sin(seed * 0.9) * 0.6);
+  p.position = [COLS[col] + jx, ROWS[row] + jy, jz];
+  p.index = String(i + 1).padStart(2, '0');
+  p.rotation = [
+    (Math.cos(seed * 2.1) * 0.08),
+    (Math.sin(seed * 1.3) * 0.14),
+    (Math.sin(seed * 0.7) * 0.03),
+  ];
+});
 
 function init() {
   const canvas = document.getElementById('scene');
@@ -122,47 +157,36 @@ function init() {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
-  camera.position.set(0, 0, 15);
+  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+  camera.position.set(0, 0, 19);
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.75));
-  const hemi = new THREE.HemisphereLight(0xcfd8ff, 0x3a1a4a, 0.95);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+  const hemi = new THREE.HemisphereLight(0xd0e0ff, 0x301830, 0.6);
   scene.add(hemi);
-  const key = new THREE.DirectionalLight(0xffffff, 2.0);
-  key.position.set(6, 10, 10);
+  const key = new THREE.DirectionalLight(0xffffff, 1.3);
+  key.position.set(4, 6, 10);
   scene.add(key);
-  const front = new THREE.DirectionalLight(0xffffff, 0.9);
-  front.position.set(0, 0, 15);
-  scene.add(front);
-  const rim = new THREE.DirectionalLight(0xffb86c, 0.6);
-  rim.position.set(-8, -4, -6);
-  scene.add(rim);
 
   addStars(scene);
 
   const objects = PROJECTS.map((p) => {
-    const grp = p.build();
+    const grp = buildCard(p);
     grp.position.fromArray(p.position);
-    if (p.rotation) grp.rotation.set(p.rotation[0] || 0, p.rotation[1] || 0, p.rotation[2] || 0);
-    const spin = p.spinY !== undefined ? p.spinY : 0.004 + Math.random() * 0.006;
+    grp.rotation.set(p.rotation[0], p.rotation[1], p.rotation[2]);
     grp.userData = {
       project: p,
       basePos: new THREE.Vector3(...p.position),
-      baseRotX: grp.rotation.x,
-      baseRotZ: grp.rotation.z,
+      baseRot: { x: p.rotation[0], y: p.rotation[1], z: p.rotation[2] },
       phase: Math.random() * Math.PI * 2,
-      spinY: spin,
-      bob: 0.08 + Math.random() * 0.14,
+      bob: 0.08 + Math.random() * 0.1,
       selectable: true,
     };
-    grp.traverse((n) => {
-      if (n.isMesh) { n.userData.ownerGroup = grp; }
-    });
+    grp.traverse((n) => { if (n.isMesh) n.userData.ownerGroup = grp; });
     scene.add(grp);
     return grp;
   });
 
-  // Build index list
+  // Index list
   const indexList = document.getElementById('index-list');
   PROJECTS.forEach((p) => {
     const li = document.createElement('li');
@@ -187,8 +211,8 @@ function init() {
     const x = (e.clientX / window.innerWidth) * 2 - 1;
     const y = -(e.clientY / window.innerHeight) * 2 + 1;
     mouseN.set(x, y);
-    parallax.tx = x * 0.6;
-    parallax.ty = y * 0.35;
+    parallax.tx = x * 0.9;
+    parallax.ty = y * 0.5;
 
     if (selected) return;
     raycaster.setFromCamera(mouseN, camera);
@@ -204,8 +228,6 @@ function init() {
     }
   }
 
-  function onPointerDown() { /* no-op, click fires */ }
-
   function onClick() {
     if (selected || !hovered) return;
     openProject(hovered);
@@ -219,8 +241,8 @@ function init() {
     panel.querySelector('.panel-name').textContent = p.name;
     panel.querySelector('.panel-tagline').textContent = p.tagline;
     panel.querySelector('.panel-desc').textContent = p.description;
-    const url = `https://github.com/${GITHUB_USER}/${p.repo}`;
-    panel.querySelector('.panel-github').href = url;
+    panel.querySelector('.panel-github').href = `https://github.com/${GITHUB_USER}/${p.repo}`;
+    panel.style.setProperty('--accent', p.palette.accent);
     panel.classList.add('open');
     panel.setAttribute('aria-hidden', 'false');
     document.body.classList.add('project-open');
@@ -246,7 +268,6 @@ function init() {
   }
 
   canvas.addEventListener('pointermove', hoverTest);
-  canvas.addEventListener('pointerdown', onPointerDown);
   canvas.addEventListener('click', onClick);
   document.getElementById('panel-close').addEventListener('click', closeProject);
   document.getElementById('index-close').addEventListener('click', hideIndex);
@@ -275,8 +296,6 @@ function init() {
   window.addEventListener('resize', resize);
 
   const clock = new THREE.Clock();
-  const focusTarget = new THREE.Vector3(0, 0, 10);
-
   function tick() {
     const t = clock.getElapsedTime();
 
@@ -293,16 +312,16 @@ function init() {
       const base = u.basePos;
 
       let tx = base.x, ty = base.y, tz = base.z;
-      if (!reduceMotion) ty += Math.sin(t * 0.6 + u.phase) * u.bob;
+      if (!reduceMotion) ty += Math.sin(t * 0.5 + u.phase) * u.bob;
 
       if (obj === selected) {
         tx = parallax.x * 1.0;
         ty = parallax.y * 1.0;
-        tz = 10;
+        tz = 11;
       } else if (selected) {
         tx = base.x * 1.5;
         ty = base.y * 1.5;
-        tz = base.z - 6;
+        tz = base.z - 8;
       }
 
       obj.position.x += (tx - obj.position.x) * 0.09;
@@ -311,39 +330,37 @@ function init() {
 
       let targetScale = 1;
       if (obj === selected) targetScale = 2.0;
-      else if (obj === hovered) targetScale = 1.25;
+      else if (obj === hovered) targetScale = 1.14;
       else if (selected) targetScale = 0.5;
-
-      const s = obj.scale.x + (targetScale - obj.scale.x) * 0.1;
+      const s = obj.scale.x + (targetScale - obj.scale.x) * 0.12;
       obj.scale.setScalar(s);
 
-      if (!reduceMotion) obj.rotation.y += u.spinY;
+      // subtle tilt reset + hover tilt-toward-camera
+      const rotYTarget = (obj === hovered) ? u.baseRot.y * 0.3 : u.baseRot.y;
+      const rotXTarget = (obj === hovered) ? u.baseRot.x * 0.3 : u.baseRot.x;
+      obj.rotation.y += (rotYTarget - obj.rotation.y) * 0.07;
+      obj.rotation.x += (rotXTarget - obj.rotation.x) * 0.07;
     }
 
     renderer.render(scene, camera);
     requestAnimationFrame(tick);
   }
-
   tick();
-  requestAnimationFrame(() => {
-    document.body.classList.add('scene-ready');
-  });
+  requestAnimationFrame(() => document.body.classList.add('scene-ready'));
 }
 
 /* ---------- helpers ---------- */
 
 function addStars(scene) {
-  const count = 500;
+  const count = 600;
   const positions = new Float32Array(count * 3);
-  const sizes = new Float32Array(count);
   for (let i = 0; i < count; i++) {
-    const r = 35 + Math.random() * 30;
+    const r = 40 + Math.random() * 30;
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(2 * Math.random() - 1);
     positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
     positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
     positions[i * 3 + 2] = r * Math.cos(phi);
-    sizes[i] = Math.random();
   }
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -354,509 +371,350 @@ function addStars(scene) {
   scene.add(new THREE.Points(geo, mat));
 }
 
-/* ---------- bespoke project models ---------- */
+/* ---------- card builder ---------- */
 
-function buildGlobe() {
-  const g = new THREE.Group();
-  const earth = new THREE.Mesh(
-    new THREE.IcosahedronGeometry(0.85, 2),
-    new THREE.MeshStandardMaterial({ color: 0x2a5fa8, flatShading: true, roughness: 0.6, metalness: 0.05 }),
-  );
-  g.add(earth);
-  for (let i = 0; i < 8; i++) {
-    const continent = new THREE.Mesh(
-      new THREE.SphereGeometry(0.28 + Math.random() * 0.18, 7, 5, 0, Math.PI * 2, 0, Math.PI * 0.42),
-      new THREE.MeshStandardMaterial({ color: 0x4a9050, flatShading: true, roughness: 0.75 }),
-    );
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(2 * Math.random() - 1);
-    const r = 0.86;
-    continent.position.set(r * Math.sin(phi) * Math.cos(theta), r * Math.sin(phi) * Math.sin(theta), r * Math.cos(phi));
-    continent.lookAt(0, 0, 0);
-    continent.rotateX(Math.PI);
-    continent.scale.setScalar(0.5);
-    g.add(continent);
-  }
-  // thin atmosphere halo
-  const halo = new THREE.Mesh(
-    new THREE.SphereGeometry(0.95, 24, 16),
-    new THREE.MeshBasicMaterial({ color: 0x6cb6ff, transparent: true, opacity: 0.08, side: THREE.BackSide }),
-  );
-  g.add(halo);
-  return g;
-}
-
-function buildCoffeeMug() {
-  const g = new THREE.Group();
-  const cupMat = new THREE.MeshStandardMaterial({ color: 0xd4a574, roughness: 0.5 });
-  const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.44, 0.9, 24), cupMat);
-  const inside = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.44, 0.4, 0.85, 24),
-    new THREE.MeshStandardMaterial({ color: 0x3a1f12 }),
-  );
-  inside.position.y = 0.04;
-  const handle = new THREE.Mesh(
-    new THREE.TorusGeometry(0.28, 0.08, 10, 20, Math.PI),
-    cupMat,
-  );
-  handle.position.set(0.5, 0, 0);
-  handle.rotation.y = Math.PI / 2;
-  const saucer = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.7, 0.72, 0.04, 24),
-    cupMat,
-  );
-  saucer.position.y = -0.48;
-  g.add(cup, inside, handle, saucer);
-  // steam
-  for (let i = 0; i < 4; i++) {
-    const s = new THREE.Mesh(
-      new THREE.SphereGeometry(0.09 + i * 0.03, 8, 6),
-      new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.35 }),
-    );
-    s.position.set((i - 1.5) * 0.08, 0.55 + i * 0.22, 0);
-    g.add(s);
-  }
-  return g;
-}
-
-function buildRadarDish() {
-  const g = new THREE.Group();
-  const dish = new THREE.Mesh(
-    new THREE.SphereGeometry(0.8, 20, 10, 0, Math.PI * 2, 0, Math.PI / 2.6),
-    new THREE.MeshStandardMaterial({ color: 0xa5adb6, side: THREE.DoubleSide, roughness: 0.4, metalness: 0.4 }),
-  );
-  dish.rotation.x = Math.PI;
-  dish.position.y = 0.4;
-  const post = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.06, 0.08, 0.7, 10),
-    new THREE.MeshStandardMaterial({ color: 0x454c56, roughness: 0.6 }),
-  );
-  post.position.y = -0.1;
-  const base = new THREE.Mesh(
-    new THREE.BoxGeometry(0.5, 0.08, 0.5),
-    new THREE.MeshStandardMaterial({ color: 0x454c56 }),
-  );
-  base.position.y = -0.5;
-  const beacon = new THREE.Mesh(
-    new THREE.SphereGeometry(0.1, 10, 8),
-    new THREE.MeshStandardMaterial({ color: 0x50ff80, emissive: 0x50ff80, emissiveIntensity: 1 }),
-  );
-  beacon.position.y = 0.5;
-  g.add(dish, post, base, beacon);
-  // concentric sweep arcs
-  for (let i = 0; i < 3; i++) {
-    const ring = new THREE.Mesh(
-      new THREE.TorusGeometry(0.6 + i * 0.3, 0.025, 6, 32),
-      new THREE.MeshBasicMaterial({ color: 0x50ff80, transparent: true, opacity: 0.45 - i * 0.12 }),
-    );
-    ring.rotation.x = Math.PI / 2;
-    ring.position.y = 0.45;
-    g.add(ring);
-  }
-  return g;
-}
-
-function buildDocument() {
-  const g = new THREE.Group();
-  const paper = new THREE.Mesh(
-    new THREE.BoxGeometry(1.1, 1.4, 0.04),
-    new THREE.MeshStandardMaterial({ color: 0xfafafa, roughness: 0.8 }),
-  );
-  for (let i = 0; i < 6; i++) {
-    const line = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.85 - (i % 2) * 0.25, 0.04),
-      new THREE.MeshBasicMaterial({ color: 0x1e3a8a }),
-    );
-    line.position.set(-0.05 + (i % 2 === 0 ? 0 : 0.1), 0.5 - i * 0.17, 0.023);
-    g.add(line);
-  }
-  // AI diamond sparkle
-  const diamond = new THREE.Mesh(
-    new THREE.OctahedronGeometry(0.17, 0),
-    new THREE.MeshStandardMaterial({ color: 0xffd54a, emissive: 0xffd54a, emissiveIntensity: 0.6, roughness: 0.1, metalness: 0.6 }),
-  );
-  diamond.position.set(0.42, 0.6, 0.14);
-  const stamp = new THREE.Mesh(
-    new THREE.CircleGeometry(0.14, 16),
-    new THREE.MeshBasicMaterial({ color: 0xcc3344, transparent: true, opacity: 0.55 }),
-  );
-  stamp.position.set(-0.35, -0.5, 0.023);
-  g.add(paper, diamond, stamp);
-  return g;
-}
-
-function buildLinkedRings() {
-  const g = new THREE.Group();
-  const matA = new THREE.MeshStandardMaterial({ color: 0xe9b48a, roughness: 0.25, metalness: 0.9 });
-  const matB = new THREE.MeshStandardMaterial({ color: 0xd4a0e0, roughness: 0.25, metalness: 0.9 });
-  const geo = new THREE.TorusGeometry(0.42, 0.09, 14, 36);
-  const r1 = new THREE.Mesh(geo, matA);
-  const r2 = new THREE.Mesh(geo, matB);
-  // Both rings face the camera (hole along +Z) with a slight outward tilt
-  // and horizontal offset so they overlap in the middle.
-  r1.position.set(-0.3, 0, 0);
-  r1.rotation.y = -0.45;
-  r2.position.set(0.3, 0, 0.05);
-  r2.rotation.y = 0.45;
-  g.add(r1, r2);
-  return g;
-}
-
-function buildHanger() {
-  const g = new THREE.Group();
-  const metal = new THREE.MeshStandardMaterial({ color: 0xc8a05a, metalness: 0.65, roughness: 0.3 });
-  const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 1.0, 8), metal);
-  bar.rotation.z = Math.PI / 2;
-  const left = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.55, 8), metal);
-  left.position.set(-0.42, 0.24, 0);
-  left.rotation.z = Math.PI / 4.5;
-  const right = left.clone();
-  right.position.set(0.42, 0.24, 0);
-  right.rotation.z = -Math.PI / 4.5;
-  const hook = new THREE.Mesh(
-    new THREE.TorusGeometry(0.1, 0.03, 8, 16, Math.PI),
-    metal,
-  );
-  hook.position.y = 0.55;
-  hook.rotation.x = Math.PI;
-  // Cloth
-  const cloth = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.9, 1.0, 4, 6),
-    new THREE.MeshStandardMaterial({ color: 0x6b1736, side: THREE.DoubleSide, roughness: 0.95 }),
-  );
-  // slightly wave the cloth
-  const pos = cloth.geometry.attributes.position;
-  for (let i = 0; i < pos.count; i++) {
-    pos.setZ(i, Math.sin(pos.getX(i) * 3) * 0.05);
-  }
-  cloth.geometry.computeVertexNormals();
-  cloth.position.y = -0.45;
-  g.add(bar, left, right, hook, cloth);
-  return g;
-}
-
-function buildMedicalCross() {
-  const g = new THREE.Group();
-  const whiteMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4 });
-  const redMat = new THREE.MeshStandardMaterial({ color: 0xe03848, emissive: 0xe03848, emissiveIntensity: 0.25 });
-  const v = new THREE.Mesh(new THREE.BoxGeometry(0.42, 1.3, 0.42), whiteMat);
-  const h = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.42, 0.42), whiteMat);
-  const vr = new THREE.Mesh(new THREE.BoxGeometry(0.3, 1.18, 0.44), redMat);
-  const hr = new THREE.Mesh(new THREE.BoxGeometry(1.18, 0.3, 0.44), redMat);
-  g.add(v, h, vr, hr);
-  return g;
-}
-
-function buildPlateFork() {
-  const g = new THREE.Group();
-  const plate = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.75, 0.68, 0.07, 28),
-    new THREE.MeshStandardMaterial({ color: 0xf6f3ea, roughness: 0.5 }),
-  );
-  const rim = new THREE.Mesh(
-    new THREE.TorusGeometry(0.72, 0.03, 8, 28),
-    new THREE.MeshStandardMaterial({ color: 0x245c82, metalness: 0.4 }),
-  );
-  rim.rotation.x = Math.PI / 2;
-  rim.position.y = 0.04;
-  const silverware = new THREE.MeshStandardMaterial({ color: 0xd0d4d8, metalness: 0.85, roughness: 0.2 });
-  const fork = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.7, 8), silverware);
-  fork.position.set(0.42, 0.15, 0.1);
-  fork.rotation.z = -Math.PI / 7;
-  const spoon = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.7, 8), silverware);
-  spoon.position.set(-0.42, 0.15, 0.1);
-  spoon.rotation.z = Math.PI / 7;
-  const spoonBowl = new THREE.Mesh(
-    new THREE.SphereGeometry(0.09, 10, 8, 0, Math.PI * 2, 0, Math.PI / 2),
-    silverware,
-  );
-  spoonBowl.position.set(-0.62, 0.4, 0.1);
-  spoonBowl.rotation.x = Math.PI / 2;
-  // fork tines
-  for (let i = -1; i <= 1; i++) {
-    const tine = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.014, 0.014, 0.18, 6),
-      silverware,
-    );
-    tine.position.set(0.62 + i * 0.05, 0.4, 0.1);
-    g.add(tine);
-  }
-  g.add(plate, rim, fork, spoon, spoonBowl);
-  return g;
-}
-
-function buildCardboardBox() {
-  const g = new THREE.Group();
-  const cardboard = new THREE.MeshStandardMaterial({ color: 0xc89050, roughness: 0.92, flatShading: true });
-  const box = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.8, 1.0), cardboard);
-  // tape strip
-  const tape = new THREE.Mesh(
-    new THREE.BoxGeometry(0.25, 0.82, 1.02),
-    new THREE.MeshStandardMaterial({ color: 0xe8dcc2, roughness: 0.6 }),
-  );
-  // open flaps
-  const darker = new THREE.MeshStandardMaterial({ color: 0xa07434, roughness: 0.92 });
-  const flap1 = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.04, 0.5), darker);
-  flap1.position.set(0, 0.42, -0.25);
-  flap1.rotation.x = -0.4;
-  const flap2 = flap1.clone();
-  flap2.rotation.x = 0.4;
-  flap2.position.z = 0.25;
-  // FREE sign (plane with canvas texture)
-  const sign = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.7, 0.25),
-    new THREE.MeshBasicMaterial({ map: makeTextTexture('FREE', '#111', '#ffe066'), transparent: true }),
-  );
-  sign.position.set(0, 0.65, 0.0);
-  sign.rotation.x = -0.3;
-  g.add(box, tape, flap1, flap2, sign);
-  return g;
-}
-
-function buildTV() {
-  const g = new THREE.Group();
-  const frame = new THREE.Mesh(
-    new THREE.BoxGeometry(1.45, 1.0, 0.18),
-    new THREE.MeshStandardMaterial({ color: 0x16181d, roughness: 0.3, metalness: 0.3 }),
-  );
-  const screen = new THREE.Mesh(
-    new THREE.PlaneGeometry(1.28, 0.84),
-    new THREE.MeshBasicMaterial({ color: 0x1b4a7e }),
-  );
-  screen.position.z = 0.095;
-  // tiny continents on the screen
-  for (let i = 0; i < 5; i++) {
-    const land = new THREE.Mesh(
-      new THREE.CircleGeometry(0.07 + Math.random() * 0.06, 8),
-      new THREE.MeshBasicMaterial({ color: 0x4ea560 }),
-    );
-    land.position.set((Math.random() - 0.5) * 1.0, (Math.random() - 0.5) * 0.6, 0.1);
-    g.add(land);
-  }
-  const stand = new THREE.Mesh(
-    new THREE.BoxGeometry(0.35, 0.12, 0.22),
-    new THREE.MeshStandardMaterial({ color: 0x16181d }),
-  );
-  stand.position.y = -0.6;
-  g.add(frame, screen, stand);
-  return g;
-}
-
-function buildSpeakerPin() {
-  const g = new THREE.Group();
-  const yellow = new THREE.MeshStandardMaterial({ color: 0xffcf4a, roughness: 0.35 });
-  const cone = new THREE.Mesh(
-    new THREE.ConeGeometry(0.55, 0.9, 16, 1, true),
-    yellow,
-  );
-  cone.rotation.z = -Math.PI / 2;
-  cone.position.x = 0.22;
-  const barrel = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.16, 0.16, 0.35, 12),
-    yellow,
-  );
-  barrel.rotation.z = Math.PI / 2;
-  barrel.position.x = -0.35;
-  const grip = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.05, 0.05, 0.4, 8),
-    new THREE.MeshStandardMaterial({ color: 0x5a4426, roughness: 0.6 }),
-  );
-  grip.position.set(-0.3, -0.3, 0);
-  // sound arcs
-  for (let i = 0; i < 3; i++) {
-    const arc = new THREE.Mesh(
-      new THREE.TorusGeometry(0.35 + i * 0.22, 0.03, 6, 20, Math.PI / 2.5),
-      new THREE.MeshBasicMaterial({ color: 0xffcf4a, transparent: true, opacity: 0.6 - i * 0.17 }),
-    );
-    arc.position.x = 0.75;
-    arc.rotation.z = -Math.PI / 2;
-    g.add(arc);
-  }
-  // Location pin pointing down
-  const pin = new THREE.Mesh(
-    new THREE.ConeGeometry(0.12, 0.3, 10),
-    new THREE.MeshStandardMaterial({ color: 0xe03848 }),
-  );
-  pin.position.set(0, -0.55, 0);
-  pin.rotation.x = Math.PI;
-  const pinBall = new THREE.Mesh(
-    new THREE.SphereGeometry(0.1, 10, 8),
-    new THREE.MeshStandardMaterial({ color: 0xe03848 }),
-  );
-  pinBall.position.set(0, -0.5, 0);
-  g.add(cone, barrel, grip, pin, pinBall);
-  return g;
-}
-
-function buildCompass() {
-  const g = new THREE.Group();
-  const brass = new THREE.MeshStandardMaterial({ color: 0xd4a054, metalness: 0.8, roughness: 0.3 });
-  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.62, 0.14, 32), brass);
-  const face = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.55, 0.55, 0.05, 32),
-    new THREE.MeshStandardMaterial({ color: 0xf4e4c2, roughness: 0.5 }),
-  );
-  face.position.y = 0.08;
-  // Compass markings as thin boxes at N/E/S/W
-  for (let i = 0; i < 4; i++) {
-    const mark = new THREE.Mesh(
-      new THREE.BoxGeometry(0.04, 0.015, 0.12),
-      new THREE.MeshStandardMaterial({ color: 0x5a3b1a }),
-    );
-    const a = (i / 4) * Math.PI * 2;
-    mark.position.set(Math.cos(a) * 0.45, 0.11, Math.sin(a) * 0.45);
-    g.add(mark);
-  }
-  // Needle - red (N) + white (S)
-  const red = new THREE.Mesh(
-    new THREE.ConeGeometry(0.07, 0.4, 4),
-    new THREE.MeshStandardMaterial({ color: 0xd13040 }),
-  );
-  red.position.y = 0.12;
-  red.rotation.x = -Math.PI / 2;
-  red.position.z = -0.2;
-  const white = new THREE.Mesh(
-    new THREE.ConeGeometry(0.07, 0.4, 4),
-    new THREE.MeshStandardMaterial({ color: 0xeaeaea }),
-  );
-  white.position.y = 0.12;
-  white.rotation.x = Math.PI / 2;
-  white.position.z = 0.2;
-  const cap = new THREE.Mesh(
-    new THREE.SphereGeometry(0.06, 10, 8),
-    brass,
-  );
-  cap.position.y = 0.13;
-  g.add(base, face, red, white, cap);
-  return g;
-}
-
-function buildGear() {
-  const g = new THREE.Group();
-  const steel = new THREE.MeshStandardMaterial({ color: 0x6a7a8a, metalness: 0.6, roughness: 0.35 });
-  const body = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.2, 24), steel);
-  body.rotation.x = Math.PI / 2;
-  const teeth = 12;
-  for (let i = 0; i < teeth; i++) {
-    const t = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.14, 0.22), steel);
-    const a = (i / teeth) * Math.PI * 2;
-    t.position.set(Math.cos(a) * 0.62, Math.sin(a) * 0.62, 0);
-    t.rotation.z = a;
-    g.add(t);
-  }
-  const hole = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.14, 0.14, 0.25, 16),
-    new THREE.MeshBasicMaterial({ color: 0x0a0a10 }),
-  );
-  hole.rotation.x = Math.PI / 2;
-  // Green checkmark
-  const check = new THREE.MeshStandardMaterial({ color: 0x55d070, emissive: 0x55d070, emissiveIntensity: 0.35 });
-  const c1 = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.22, 0.07), check);
-  c1.position.set(-0.08, -0.02, 0.14);
-  c1.rotation.z = Math.PI / 4;
-  const c2 = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.38, 0.07), check);
-  c2.position.set(0.08, 0.08, 0.14);
-  c2.rotation.z = -Math.PI / 4;
-  g.add(body, hole, c1, c2);
-  return g;
-}
-
-function buildContainer() {
-  const g = new THREE.Group();
-  const red = new THREE.MeshStandardMaterial({ color: 0xc44a3a, roughness: 0.6, flatShading: true });
-  const body = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.75, 0.65), red);
-  g.add(body);
-  // Vertical ridges
-  const ridge = new THREE.MeshStandardMaterial({ color: 0x8a2a1f });
-  for (let i = -6; i <= 6; i++) {
-    const r = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.76, 0.66), ridge);
-    r.position.x = i * 0.1;
-    g.add(r);
-  }
-  // Top/bottom edges
-  const edgeMat = new THREE.MeshStandardMaterial({ color: 0x6a1810 });
-  const top = new THREE.Mesh(new THREE.BoxGeometry(1.52, 0.06, 0.67), edgeMat);
-  top.position.y = 0.38;
-  const bot = top.clone();
-  bot.position.y = -0.38;
-  g.add(top, bot);
-  // Corner castings
-  for (let xi of [-1, 1]) for (let yi of [-1, 1]) for (let zi of [-1, 1]) {
-    const corner = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.08, 0.08), edgeMat);
-    corner.position.set(xi * 0.73, yi * 0.37, zi * 0.32);
-    g.add(corner);
-  }
-  return g;
-}
-
-function buildSpool() {
-  const g = new THREE.Group();
-  const wood = new THREE.MeshStandardMaterial({ color: 0xc89566, roughness: 0.75 });
-  const top = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.08, 24), wood);
-  top.position.y = 0.42;
-  const bottom = top.clone();
-  bottom.position.y = -0.42;
-  const thread = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.36, 0.36, 0.76, 24),
-    new THREE.MeshStandardMaterial({ color: 0x5a1a60, roughness: 0.4 }),
-  );
-  // thread wrap suggestion
-  for (let i = 0; i < 6; i++) {
-    const wrap = new THREE.Mesh(
-      new THREE.TorusGeometry(0.37, 0.012, 4, 24),
-      new THREE.MeshStandardMaterial({ color: 0x7a2a80, roughness: 0.4 }),
-    );
-    wrap.position.y = -0.3 + i * 0.12;
-    wrap.rotation.x = Math.PI / 2;
-    g.add(wrap);
-  }
-  const needle = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.015, 0.015, 0.95, 8),
-    new THREE.MeshStandardMaterial({ color: 0xd8dce0, metalness: 0.9, roughness: 0.2 }),
-  );
-  needle.position.set(0.55, 0, 0);
-  needle.rotation.z = Math.PI / 2;
-  g.add(top, bottom, thread, needle);
-  return g;
-}
-
-function buildPillar() {
-  const g = new THREE.Group();
-  const marble = new THREE.MeshStandardMaterial({ color: 0xeadcc2, roughness: 0.65 });
-  const marbleDark = new THREE.MeshStandardMaterial({ color: 0xd8c8a4, roughness: 0.7 });
-  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.14, 20), marble);
-  base.position.y = -0.55;
-  const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 0.95, 20), marble);
-  for (let i = 0; i < 10; i++) {
-    const flute = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.025, 0.025, 0.93, 6),
-      marbleDark,
-    );
-    const a = (i / 10) * Math.PI * 2;
-    flute.position.set(Math.cos(a) * 0.4, 0, Math.sin(a) * 0.4);
-    g.add(flute);
-  }
-  const capital = new THREE.Mesh(new THREE.CylinderGeometry(0.56, 0.4, 0.14, 20), marble);
-  capital.position.y = 0.55;
-  const abacus = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.08, 1.1), marble);
-  abacus.position.y = 0.66;
-  g.add(base, shaft, capital, abacus);
-  return g;
-}
-
-/* Canvas text texture for the FREE sign */
-function makeTextTexture(text, color, bg) {
+const _glowTexCache = { tex: null };
+function getGlowTexture() {
+  if (_glowTexCache.tex) return _glowTexCache.tex;
+  const S = 256;
   const c = document.createElement('canvas');
-  c.width = 256; c.height = 96;
+  c.width = S; c.height = S;
   const ctx = c.getContext('2d');
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, c.width, c.height);
-  ctx.fillStyle = color;
-  ctx.font = 'bold 68px Inter, system-ui, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(text, c.width / 2, c.height / 2 + 4);
+  const grad = ctx.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2);
+  grad.addColorStop(0.0, 'rgba(255,255,255,1)');
+  grad.addColorStop(0.3, 'rgba(255,255,255,0.7)');
+  grad.addColorStop(0.75, 'rgba(255,255,255,0.08)');
+  grad.addColorStop(1.0, 'rgba(255,255,255,0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, S, S);
+  _glowTexCache.tex = new THREE.CanvasTexture(c);
+  _glowTexCache.tex.colorSpace = THREE.SRGBColorSpace;
+  return _glowTexCache.tex;
+}
+
+
+function buildCard(project) {
+  const g = new THREE.Group();
+
+  // Backlight glow — a radial fade so the halo is soft, not a rectangle
+  const glowTex = getGlowTexture();
+  const glowGeo = new THREE.PlaneGeometry(CARD_W * 2.2, CARD_H * 2.2);
+  const glowMat = new THREE.MeshBasicMaterial({
+    color: project.palette.glow,
+    map: glowTex,
+    transparent: true,
+    opacity: 0.55,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  });
+  const glow = new THREE.Mesh(glowGeo, glowMat);
+  glow.position.z = -0.15;
+  g.add(glow);
+
+  // Frame — a very thin dark slab behind the panel for depth
+  const frame = new THREE.Mesh(
+    new THREE.BoxGeometry(CARD_W + 0.1, CARD_H + 0.1, 0.06),
+    new THREE.MeshStandardMaterial({ color: 0x0e0a1c, roughness: 0.35, metalness: 0.6 }),
+  );
+  frame.position.z = -0.02;
+  g.add(frame);
+
+  // Main panel — textured plane
+  const tex = buildCardTexture(project);
+  const panelMat = new THREE.MeshBasicMaterial({ map: tex, side: THREE.FrontSide });
+  const panel = new THREE.Mesh(new THREE.PlaneGeometry(CARD_W, CARD_H), panelMat);
+  panel.position.z = 0.02;
+  g.add(panel);
+
+  return g;
+}
+
+function buildCardTexture(project) {
+  const W = 1200, H = 750;
+  const c = document.createElement('canvas');
+  c.width = W; c.height = H;
+  const ctx = c.getContext('2d');
+  const pal = project.palette;
+
+  // Background gradient
+  const grad = ctx.createLinearGradient(0, 0, W * 0.6, H);
+  grad.addColorStop(0, pal.bgA);
+  grad.addColorStop(1, pal.bgB);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // Soft radial accent in a corner to add depth
+  const r = ctx.createRadialGradient(W * 0.88, H * 0.12, 20, W * 0.88, H * 0.12, W * 0.6);
+  r.addColorStop(0, hexWithAlpha(pal.accent, 0.26));
+  r.addColorStop(1, hexWithAlpha(pal.accent, 0));
+  ctx.fillStyle = r;
+  ctx.fillRect(0, 0, W, H);
+
+  // Grain
+  addGrain(ctx, W, H, 0.03);
+
+  // Signature motif in the lower-right / around the card
+  drawMotif(ctx, project.motif, W, H, pal);
+
+  // Border inset — a thin line at the edge
+  ctx.strokeStyle = hexWithAlpha(pal.ink, 0.1);
+  ctx.lineWidth = 2;
+  ctx.strokeRect(16, 16, W - 32, H - 32);
+
+  // Index number — top-left eyebrow
+  ctx.fillStyle = pal.accent;
+  ctx.font = '600 26px ui-monospace, "SF Mono", Menlo, monospace';
+  ctx.textBaseline = 'top';
+  ctx.fillText(`${project.index} / 16`, 56, 56);
+
+  // Name — big display
+  ctx.fillStyle = pal.ink;
+  const nameSize = fitNameSize(ctx, project.name, W - 112, 110);
+  ctx.font = `200 ${nameSize}px "Inter", system-ui, sans-serif`;
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText(project.name, 56, H - 220);
+
+  // Tagline — small, mono
+  ctx.fillStyle = hexWithAlpha(pal.ink, 0.72);
+  ctx.font = '400 24px "Inter", system-ui, sans-serif';
+  ctx.fillText(project.tagline, 56, H - 140);
+
+  // Bottom-right GitHub cue
+  ctx.fillStyle = hexWithAlpha(pal.accent, 0.9);
+  ctx.font = '600 20px ui-monospace, "SF Mono", Menlo, monospace';
+  ctx.textAlign = 'right';
+  ctx.fillText(`→  OPEN`, W - 56, H - 60);
+  ctx.textAlign = 'left';
+
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 8;
+  tex.needsUpdate = true;
   return tex;
 }
+
+function fitNameSize(ctx, text, maxWidth, startSize) {
+  let size = startSize;
+  while (size > 30) {
+    ctx.font = `200 ${size}px "Inter", system-ui, sans-serif`;
+    if (ctx.measureText(text).width <= maxWidth) break;
+    size -= 4;
+  }
+  return size;
+}
+
+function hexWithAlpha(hex, alpha) {
+  const h = hex.replace('#', '');
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+function addGrain(ctx, W, H, intensity) {
+  const img = ctx.getImageData(0, 0, W, H);
+  const d = img.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const n = (Math.random() - 0.5) * 255 * intensity;
+    d[i] = clamp255(d[i] + n);
+    d[i + 1] = clamp255(d[i + 1] + n);
+    d[i + 2] = clamp255(d[i + 2] + n);
+  }
+  ctx.putImageData(img, 0, 0);
+}
+function clamp255(v) { return v < 0 ? 0 : v > 255 ? 255 : v; }
+
+/* motifs are drawn large on the right side of the card */
+function drawMotif(ctx, motif, W, H, pal) {
+  ctx.save();
+  ctx.translate(W * 0.72, H * 0.42);
+  const stroke = hexWithAlpha(pal.ink, 0.14);
+  const strokeAccent = hexWithAlpha(pal.accent, 0.4);
+  ctx.lineWidth = 2;
+
+  switch (motif) {
+    case 'orbit':
+      for (let i = 0; i < 4; i++) {
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 90 + i * 40, 50 + i * 24, (i * Math.PI) / 7, 0, Math.PI * 2);
+        ctx.strokeStyle = i === 1 ? strokeAccent : stroke;
+        ctx.stroke();
+      }
+      ctx.fillStyle = pal.accent;
+      ctx.beginPath(); ctx.arc(0, 0, 10, 0, Math.PI * 2); ctx.fill();
+      break;
+
+    case 'ring':
+      for (let i = 0; i < 5; i++) {
+        ctx.beginPath();
+        ctx.arc(0, 0, 60 + i * 30, 0, Math.PI * 2);
+        ctx.strokeStyle = i === 2 ? strokeAccent : stroke;
+        ctx.stroke();
+      }
+      break;
+
+    case 'wave':
+      ctx.strokeStyle = strokeAccent;
+      ctx.lineWidth = 3;
+      for (let line = 0; line < 3; line++) {
+        ctx.beginPath();
+        const amp = 30 + line * 12;
+        for (let x = -180; x <= 180; x += 4) {
+          const y = Math.sin((x / 42) + line) * amp;
+          if (x === -180) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.globalAlpha = 1 - line * 0.25;
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      break;
+
+    case 'grid':
+      ctx.strokeStyle = stroke;
+      for (let i = -4; i <= 4; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * 36, -140);
+        ctx.lineTo(i * 36, 140);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(-140, i * 36);
+        ctx.lineTo(140, i * 36);
+        ctx.stroke();
+      }
+      ctx.fillStyle = pal.accent;
+      ctx.beginPath(); ctx.arc(0, 0, 14, 0, Math.PI * 2); ctx.fill();
+      break;
+
+    case 'rings':
+      for (let s = -1; s <= 1; s += 2) {
+        ctx.strokeStyle = s === -1 ? strokeAccent : stroke;
+        ctx.lineWidth = 10;
+        ctx.beginPath();
+        ctx.arc(s * 50, 0, 90, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      break;
+
+    case 'arch':
+      ctx.strokeStyle = strokeAccent;
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.moveTo(-120, 120); ctx.lineTo(-120, -20);
+      ctx.quadraticCurveTo(-120, -140, 0, -140);
+      ctx.quadraticCurveTo(120, -140, 120, -20);
+      ctx.lineTo(120, 120);
+      ctx.stroke();
+      break;
+
+    case 'cross':
+      ctx.fillStyle = strokeAccent;
+      ctx.fillRect(-20, -120, 40, 240);
+      ctx.fillRect(-120, -20, 240, 40);
+      break;
+
+    case 'plate':
+      ctx.strokeStyle = strokeAccent;
+      ctx.lineWidth = 10;
+      ctx.beginPath(); ctx.arc(0, 0, 130, 0, Math.PI * 2); ctx.stroke();
+      ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.arc(0, 0, 90, 0, Math.PI * 2); ctx.stroke();
+      break;
+
+    case 'tape':
+      ctx.strokeStyle = strokeAccent;
+      ctx.lineWidth = 50;
+      ctx.strokeRect(-110, -70, 220, 140);
+      ctx.lineWidth = 10;
+      ctx.strokeStyle = stroke;
+      ctx.beginPath();
+      ctx.moveTo(-170, -40); ctx.lineTo(170, 40);
+      ctx.stroke();
+      break;
+
+    case 'map':
+      ctx.strokeStyle = stroke;
+      for (let i = 0; i < 5; i++) {
+        ctx.beginPath();
+        const y = -100 + i * 50;
+        ctx.moveTo(-150, y);
+        ctx.bezierCurveTo(-80, y - 30, 20, y + 30, 150, y);
+        ctx.stroke();
+      }
+      ctx.fillStyle = pal.accent;
+      ctx.beginPath(); ctx.arc(-30, 10, 10, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(70, -40, 10, 0, Math.PI * 2); ctx.fill();
+      break;
+
+    case 'needle':
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(0, 0, 130, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(0, 0, 80, 0, Math.PI * 2); ctx.stroke();
+      // Needle
+      ctx.fillStyle = pal.accent;
+      ctx.beginPath();
+      ctx.moveTo(0, -120); ctx.lineTo(12, 0); ctx.lineTo(-12, 0);
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = hexWithAlpha(pal.ink, 0.4);
+      ctx.beginPath();
+      ctx.moveTo(0, 120); ctx.lineTo(12, 0); ctx.lineTo(-12, 0);
+      ctx.closePath(); ctx.fill();
+      break;
+
+    case 'check':
+      ctx.strokeStyle = strokeAccent;
+      ctx.lineWidth = 24;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(-110, 0); ctx.lineTo(-30, 80); ctx.lineTo(130, -90);
+      ctx.stroke();
+      ctx.lineCap = 'butt';
+      break;
+
+    case 'route':
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 3;
+      ctx.setLineDash([10, 10]);
+      ctx.beginPath();
+      ctx.moveTo(-170, 90);
+      ctx.bezierCurveTo(-70, -80, 50, 120, 170, -70);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      // Nodes
+      ctx.fillStyle = pal.accent;
+      for (const [x, y] of [[-170, 90], [0, 20], [170, -70]]) {
+        ctx.beginPath(); ctx.arc(x, y, 10, 0, Math.PI * 2); ctx.fill();
+      }
+      break;
+
+    case 'thread':
+      ctx.strokeStyle = strokeAccent;
+      ctx.lineWidth = 3;
+      for (let i = 0; i < 8; i++) {
+        ctx.beginPath();
+        for (let x = -170; x <= 170; x += 4) {
+          const y = Math.sin(x / 30 + i * 0.4) * (60 + i * 6);
+          if (x === -170) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.globalAlpha = 0.6 - i * 0.05;
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      break;
+
+    case 'serifA':
+      ctx.fillStyle = hexWithAlpha(pal.ink, 0.14);
+      ctx.font = '900 320px "Times New Roman", Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('M', 0, 10);
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'alphabetic';
+      break;
+  }
+  ctx.restore();
+}
+
+init();
