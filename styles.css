@@ -103,7 +103,8 @@ a:hover { text-decoration: underline; }
 .site-header nav a:hover { color: var(--ink); text-decoration: none; }
 
 @media (max-width: 560px) {
-  .site-header nav { gap: 14px; }
+  .site-header nav { gap: 14px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+  .header-row { gap: 12px; }
   .site-header nav a { font-size: 14px; }
   .brand-name { display: none; }
 }
@@ -747,3 +748,74 @@ body { background: #0b1220; }
 @media (prefers-reduced-motion: reduce) {
   .hero-scene.ready { animation: none; opacity: 0.4; }
 }
+
+/* Résumé refresh: hero stats, role summaries, product cards */
+.hero-stats {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 720px) { .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.hero-stats li {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: color-mix(in oklab, var(--bg) 80%, transparent);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hero-stats strong {
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.hero-stats span { font-size: 12.5px; line-height: 1.35; color: var(--ink-muted); }
+
+.role-summary { margin: 0 0 4px; color: var(--ink-soft); font-size: 14.5px; max-width: 75ch; }
+
+.subsection-title {
+  margin: 56px 0 8px;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+}
+.project-role {
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.project-card-feature {
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
+}
+.client-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.client-list li { font-size: 14px; line-height: 1.45; }
+.client-list a { font-weight: 600; margin-right: 6px; }
+.client-list span { color: var(--ink-muted); }
+
+/* New pieces over the video backdrop (always-dark palette, matching the overrides above) */
+.hero-stats li {
+  background: rgba(11, 18, 32, 0.55);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+.hero-stats strong { color: #ffffff; }
+.hero-stats span { color: rgba(255, 255, 255, 0.7); }
+.subsection-title { color: #ffffff; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55); }
+p.prose { color: rgba(255, 255, 255, 0.82); }
+.role-summary { color: rgba(255, 255, 255, 0.65); }
+.project-card .project-head h3 { color: #ffffff; }
+.project-role { color: rgba(255, 255, 255, 0.55); }
+.project-card-feature { border-color: rgba(255, 215, 102, 0.35); }
+.client-list a { color: #ffd766; }
+.client-list span { color: rgba(255, 255, 255, 0.72); }
