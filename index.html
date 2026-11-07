@@ -6,734 +6,531 @@
   <title>Fahim Alam — Solutions Engineer</title>
   <meta name="description" content="Fahim Alam is a Solutions Engineer in Charlotte, NC working on cloud data migration across AWS, Microsoft 365 and Google Workspace, QA automation, and full-stack apps in TypeScript, React, Next.js, Python and .NET." />
   <meta name="author" content="Fahim Alam" />
-  <meta name="theme-color" content="#0b1220" />
+  <meta name="theme-color" content="#f5f3ee" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)" />
 
   <meta property="og:title" content="Fahim Alam — Solutions Engineer" />
   <meta property="og:description" content="Cloud data migration, QA automation and full-stack products. Terabyte-scale migrations with zero data loss, and 10+ apps shipped." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/headshot.jpg" />
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231e3a8a'/%3E%3Ctext x='50' y='66' font-family='Inter,Arial' font-size='52' font-weight='700' text-anchor='middle' fill='white'%3EF%3C/text%3E%3C/svg%3E" />
-  <link rel="preconnect" href="https://rsms.me/" />
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%2317150f'/%3E%3Ctext x='50' y='72' font-family='Georgia,serif' font-size='66' text-anchor='middle' fill='%23ffc552'%3EF%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
 </head>
-<body>
-  <a href="#main" class="skip-link">Skip to content</a>
+<body data-root="">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M16 13H8M16 17H8M10 9H8"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  </svg>
 
-  <div class="page-backdrop" aria-hidden="true">
-    <video id="hero-video"
-           class="page-video is-active"
-           data-section="hero"
-           src="assets/video/hero.mp4"
-           poster="assets/video/hero-poster.jpg"
-           muted playsinline preload="auto"></video>
-    <video class="page-video" data-section="about"
-           src="assets/video/about.mp4"
-           muted playsinline preload="auto"></video>
-    <video class="page-video" data-section="skills"
-           src="assets/video/skills.mp4"
-           muted playsinline preload="auto"></video>
-    <video class="page-video" data-section="experience"
-           src="assets/video/experience.mp4"
-           muted playsinline preload="auto"></video>
-    <video class="page-video" data-section="projects"
-           src="assets/video/projects.mp4"
-           muted playsinline preload="auto"></video>
-    <video class="page-video" data-section="contact"
-           src="assets/video/contact.mp4"
-           muted playsinline preload="auto"></video>
-    <div class="page-vignette"></div>
-  </div>
+  <a href="#main" class="skip-link">Skip to content</a>
 
   <header class="site-header">
     <div class="container header-row">
-      <a href="#" class="brand" aria-label="Fahim Alam — Home">
+      <a href="#top" class="brand" aria-label="Fahim Alam, home">
         <span class="brand-mark" aria-hidden="true">F</span>
         <span class="brand-name">Fahim Alam</span>
       </a>
-      <nav aria-label="Primary">
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-        <a href="lab/" class="nav-lab">Lab <span aria-hidden="true">↗</span></a>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-links">
+          <a href="#work">Work</a>
+          <a href="#experience">Experience</a>
+          <a href="#skills">Skills</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <a href="lab/" class="nav-lab">Lab ↗</a>
+        </div>
+        <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+          <svg class="icon icon-moon"><use href="#i-moon"/></svg>
+          <svg class="icon icon-sun"><use href="#i-sun"/></svg>
+        </button>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero" id="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">Solutions Engineer · Charlotte, NC</p>
-          <h1>I move terabytes between clouds with zero data loss, and ship the apps around it.</h1>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="top">
+      <div class="container bento">
+        <div class="tile tile-intro">
+          <img class="hero-poster" src="assets/video/hero-poster.jpg" alt="" />
+          <video class="hero-video" src="assets/video/hero.mp4" poster="assets/video/hero-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
+          <span class="tile-label">Solutions Engineer · Charlotte, NC</span>
+          <h1>I move terabytes between clouds with <em>zero data loss</em>, and ship the apps around it.</h1>
           <p class="lede">
-            Solutions Engineer at an AI SaaS company for law-enforcement and public-safety
-            agencies, working between <strong>Customer Success</strong> and
-            <strong>Engineering</strong>. Nearly 5 years in enterprise software delivery
-            across <strong>cloud data migration</strong>, <strong>QA automation</strong> and
+            I work between <strong>Customer Success</strong> and <strong>Engineering</strong> at an
+            AI SaaS company for law-enforcement and public-safety agencies. Nearly 5 years across
+            <strong>cloud data migration</strong>, <strong>QA automation</strong> and
             <strong>full-stack</strong> builds in TypeScript, React, Next.js, Python and .NET.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#contact">Get in touch</a>
-            <a class="btn btn-secondary" href="assets/Fahim_Alam_Resume.pdf" target="_blank" rel="noopener">
-              Download résumé
-            </a>
-            <a class="btn btn-lab" href="lab/">
-              <span class="btn-lab-dot" aria-hidden="true"></span>
-              Enter the Lab
-              <span class="btn-lab-arrow" aria-hidden="true">↗</span>
-            </a>
-          </div>
-          <ul class="hero-stats" aria-label="Highlights">
-            <li><strong>1.07 TB</strong><span>largest tenant migration, 0 discrepancies</span></li>
-            <li><strong>25+</strong><span>agency tenants provisioned</span></li>
-            <li><strong>60%</strong><span>less manual testing via CI/CD automation</span></li>
-            <li><strong>10+</strong><span>products shipped to production</span></li>
-          </ul>
-          <ul class="hero-meta" aria-label="Quick facts">
-            <li><span aria-hidden="true">📍</span> Charlotte, NC</li>
-            <li><span aria-hidden="true">✉️</span> <a href="mailto:fahimalam.work@gmail.com">fahimalam.work@gmail.com</a></li>
-            <li><span aria-hidden="true">🔗</span> <a href="https://www.linkedin.com/in/fahimalamwork/" target="_blank" rel="noopener">LinkedIn</a></li>
-            <li><span aria-hidden="true">💻</span> <a href="https://github.com/fahimalamwork" target="_blank" rel="noopener">GitHub</a></li>
-          </ul>
-        </div>
-        <div class="hero-photo">
-          <img src="assets/headshot.jpg" alt="Portrait of Fahim Alam" width="320" height="320" />
-          <div class="photo-bg" aria-hidden="true"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="section">
-      <div class="container reveal">
-        <h2 class="section-title">About</h2>
-        <div class="prose">
-          <p>
-            I'm a Solutions Engineer at <strong>Tranquility Inc.</strong>, which builds
-            TimePilot, an AI platform for police, sheriff, prosecutor and public-safety
-            agencies. I handle tenant onboarding, cloud data migration and sync, release
-            regression and production triage on a multi-tenant, CJIS-sensitive platform.
-            That means moving terabyte-scale data across AWS, Microsoft 365 and Google
-            Workspace without losing a file.
-          </p>
-          <p>
-            Before that I spent four and a half years at <strong>Hitachi Solutions, Ltd.</strong>,
-            going from SDET to Senior Consultant. I led QA on enterprise Dynamics 365
-            projects, migrated BDD suites from SpecFlow to Reqnroll, built a hybrid
-            Playwright and .NET 9 framework, and cut manual effort by 60% and release
-            cycle time by 30% with Azure DevOps CI/CD automation.
-          </p>
-          <p>
-            Outside the day job I build and ship: <strong>BandarTrade</strong>, a live
-            AI freight-quoting platform in Bangladesh; <strong>Uplift Digital Partners</strong>,
-            a web agency I co-founded for local small businesses; and a run of apps, games
-            and tools. I use Claude Code and Cursor agents to automate a lot of the
-            operations work along the way.
-          </p>
-          <p class="aside">
-            Outside of work, I'm a photographer. The same eye that notices a misaligned
-            button in a UI tends to notice the light at the end of a long avenue.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills" class="section section-alt">
-      <div class="container reveal">
-        <h2 class="section-title">Skills</h2>
-        <div class="skills-grid">
-          <div class="skill-group">
-            <h3>Languages</h3>
-            <ul class="chips">
-              <li>Python</li><li>TypeScript</li><li>JavaScript (Node.js)</li><li>C#</li>
-              <li>Java</li><li>SQL</li><li>Bash</li><li>HTML / CSS</li>
-            </ul>
-          </div>
-          <div class="skill-group">
-            <h3>AWS</h3>
-            <ul class="chips">
-              <li>S3</li><li>EC2</li><li>ECS</li><li>SQS</li><li>EventBridge</li>
-              <li>DynamoDB</li><li>Textract</li><li>IAM / SSO</li><li>KMS</li>
-              <li>Secrets Manager</li><li>SSM Session Manager</li><li>AWS CLI</li>
-            </ul>
-          </div>
-          <div class="skill-group">
-            <h3>Microsoft &amp; Google</h3>
-            <ul class="chips">
-              <li>Microsoft Graph API</li><li>SharePoint / OneDrive</li><li>Entra ID</li>
-              <li>Azure Functions</li><li>Google Drive API</li><li>Domain-wide delegation</li>
-              <li>Google Workspace admin</li>
-            </ul>
-          </div>
-          <div class="skill-group">
-            <h3>Web &amp; backend</h3>
-            <ul class="chips">
-              <li>React</li><li>Next.js</li><li>Tailwind CSS</li><li>.NET 8/9 Web API</li>
-              <li>Entity Framework Core</li><li>REST APIs</li><li>PWAs</li>
-            </ul>
-          </div>
-          <div class="skill-group">
-            <h3>DevOps</h3>
-            <ul class="chips">
-              <li>GitLab CI/CD</li><li>Azure DevOps</li><li>GitHub Actions</li><li>Jenkins</li>
-              <li>Docker</li><li>Pulumi</li><li>rclone</li><li>Vercel</li><li>Render</li>
-            </ul>
-          </div>
-          <div class="skill-group">
-            <h3>Data</h3>
-            <ul class="chips">
-              <li>SQL Server</li><li>Oracle</li><li>Supabase (Postgres)</li><li>DynamoDB</li>
-            </ul>
-          </div>
-          <div class="skill-group">
-            <h3>AI &amp; LLMs</h3>
-            <ul class="chips">
-              <li>Claude Code</li><li>Cursor</li><li>Anthropic Claude</li><li>OpenAI API</li>
-              <li>Groq API</li><li>LLM answer-quality evals</li><li>Prompt engineering</li>
-            </ul>
-          </div>
-          <div class="skill-group">
-            <h3>Quality engineering</h3>
-            <ul class="chips">
-              <li>Playwright</li><li>Selenium</li><li>Leapwork</li><li>Reqnroll</li>
-              <li>SpecFlow</li><li>Cucumber</li><li>Jira Xray</li><li>Postman</li>
-              <li>Rest-Assured</li><li>BDD</li>
-            </ul>
+            <a class="btn btn-primary" href="#work">See my work <svg class="icon"><use href="#i-right"/></svg></a>
+            <a class="btn btn-ghost" href="assets/Fahim_Alam_Resume.pdf" target="_blank" rel="noopener"><svg class="icon"><use href="#i-file"/></svg> Résumé</a>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section id="experience" class="section">
-      <div class="container reveal">
-        <h2 class="section-title">Experience</h2>
-
-        <article class="role">
-          <header class="role-header">
+        <figure class="tile tile-photo" style="margin:0">
+          <img src="assets/headshot.jpg" alt="Portrait of Fahim Alam" width="832" height="832" />
+          <figcaption>
             <div>
-              <h3>Solutions Engineer</h3>
-              <p class="role-company">Tranquility Inc. · Charlotte, NC</p>
+              <strong>Fahim Alam</strong>
+              <span>Solutions Engineer, Tranquility</span>
             </div>
-            <p class="role-dates">Jun 2026 – Present</p>
-          </header>
-          <p class="role-summary">AI SaaS platform (TimePilot) for police, sheriff, prosecutor and public-safety agencies. The role covers technical operations, cloud data migration, QA and Customer Success engineering.</p>
+            <span class="status"><span class="status-dot" aria-hidden="true"></span> Open to chat</span>
+          </figcaption>
+        </figure>
 
-          <div class="role-track">
-            <h4>Cloud data migration &amp; sync</h4>
-            <ul>
-              <li>Migrated 12 customer tenants to a new SharePoint tenant using runbook-driven rclone jobs on EC2 with exact file and byte reconciliation. The largest moved 88,290 files (1.07 TB) from 3 sources with zero discrepancies.</li>
-              <li>Set up 12+ SharePoint and Google Drive sync integrations on a new cell-based architecture, wiring Microsoft Graph change subscriptions through an Azure Function relay. Delta syncs of up to 669 GiB and 51K objects finished with 0 errors.</li>
-              <li>Traced an outage that stopped syncing for 22 tenants to an expired SharePoint refresh token, and shipped a fix that saves rotated tokens to Secrets Manager.</li>
-              <li>Fixed a sync-service startup crash affecting every production cell, restoring syncs fleet-wide.</li>
-            </ul>
+        <div class="tile tile-term" aria-label="Migration reconciliation summary">
+          <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>reconciliation.log</span></div>
+<div class="term-body"><span class="line h" style="--i:0"># tenant migration · largest</span><span class="line" style="--i:1"><span class="k">files    </span> 88,290</span><span class="line" style="--i:2"><span class="k">size     </span> 1.07 TB</span><span class="line" style="--i:3"><span class="k">sources  </span> 3</span><span class="line" style="--i:4"><span class="k">diff     </span> <span class="ok">0  ✓ match</span></span><span class="line" style="--i:5"> </span><span class="line h" style="--i:6"># delta sync · largest</span><span class="line" style="--i:7"><span class="k">size     </span> 669 GiB · 51K objects</span><span class="line" style="--i:8"><span class="k">errors   </span> <span class="ok">0  ✓</span></span></div>
+        </div>
+
+        <div class="tile tile-stats">
+          <div class="stat"><strong>12</strong><span>customer tenants migrated to a new SharePoint tenant</span></div>
+          <div class="stat"><strong>25+</strong><span>police, sheriff and DA tenants provisioned</span></div>
+          <div class="stat"><strong>60%</strong><span>less manual testing from CI/CD automation</span></div>
+          <div class="stat"><strong>10+</strong><span>products shipped to production on my own time</span></div>
+        </div>
+
+        <div class="tile tile-now">
+          <span class="tile-label">Right now</span>
+          <ul class="now-list">
+            <li><b>Day job</b><span>Solutions Engineer at Tranquility (TimePilot)</span></li>
+            <li><b>Building</b><span><a href="work/bandartrade.html">BandarTrade</a> and <a href="#okdoc">OkDoc</a></span></li>
+            <li><b>Running</b><span><a href="#uplift">Uplift Digital Partners</a>, a web agency</span></li>
+          </ul>
+        </div>
+
+        <div class="tile tile-place">
+          <span class="tile-label"><svg class="icon" style="width:14px;height:14px"><use href="#i-pin"/></svg> Charlotte, NC</span>
+          <div>
+            <div class="place-time" data-clock>--:--</div>
+            <p class="place-meta">Local time, Eastern</p>
           </div>
+        </div>
 
-          <div class="role-track">
-            <h4>Tenant operations &amp; QA</h4>
-            <ul>
-              <li>Provisioned 25+ agency tenants (police, sheriff's offices, district attorneys, fusion centers) and offboarded 10+, including S3, KMS and integration cleanup.</li>
-              <li>Found an apostrophe-in-tenant-name bug that broke HTTP headers and put 46 tenants at risk. Reversed an accidental deletion of 933 S3 objects using versioning.</li>
-              <li>Run weekly release regression and sign-off, per-tenant Playwright smoke tests, and a Jira Xray onboarding test plan.</li>
-              <li>Triaged AI answer-quality reports (wrong citations, hallucinations, wrong-language output) with telemetry, separating model behavior from product bugs.</li>
-            </ul>
+        <div class="tile tile-links">
+          <ul class="link-list">
+            <li><a href="mailto:fahimalam.work@gmail.com"><svg class="icon"><use href="#i-mail"/></svg> Email<svg class="icon arrow"><use href="#i-arrow"/></svg></a></li>
+            <li><a href="https://www.linkedin.com/in/fahimalamwork/" target="_blank" rel="noopener"><svg class="icon"><use href="#i-linkedin"/></svg> LinkedIn<svg class="icon arrow"><use href="#i-arrow"/></svg></a></li>
+            <li><a href="https://github.com/fahimalamwork" target="_blank" rel="noopener"><svg class="icon"><use href="#i-github"/></svg> GitHub<svg class="icon arrow"><use href="#i-arrow"/></svg></a></li>
+            <li><a href="assets/Fahim_Alam_Resume.pdf" target="_blank" rel="noopener"><svg class="icon"><use href="#i-file"/></svg> Résumé<svg class="icon arrow"><use href="#i-arrow"/></svg></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WORK ================= -->
+    <section class="section" id="work">
+      <div class="container">
+        <header class="section-head reveal">
+          <div>
+            <span class="section-num">01 / Selected work</span>
+            <h2 class="section-title">Things I've built</h2>
           </div>
+          <p class="section-lede">Products I've designed, built and shipped, from a live freight platform to a browser game. Most are live, so try them.</p>
+        </header>
 
-          <div class="role-track">
-            <h4>Customer Success tooling</h4>
-            <ul>
-              <li>Built an HTML command center for the CSM team combining HubSpot, Jira and Intercom data across 62 customer domains, plus at-risk reports and a staffing model.</li>
-              <li>Shipped a browser-only tool that autofills customers' security questionnaires (.docx) from a curated answer library.</li>
-              <li>Wrote runbooks, customer IT setup guides for SharePoint and Google Drive, and 14 Confluence automation pages.</li>
-            </ul>
+        <div class="bento">
+          <article class="tile work work-feature has-hover reveal">
+            <div class="cover" data-shot="bandartrade">
+              <img src="assets/covers/bandartrade.svg" alt="" loading="lazy" />
+              <span class="cover-tag">bandartrade.com · live</span>
+            </div>
+            <div class="work-body">
+              <div class="work-top"><h3>BandarTrade</h3><span class="meta">Founder · 2026–</span></div>
+              <p>An AI-assisted freight quoting and port trading platform serving customers in Bangladesh. Type <em>"2x 40ft containers, Shanghai to Chittagong"</em> and an LLM pulls out the route, container size and quantity. The engine then prices it with carrier rates, trucking costs and client markups.</p>
+              <ul class="tags"><li>.NET 8</li><li>EF Core</li><li>SQL Server</li><li>React</li><li>OpenAI API</li><li>Playwright</li><li>Reqnroll</li></ul>
+              <div class="work-actions">
+                <a class="btn btn-primary btn-sm" href="work/bandartrade.html">Read the case study <svg class="icon"><use href="#i-right"/></svg></a>
+                <a class="btn btn-ghost btn-sm" href="https://bandartrade.com" target="_blank" rel="noopener">Visit site <svg class="icon"><use href="#i-arrow"/></svg></a>
+              </div>
+            </div>
+          </article>
+
+          <a class="tile work work-case reveal" href="work/tenant-migration.html">
+            <div class="cover">
+              <img src="assets/covers/migration.svg" alt="" loading="lazy" />
+              <span class="cover-tag">case study · day job</span>
+            </div>
+            <div class="work-body">
+              <div class="work-top"><h3>1.07 TB, zero discrepancies</h3><svg class="icon arrow-ic"><use href="#i-arrow"/></svg></div>
+              <p>How I migrated 12 agency tenants to a new SharePoint tenant and rebuilt their sync on a cell-based architecture, plus the outages I traced along the way.</p>
+              <ul class="tags"><li>AWS</li><li>rclone</li><li>Microsoft Graph</li><li>Azure Functions</li></ul>
+            </div>
+          </a>
+
+          <article class="tile work work-uplift reveal" id="uplift">
+            <div class="cover" data-shot="uplift">
+              <img src="assets/covers/uplift.svg" alt="" loading="lazy" />
+              <span class="cover-tag">upliftdigitalpartners.com</span>
+            </div>
+            <div class="work-body">
+              <div class="work-top"><h3><a href="https://upliftdigitalpartners.com" target="_blank" rel="noopener">Uplift Digital Partners</a></h3><span class="meta">Co-founder &amp; Tech Lead · 2026–</span></div>
+              <p>A web agency that builds and modernizes sites for local small businesses. I built our own site, including a booking assistant, EmailJS confirmations and one-click Google Calendar invites with Meet links. These are the client sites I've built:</p>
+              <ul class="clients">
+                <li><a href="https://sharifadornment.com" target="_blank" rel="noopener"><strong>Sharif Adornment <svg class="icon"><use href="#i-arrow"/></svg></strong><span>Jewelry boutique in Queens. Searchable collections and a page per piece.</span></a></li>
+                <li><a href="https://hololandbd.com" target="_blank" rel="noopener"><strong>Hololand <svg class="icon"><use href="#i-arrow"/></svg></strong><span>Clothing brand. Three.js lookbook and a bilingual AI stylist.</span></a></li>
+                <li><a href="https://mozumderbd.net" target="_blank" rel="noopener"><strong>Mozumder <svg class="icon"><use href="#i-arrow"/></svg></strong><span>Logistics in Chattogram. Scroll-driven film and a 3D network map.</span></a></li>
+                <li><a href="https://maria-closet.vercel.app" target="_blank" rel="noopener"><strong>Maria's Closet <svg class="icon"><use href="#i-arrow"/></svg></strong><span>Outfit rentals. Next.js, React Three Fiber, Supabase.</span></a></li>
+                <li><a href="https://seamsofsafa.vercel.app" target="_blank" rel="noopener"><strong>Seams of Safa <svg class="icon"><use href="#i-arrow"/></svg></strong><span>Clothing label. Sanity CMS, next-intl, Groq AI.</span></a></li>
+                <li><a href="https://fahimalamwork.github.io/primecookie" target="_blank" rel="noopener"><strong>Primé Cookie <svg class="icon"><use href="#i-arrow"/></svg></strong><span>Bakery. An interactive "take a bite" hero.</span></a></li>
+                <li><a href="https://upliftdigitalpartners.github.io/GreyCafe" target="_blank" rel="noopener"><strong>GREY Cafe <svg class="icon"><use href="#i-arrow"/></svg></strong><span>Cafe in Flushing. Live open/closed indicator.</span></a></li>
+              </ul>
+              <ul class="tags"><li>HTML / CSS / JS</li><li>Three.js</li><li>Next.js</li><li>EmailJS</li><li>Custom DNS</li></ul>
+            </div>
+          </article>
+
+          <a class="tile work work-sm reveal" href="https://animafy-ai.vercel.app" target="_blank" rel="noopener">
+            <div class="cover" data-shot="animafy"><img src="assets/covers/animafy.svg" alt="" loading="lazy" /><span class="cover-tag">animafy-ai.vercel.app</span></div>
+            <div class="work-body">
+              <div class="work-top"><h3>Anima-Fy</h3><svg class="icon arrow-ic"><use href="#i-arrow"/></svg></div>
+              <p>Audit planning for any U.S. public company from free SEC EDGAR data. Surfaces critical audit matters and material weaknesses, benchmarks against industry XBRL, and drafts Excel workpapers.</p>
+              <ul class="tags"><li>React</li><li>Express</li><li>XBRL</li><li>Groq</li></ul>
+            </div>
+          </a>
+
+          <a class="tile work work-sm reveal" href="https://dishcover-two.vercel.app" target="_blank" rel="noopener">
+            <div class="cover" data-shot="dishcover"><img src="assets/covers/dishcover.svg" alt="" loading="lazy" /><span class="cover-tag">dishcover · PWA</span></div>
+            <div class="work-body">
+              <div class="work-top"><h3>Dishcover</h3><svg class="icon arrow-ic"><use href="#i-arrow"/></svg></div>
+              <p>Shows travelers 3 to 5 nearby restaurants by mood and budget, each with its most-praised dishes. An LLM reads the reviews, and the results are cached in Supabase so API costs stay near zero.</p>
+              <ul class="tags"><li>Next.js</li><li>Google Places</li><li>Supabase</li><li>zod</li></ul>
+            </div>
+          </a>
+
+          <a class="tile work work-sm reveal" href="https://three-js-brainstorm.vercel.app" target="_blank" rel="noopener">
+            <div class="cover" data-shot="nightwalker"><img src="assets/covers/nightwalker.svg" alt="" loading="lazy" /><span class="cover-tag">browser game</span></div>
+            <div class="work-body">
+              <div class="work-top"><h3>Night Walker NYC</h3><svg class="icon arrow-ic"><use href="#i-arrow"/></svg></div>
+              <p>A cel-shaded, comic-style game across New York neighborhoods. Walk, bike, drive or take the subway. Every street, building, crowd and sound is generated in code.</p>
+              <ul class="tags"><li>Three.js</li><li>Vite</li><li>Procedural</li></ul>
+            </div>
+          </a>
+
+          <a class="tile work work-sm reveal" href="https://nearcoffee.space" target="_blank" rel="noopener">
+            <div class="cover" data-shot="nearcoffee"><img src="assets/covers/nearcoffee.svg" alt="" loading="lazy" /><span class="cover-tag">nearcoffee.space</span></div>
+            <div class="work-body">
+              <div class="work-top"><h3>NearCoffee</h3><svg class="icon arrow-ic"><use href="#i-arrow"/></svg></div>
+              <p>An immersive cafe concept: a converted barn below the Tetons, lit to match your local time of day.</p>
+              <ul class="tags"><li>Vite</li><li>WebGL</li><li>Vercel</li></ul>
+            </div>
+          </a>
+
+          <a class="tile work work-sm reveal" href="https://neverforget-timesheet.netlify.app" target="_blank" rel="noopener">
+            <div class="cover" data-shot="neverforget"><img src="assets/covers/neverforget.svg" alt="" loading="lazy" /><span class="cover-tag">PWA · web push</span></div>
+            <div class="work-body">
+              <div class="work-top"><h3>Never Forget</h3><svg class="icon arrow-ic"><use href="#i-arrow"/></svg></div>
+              <p>A timesheet reminder that starts polite on Friday morning and escalates until you confirm you've submitted.</p>
+              <ul class="tags"><li>Node.js</li><li>Web Push</li><li>Netlify Functions</li></ul>
+            </div>
+          </a>
+
+          <a class="tile work work-sm reveal" href="https://tether-us.vercel.app" target="_blank" rel="noopener">
+            <div class="cover" data-shot="tether"><img src="assets/covers/tether.svg" alt="" loading="lazy" /><span class="cover-tag">tether-us.vercel.app</span></div>
+            <div class="work-body">
+              <div class="work-top"><h3>Tether</h3><svg class="icon arrow-ic"><use href="#i-arrow"/></svg></div>
+              <p>A web app for couples. I owned product, UI/UX, brand and front-end state end to end.</p>
+              <ul class="tags"><li>Product design</li><li>Front end</li><li>Vercel</li></ul>
+            </div>
+          </a>
+
+          <a class="tile work work-sm reveal" href="https://livegrid.onrender.com" target="_blank" rel="noopener">
+            <div class="cover" data-shot="livegrid"><img src="assets/covers/livegrid.svg" alt="" loading="lazy" /><span class="cover-tag">livegrid.onrender.com</span></div>
+            <div class="work-body">
+              <div class="work-top"><h3>LiveGrid</h3><svg class="icon arrow-ic"><use href="#i-arrow"/></svg></div>
+              <p>Real-time football analytics: match stats, historical scoring records and international player metrics.</p>
+              <ul class="tags"><li>Data pipelines</li><li>Analytics</li><li>Render</li></ul>
+            </div>
+          </a>
+
+          <article class="tile work work-sm reveal">
+            <div class="cover"><img src="assets/covers/livescanner.svg" alt="" loading="lazy" /><span class="cover-tag">Android · Android Auto</span></div>
+            <div class="work-body">
+              <div class="work-top"><h3>LiveScanner</h3><span class="meta">Native app</span></div>
+              <p>Streams 50+ live air-traffic control and police/fire/EMS scanner feeds, sorted by distance, with lock-screen controls and Android Auto.</p>
+              <ul class="tags"><li>Kotlin</li><li>Jetpack Compose</li><li>Media3</li></ul>
+            </div>
+          </article>
+
+          <article class="tile work work-sm reveal" id="okdoc">
+            <div class="cover"><img src="assets/covers/okdoc.svg" alt="" loading="lazy" /><span class="cover-tag">in development</span></div>
+            <div class="work-body">
+              <div class="work-top"><h3>OkDoc</h3><span class="meta">In progress</span></div>
+              <p>Answers "which doctors near me take my insurance," starting with Medicare Advantage in NYC. Built on CMS provider-directory FHIR APIs, for 12 languages and WCAG 2.2 AA.</p>
+              <ul class="tags"><li>Next.js</li><li>Supabase</li><li>FHIR</li><li>next-intl</li></ul>
+            </div>
+          </article>
+
+          <article class="tile work work-sm reveal">
+            <div class="cover"><img src="assets/covers/eatyourway.svg" alt="" loading="lazy" /><span class="cover-tag">in development</span></div>
+            <div class="work-body">
+              <div class="work-top"><h3>Eat Your Way</h3><span class="meta">In progress</span></div>
+              <p>An Android game in Unreal Engine 5.7 set in the food scenes of Jackson Heights and Flushing, Queens.</p>
+              <ul class="tags"><li>Unreal Engine 5.7</li><li>Android</li></ul>
+            </div>
+          </article>
+
+          <a class="tile work work-lab reveal" href="lab/">
+            <img class="lab-bg" src="assets/covers/lab.svg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1" />
+            <div class="work-body">
+              <span class="tile-label" style="color:#ffd54a">Interactive</span>
+              <div class="work-top"><h3>Enter the Lab</h3><svg class="icon arrow-ic"><use href="#i-arrow"/></svg></div>
+              <p>My projects as a 3D constellation you can fly through. Hover anything, click to open.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIENCE ================= -->
+    <section class="section" id="experience">
+      <div class="container">
+        <header class="section-head reveal">
+          <div>
+            <span class="section-num">02 / Experience</span>
+            <h2 class="section-title">Where I've worked</h2>
+          </div>
+          <p class="section-lede">Nearly five years of enterprise delivery, from test architecture to running cloud migrations for public-safety agencies.</p>
+        </header>
+
+        <article class="role reveal">
+          <div class="role-meta">
+            <span class="dates">Jun 2026 – Present</span>
+            <h3>Tranquility Inc.</h3>
+            <span class="title">Solutions Engineer</span>
+            <span class="where">Charlotte, NC</span>
+          </div>
+          <div>
+            <p class="role-summary">TimePilot is an AI platform for police, sheriff, prosecutor and public-safety agencies. My role covers technical operations, cloud data migration, QA and Customer Success engineering on a multi-tenant, CJIS-sensitive platform.</p>
+            <div class="track">
+              <h4>Cloud data migration &amp; sync</h4>
+              <ul>
+                <li>Migrated 12 customer tenants to a new SharePoint tenant using runbook-driven rclone jobs on EC2 with exact file and byte reconciliation. The largest moved <b>88,290 files (1.07 TB) from 3 sources with zero discrepancies</b>.</li>
+                <li>Set up 12+ SharePoint and Google Drive sync integrations on a new cell-based architecture, wiring Microsoft Graph change subscriptions through an Azure Function relay. Delta syncs of up to <b>669 GiB and 51K objects finished with 0 errors</b>.</li>
+                <li>Traced an outage that stopped syncing for 22 tenants to an expired SharePoint refresh token, and shipped a fix that saves rotated tokens to Secrets Manager.</li>
+                <li>Fixed a sync-service startup crash affecting every production cell, restoring syncs fleet-wide.</li>
+              </ul>
+            </div>
+            <div class="track">
+              <h4>Tenant operations &amp; QA</h4>
+              <ul>
+                <li>Provisioned <b>25+ agency tenants</b> (police, sheriff's offices, district attorneys, fusion centers) and offboarded 10+, including S3, KMS and integration cleanup.</li>
+                <li>Found an apostrophe-in-tenant-name bug that broke HTTP headers and put 46 tenants at risk. Reversed an accidental deletion of 933 S3 objects using versioning.</li>
+                <li>Run weekly release regression and sign-off, per-tenant Playwright smoke tests, and a Jira Xray onboarding test plan.</li>
+                <li>Triage AI answer-quality reports (wrong citations, hallucinations, wrong-language output) with telemetry, separating model behavior from product bugs.</li>
+              </ul>
+            </div>
+            <div class="track">
+              <h4>Customer Success tooling</h4>
+              <ul>
+                <li>Built an HTML command center for the CSM team combining HubSpot, Jira and Intercom data across 62 customer domains, plus at-risk reports and a staffing model.</li>
+                <li>Shipped a browser-only tool that autofills customers' security questionnaires (.docx) from a curated answer library.</li>
+                <li>Wrote runbooks, customer IT setup guides for SharePoint and Google Drive, and 14 Confluence automation pages.</li>
+              </ul>
+            </div>
+            <div class="work-actions" style="margin-top:24px">
+              <a class="btn btn-ghost btn-sm" href="work/tenant-migration.html">Read the migration case study <svg class="icon"><use href="#i-right"/></svg></a>
+            </div>
           </div>
         </article>
 
-        <article class="role">
-          <header class="role-header">
-            <div>
-              <h3>Senior Consultant, QA (SDET)</h3>
-              <p class="role-company">Hitachi Solutions, Ltd. · Irvine, CA (Remote)</p>
+        <article class="role reveal">
+          <div class="role-meta">
+            <span class="dates">Jan 2022 – Jun 2026</span>
+            <h3>Hitachi Solutions, Ltd.</h3>
+            <span class="title">Senior Consultant, QA (SDET)</span>
+            <span class="where">Irvine, CA (Remote) · promoted twice</span>
+          </div>
+          <div>
+            <p class="role-summary">Promoted from SDET to Senior SDET to Senior Consultant, leading QA on enterprise Microsoft Dynamics 365 projects.</p>
+            <div class="track">
+              <h4>Highlights</h4>
+              <ul>
+                <li>Built <b>300+ automated regression tests</b> in Leapwork for IEHP, cutting <b>manual testing effort by 60%</b> and <b>release cycle time by 30%</b>, with nightly runs in Azure DevOps CI/CD.</li>
+                <li>Led the migration from SpecFlow to Reqnroll and architected a hybrid Playwright and .NET 9 framework (Page Object Model, BDD, parallel and multi-browser).</li>
+                <li>Planned sprint QA work in Azure DevOps, sized workload and resourcing, and reported dependencies, timelines and quality risks to PMs and Scrum Masters.</li>
+                <li>Integrated automated runs into Azure Pipelines and published JUnit results to ADO Test Plans so the whole team could see outcomes in one place.</li>
+              </ul>
             </div>
-            <p class="role-dates">Jan 2022 – Jun 2026</p>
-          </header>
-          <p class="role-summary">Promoted from SDET to Senior SDET to Senior Consultant.</p>
 
-          <div class="role-track">
-            <h4>Delivery &amp; QA leadership</h4>
-            <ul>
-              <li>Led QA on enterprise Microsoft Dynamics 365 projects, turning committed PBIs, user stories and acceptance criteria into test scenarios and cases.</li>
-              <li>Planned sprint QA work in Azure DevOps, sized workload and resourcing, and reported dependencies, timelines and quality risks to project managers and Scrum Masters.</li>
-              <li>Integrated automated runs into Azure Pipelines and published JUnit results to ADO Test Plans so the whole team could see test outcomes in one place.</li>
-              <li>Developed a TypeScript record-and-play framework prototype that captures and replays browser interactions to simplify test creation.</li>
-            </ul>
-          </div>
-
-          <div class="role-track">
-            <h4>Health Plans &amp; Providers</h4>
-            <ul>
-              <li>Led the migration from SpecFlow to Reqnroll, modernizing the BDD framework and improving long-term maintainability.</li>
-              <li>Architected a hybrid Playwright and .NET 9 framework using Page Object Model and BDD, with parallel and multi-browser execution.</li>
-              <li>Defined automation strategy for SIT and UAT phases with developers and product owners, and ran cross-functional defect triage.</li>
-            </ul>
-          </div>
-
-          <div class="role-track">
-            <h4>Professional Services: IEHP (Leapwork)</h4>
-            <ul>
-              <li>Built 300+ automated regression tests in Leapwork, cutting manual testing effort by 60% and release cycle time by 30%.</li>
-              <li>Integrated the suite into Azure DevOps CI/CD pipelines for nightly regression runs and early defect detection.</li>
-            </ul>
-          </div>
-
-          <div class="role-track">
-            <h4>Manufacturing: GlobalFoundries</h4>
-            <ul>
-              <li>Extended a Cucumber and TestNG framework to support parallel, multi-browser execution.</li>
-              <li>Wrote SQL validation scripts to check data transformation output against expected results.</li>
-              <li>Shifted to functional testing on the D2P workstream as priorities changed, keeping coverage steady. The team recognized the contribution.</li>
-            </ul>
-          </div>
-
-          <div class="role-track">
-            <h4>ALTA (QA lead) &amp; ITA (Dynamics 365 CE)</h4>
-            <ul>
-              <li>Served as QA lead on ALTA, owning manual and functional coverage, and designed and launched the project's automation framework.</li>
-              <li>Built reusable Customer Engagement automation subflows for ITA and automated the full CE suite, diagnosing dispute-number generation failures and extending coverage to public portal scenarios.</li>
-            </ul>
-          </div>
-
-          <div class="role-track">
-            <h4>Internal innovation: AI-powered QA assistant</h4>
-            <ul>
-              <li>Validated LLM-generated test cases for accuracy, completeness and fit with acceptance criteria during alpha rollout.</li>
-              <li>Documented hallucination patterns, edge cases and formatting errors, feeding fixes back into prompt templates.</li>
-              <li>Verified the Azure DevOps extension workflow that links generated test cases to their parent user stories.</li>
-            </ul>
+            <details class="more">
+              <summary>Every project, in detail <svg class="icon"><use href="#i-plus"/></svg></summary>
+              <div class="more-body">
+                <div class="track">
+                  <h4>Delivery &amp; QA leadership</h4>
+                  <ul>
+                    <li>Turned committed PBIs, user stories and acceptance criteria into test scenarios and cases on Dynamics 365 projects.</li>
+                    <li>Developed a TypeScript record-and-play framework prototype that captures and replays browser interactions to simplify test creation.</li>
+                  </ul>
+                </div>
+                <div class="track">
+                  <h4>Health Plans &amp; Providers</h4>
+                  <ul>
+                    <li>Defined automation strategy for SIT and UAT phases with developers and product owners.</li>
+                    <li>Ran cross-functional defect triage, speeding issue resolution and improving sprint predictability.</li>
+                    <li>Set up .NET project builds, Git version control and Azure DevOps continuous integration.</li>
+                  </ul>
+                </div>
+                <div class="track">
+                  <h4>Manufacturing: GlobalFoundries</h4>
+                  <ul>
+                    <li>Extended a Cucumber and TestNG framework to support parallel, multi-browser execution.</li>
+                    <li>Wrote SQL validation scripts to check data transformation output against expected results.</li>
+                    <li>Shifted to functional testing on the D2P workstream as priorities changed, keeping coverage steady. The team recognized the contribution.</li>
+                  </ul>
+                </div>
+                <div class="track">
+                  <h4>ALTA: QA lead</h4>
+                  <ul>
+                    <li>Owned manual and functional test coverage, and designed and launched the project's automation framework.</li>
+                  </ul>
+                </div>
+                <div class="track">
+                  <h4>ITA: Dynamics 365 Customer Engagement</h4>
+                  <ul>
+                    <li>Built reusable CE automation subflows and automated the full CE suite except two cases awaiting client re-verification.</li>
+                    <li>Diagnosed dispute-number generation failures and extended coverage to public portal scenarios.</li>
+                  </ul>
+                </div>
+                <div class="track">
+                  <h4>Internal innovation: AI-powered QA assistant</h4>
+                  <ul>
+                    <li>Validated LLM-generated test cases for accuracy, completeness and fit with acceptance criteria during alpha rollout.</li>
+                    <li>Documented hallucination patterns, edge cases and formatting errors, feeding fixes back into prompt templates.</li>
+                    <li>Verified the Azure DevOps extension workflow that links generated test cases to their parent user stories.</li>
+                  </ul>
+                </div>
+              </div>
+            </details>
           </div>
         </article>
       </div>
     </section>
 
-    <section id="projects" class="section section-alt">
-      <div class="container reveal">
-        <h2 class="section-title">Things I've built</h2>
-        <p class="prose section-lede">
-          Products I've designed, built and shipped on my own time, from a live freight
-          platform to browser games. Most of them are live, so you can try them.
-        </p>
+    <!-- ================= SKILLS ================= -->
+    <section class="section" id="skills">
+      <div class="container">
+        <header class="section-head reveal">
+          <div>
+            <span class="section-num">03 / Skills</span>
+            <h2 class="section-title">The toolbox</h2>
+          </div>
+          <p class="section-lede">What I reach for, grouped the way I actually use it.</p>
+        </header>
+        <dl class="skills reveal">
+          <div class="skill-row"><dt>Languages</dt><dd>Python, TypeScript, JavaScript (Node.js), C#, Java, SQL, Bash, HTML, CSS</dd></div>
+          <div class="skill-row"><dt>AWS</dt><dd>S3 (versioning, lifecycle), EC2, ECS, SQS, EventBridge, DynamoDB, Textract, IAM / SSO, KMS, Secrets Manager, SSM Session Manager, AWS CLI</dd></div>
+          <div class="skill-row"><dt>Microsoft &amp; Google</dt><dd>Microsoft Graph API (change subscriptions, webhooks), SharePoint / OneDrive, Entra ID, Azure Functions, Google Drive API, service accounts, domain-wide delegation, Workspace admin</dd></div>
+          <div class="skill-row"><dt>Web &amp; backend</dt><dd>React, Next.js, Tailwind CSS, .NET 8/9 Web API, Entity Framework Core, REST APIs, PWAs</dd></div>
+          <div class="skill-row"><dt>DevOps</dt><dd>GitLab CI/CD, Azure DevOps, GitHub Actions, Jenkins, Git, Docker, Pulumi, rclone, Vercel, Render, GitHub Pages, custom DNS</dd></div>
+          <div class="skill-row"><dt>Data</dt><dd>Microsoft SQL Server, Oracle, Supabase (Postgres), DynamoDB</dd></div>
+          <div class="skill-row"><dt>AI &amp; LLMs</dt><dd>Claude Code, Cursor, Anthropic Claude, OpenAI API, Groq API, LLM answer-quality evaluation, prompt engineering</dd></div>
+          <div class="skill-row"><dt>Quality</dt><dd>Playwright, Selenium, Leapwork, Reqnroll, SpecFlow, Cucumber, Jira Xray, Postman, Rest-Assured, BDD</dd></div>
+          <div class="skill-row"><dt>Platforms</dt><dd>Unreal Engine 5, Android (Kotlin, Jetpack Compose), Microsoft Dynamics 365, Jira, Confluence, HubSpot, Intercom</dd></div>
+        </dl>
+      </div>
+    </section>
 
-        <div class="projects-grid">
-          <article class="project-card project-card-feature">
-            <header class="project-head">
-              <h3><a href="https://bandartrade.com" target="_blank" rel="noopener">BandarTrade</a></h3>
-              <span class="project-role">Founder · 2026–</span>
-            </header>
-            <p>A live AI-assisted freight quoting and port trading platform for customers in Bangladesh. Its quoting engine turns requests like <em>"2x 40ft containers, Shanghai to Chittagong"</em> into priced quotes. An LLM extracts origin, destination, container size and quantity, then the engine applies carrier rates, trucking costs and client markups. It handles ports the model invents, routes with no rate on file, and USD-to-BDT conversion. The React review UI has an English/Bangla toggle, an audit log and a chat assistant, and the quote logic is covered by Reqnroll and Playwright tests.</p>
-            <ul class="project-tags">
-              <li>.NET 8</li><li>EF Core</li><li>SQL Server</li><li>React</li><li>TypeScript</li><li>OpenAI API</li><li>Playwright</li><li>Reqnroll</li>
-            </ul>
-          </article>
+    <!-- ================= OPEN SOURCE ================= -->
+    <section class="section" id="open-source">
+      <div class="container">
+        <header class="section-head reveal">
+          <div>
+            <span class="section-num">04 / Open source</span>
+            <h2 class="section-title">QA tooling</h2>
+          </div>
+          <p class="section-lede">Repos that mirror how I build test automation at work. Each one is reproducible: clone, install, run.</p>
+        </header>
+        <ul class="repo-list reveal">
+          <li class="repo">
+            <span class="repo-name">playwright-bdd-ts</span>
+            <div class="repo-desc">Playwright, TypeScript and Cucumber-JS with POM, per-scenario browser contexts, screenshot-on-failure and a Chromium / Firefox / WebKit CI matrix.</div>
+            <div class="repo-links"><a href="https://github.com/fahimalamwork/playwright-bdd-ts" target="_blank" rel="noopener"><svg class="icon"><use href="#i-github"/></svg> Repo</a></div>
+          </li>
+          <li class="repo">
+            <span class="repo-name">playwright-dotnet-reqnroll</span>
+            <div class="repo-desc">Playwright .NET, C# 12, Reqnroll and NUnit: the BDD stack I migrated to from SpecFlow at Hitachi. Ships with Azure DevOps and GitHub Actions pipelines.</div>
+            <div class="repo-links"><a href="https://github.com/fahimalamwork/playwright-dotnet-reqnroll" target="_blank" rel="noopener"><svg class="icon"><use href="#i-github"/></svg> Repo</a></div>
+          </li>
+          <li class="repo">
+            <span class="repo-name">selenium-java-cucumber</span>
+            <div class="repo-desc">Selenium 4, Java 17, Cucumber, TestNG and Rest-Assured with a thread-local DriverFactory for parallel scenarios and UI + API in one pass.</div>
+            <div class="repo-links"><a href="https://github.com/fahimalamwork/selenium-java-cucumber" target="_blank" rel="noopener"><svg class="icon"><use href="#i-github"/></svg> Repo</a></div>
+          </li>
+          <li class="repo">
+            <span class="repo-name">flaky-test-detector</span>
+            <div class="repo-desc">A CLI that ranks tests across CI runs by a binomial-variance flake score, so a test that always fails isn't mistaken for one that fails half the time.</div>
+            <div class="repo-links"><a href="https://github.com/fahimalamwork/flaky-test-detector" target="_blank" rel="noopener"><svg class="icon"><use href="#i-github"/></svg> Repo</a></div>
+          </li>
+          <li class="repo">
+            <span class="repo-name">llm-test-case-generator</span>
+            <div class="repo-desc">Generates test cases from a user story with an LLM, then scores them for hallucinations and acceptance-criteria coverage. Stub, OpenAI and Anthropic backends.</div>
+            <div class="repo-links"><a href="https://github.com/fahimalamwork/llm-test-case-generator" target="_blank" rel="noopener"><svg class="icon"><use href="#i-github"/></svg> Repo</a></div>
+          </li>
+          <li class="repo">
+            <span class="repo-name">test-report-dashboard</span>
+            <div class="repo-desc">Turns JUnit XML or Playwright JSON from one or many runs into a self-contained HTML dashboard: pass-rate trend, slowest tests, recent failures.</div>
+            <div class="repo-links">
+              <a href="demo/dashboard.html" target="_blank" rel="noopener">Live demo <svg class="icon"><use href="#i-arrow"/></svg></a>
+              <a href="https://github.com/fahimalamwork/test-report-dashboard" target="_blank" rel="noopener"><svg class="icon"><use href="#i-github"/></svg> Repo</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
 
-          <article class="project-card project-card-feature">
-            <header class="project-head">
-              <h3><a href="https://upliftdigitalpartners.com" target="_blank" rel="noopener">Uplift Digital Partners</a></h3>
-              <span class="project-role">Co-founder &amp; Tech Lead · 2026–</span>
-            </header>
-            <p>A web agency that builds and modernizes sites and apps for local small businesses. I built the company site, including a conversational booking assistant, EmailJS confirmations, one-click Google Calendar invites with Meet links, and SEO basics. Client sites I've built:</p>
-            <ul class="client-list">
-              <li><a href="https://sharifadornment.com" target="_blank" rel="noopener">Sharif Adornment</a><span>Jewelry boutique in Queens. Searchable collections, per-piece SEO pages, full-screen zoom.</span></li>
-              <li><a href="https://hololandbd.com" target="_blank" rel="noopener">Hololand</a><span>Clothing brand. GSAP hero, Three.js lookbook, bilingual AI stylist on Groq + Cloudflare Workers.</span></li>
-              <li><a href="https://mozumderbd.net" target="_blank" rel="noopener">Mozumder</a><span>Logistics company in Chattogram. Scroll-driven homepage film and a 3D network map.</span></li>
-              <li><a href="https://maria-closet.vercel.app" target="_blank" rel="noopener">Maria's Closet</a><span>Outfit rentals. Next.js, React Three Fiber, Supabase, owner admin.</span></li>
-              <li><a href="https://seamsofsafa.vercel.app" target="_blank" rel="noopener">Seams of Safa</a><span>Clothing label. Next.js, Sanity CMS, next-intl, Groq AI, Resend.</span></li>
-              <li><a href="https://fahimalamwork.github.io/primecookie" target="_blank" rel="noopener">Primé Cookie</a><span>Bakery. Vite + Three.js "take a bite" hero with crumb particles.</span></li>
-              <li><a href="https://upliftdigitalpartners.github.io/GreyCafe" target="_blank" rel="noopener">GREY Cafe</a><span>Women-owned cafe in Flushing. Menu, reviews, live open/closed indicator.</span></li>
-            </ul>
-            <ul class="project-tags">
-              <li>HTML / CSS / JS</li><li>EmailJS</li><li>GitHub Pages</li><li>Custom DNS</li>
-            </ul>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3><a href="https://animafy-ai.vercel.app" target="_blank" rel="noopener">Anima-Fy</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>An audit-planning workspace for any U.S. public company, built on free SEC EDGAR data. It surfaces critical audit matters, material weaknesses and restatements, rebuilds quarters with a derived Q4, benchmarks against industry XBRL percentiles, and generates Excel workpapers and an AI planning-memo draft.</p>
-            <ul class="project-tags"><li>React</li><li>Express</li><li>SEC EDGAR</li><li>XBRL</li><li>Groq</li><li>ExcelJS</li></ul>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3><a href="https://dishcover-two.vercel.app" target="_blank" rel="noopener">Dishcover</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>A mobile-first PWA for travelers that shows 3 to 5 nearby restaurants by mood and budget, each with its most-praised dishes. An LLM pulls top dishes from review text and caches them per place in Supabase, which keeps API costs near zero. Inputs and model output are validated with zod.</p>
-            <ul class="project-tags"><li>Next.js</li><li>TypeScript</li><li>Google Places</li><li>Groq</li><li>Supabase</li><li>zod</li></ul>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3><a href="https://three-js-brainstorm.vercel.app" target="_blank" rel="noopener">Night Walker NYC</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>A cel-shaded, comic-style browser game set in New York neighborhoods, with walking, biking, driving and subway travel. Streets, buildings, traffic, crowds and sound are all generated in code, with a day-to-night cycle. Plays on desktop and phone.</p>
-            <ul class="project-tags"><li>Three.js</li><li>Vite</li><li>Procedural generation</li></ul>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3><a href="https://nearcoffee.space" target="_blank" rel="noopener">NearCoffee</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>An immersive cafe concept in the browser: a converted barn below the Tetons, lit to match the visitor's local time. Vercel cache headers keep hashed assets for a year while textures refresh weekly.</p>
-            <ul class="project-tags"><li>Vite</li><li>WebGL</li><li>Vercel</li></ul>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3><a href="https://neverforget-timesheet.netlify.app" target="_blank" rel="noopener">Never Forget</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>A weekly timesheet reminder that starts polite on Friday morning and escalates in frequency and tone until you confirm you've submitted. Web push from serverless functions, with streak tracking and a partner view.</p>
-            <ul class="project-tags"><li>Node.js</li><li>Web Push</li><li>Netlify Functions</li><li>PWA</li></ul>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3><a href="https://tether-us.vercel.app" target="_blank" rel="noopener">Tether</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>A web app for couples. I owned product, UI/UX, brand identity and front-end state management end to end, and shipped it to production on Vercel.</p>
-            <ul class="project-tags"><li>Product design</li><li>Front end</li><li>Vercel</li></ul>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3><a href="https://livegrid.onrender.com" target="_blank" rel="noopener">LiveGrid</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>Real-time football analytics: professional match stats, historical scoring records and international player metrics, with the data pipelines and interactive front end behind them.</p>
-            <ul class="project-tags"><li>Data pipelines</li><li>Analytics</li><li>Render</li></ul>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3>LiveScanner</h3>
-              <span class="project-role">Android</span>
-            </header>
-            <p>A native Android and Android Auto app that streams 50+ live air-traffic control and police/fire/EMS scanner feeds sorted by distance, with background playback, lock-screen controls and favorites.</p>
-            <ul class="project-tags"><li>Kotlin</li><li>Jetpack Compose</li><li>Media3</li><li>Android Auto</li></ul>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3>OkDoc</h3>
-              <span class="project-role">In development</span>
-            </header>
-            <p>Answers "which doctors near me take my insurance," starting with Medicare Advantage plans in NYC. Syncs CMS-mandated provider directory FHIR APIs and the NPI Registry into Postgres through payer adapters, with source and freshness labels on every result. Built for 12 languages and WCAG 2.2 AA.</p>
-            <ul class="project-tags"><li>Next.js</li><li>Supabase</li><li>FHIR Plan-Net</li><li>NPPES</li><li>next-intl</li></ul>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3>Eat Your Way</h3>
-              <span class="project-role">In development</span>
-            </header>
-            <p>An Android game in Unreal Engine 5.7 themed around the food scenes of Jackson Heights and Flushing in Queens.</p>
-            <ul class="project-tags"><li>Unreal Engine 5.7</li><li>Android</li></ul>
-          </article>
-        </div>
-
-        <h3 class="subsection-title">Open-source QA tooling</h3>
-        <p class="prose section-lede">
-          Repos that mirror how I build test automation at work. Each one is
-          reproducible: clone, install, run.
-        </p>
-
-        <div class="projects-grid">
-          <article class="project-card">
-            <header class="project-head">
-              <h3><a href="https://github.com/fahimalamwork/playwright-bdd-ts" target="_blank" rel="noopener">playwright-bdd-ts</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>End-to-end framework on Playwright + TypeScript + Cucumber-JS. POM, per-scenario browser context, screenshot-on-failure, and a Chromium / Firefox / WebKit GitHub Actions matrix. Runs against saucedemo.com.</p>
-            <ul class="project-tags">
-              <li>Playwright</li><li>TypeScript</li><li>Cucumber</li><li>POM</li><li>GitHub Actions</li>
-            </ul>
-            <details class="project-sample">
-              <summary>View a real scenario from the suite</summary>
-              <div class="project-sample-body">
-                <div class="code-block">
-                  <span class="code-lang">features/cart.feature</span>
-<pre><code>Feature: Shopping cart
-
-  Background:
-    Given I am on the login page
-    And I sign in as "standard_user" with password "secret_sauce"
-    Then I see the inventory page
-
-  Scenario: Add multiple items to the cart
-    When I add "Sauce Labs Backpack" to the cart
-    And I add "Sauce Labs Bike Light" to the cart
-    Then the cart badge shows 2
-    When I open the cart
-    Then the cart contains "Sauce Labs Backpack"
-    And the cart contains "Sauce Labs Bike Light"</code></pre>
-                </div>
-                <div class="code-block">
-                  <span class="code-lang">src/steps/cart.steps.ts</span>
-<pre><code>import { When, Then } from '@cucumber/cucumber';
-import { strict as assert } from 'node:assert';
-import { TestWorld } from '../support/world';
-import { InventoryPage } from '../pages/InventoryPage';
-import { CartPage } from '../pages/CartPage';
-
-When('I add {string} to the cart', async function (this: TestWorld, item: string) {
-  await new InventoryPage(this.page).addItemToCart(item);
-});
-
-Then('the cart badge shows {int}', async function (this: TestWorld, count: number) {
-  assert.equal(await new InventoryPage(this.page).cartCount(), count);
-});
-
-Then('the cart contains {string}', async function (this: TestWorld, name: string) {
-  assert.equal(await new CartPage(this.page).hasItem(name), true);
-});</code></pre>
-                </div>
-              </div>
-            </details>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3><a href="https://github.com/fahimalamwork/selenium-java-cucumber" target="_blank" rel="noopener">selenium-java-cucumber</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>Selenium 4 + Java 17 + Cucumber + TestNG + Rest-Assured. Thread-local DriverFactory for parallel scenarios, Maven profiles for Chrome/Firefox/API-only, and a TestNG suite XML that runs UI + API in one pass.</p>
-            <ul class="project-tags">
-              <li>Selenium</li><li>Java</li><li>Cucumber</li><li>TestNG</li><li>Rest-Assured</li><li>Maven</li>
-            </ul>
-            <details class="project-sample">
-              <summary>View a real scenario from the suite</summary>
-              <div class="project-sample-body">
-                <div class="code-block">
-                  <span class="code-lang">src/test/resources/features/cart.feature</span>
-<pre><code>Feature: Shopping cart
-
-  Background:
-    Given I am on the login page
-    When I sign in as "standard_user" with password "secret_sauce"
-    Then I see the inventory page
-
-  Scenario: Add multiple items to the cart
-    When I add "Sauce Labs Backpack" to the cart
-    And I add "Sauce Labs Bike Light" to the cart
-    Then the cart badge shows 2
-    When I open the cart
-    Then the cart contains "Sauce Labs Backpack"</code></pre>
-                </div>
-                <div class="code-block">
-                  <span class="code-lang">src/test/java/com/fahimalam/qa/steps/CartSteps.java</span>
-<pre><code>package com.fahimalam.qa.steps;
-
-import com.fahimalam.qa.pages.CartPage;
-import com.fahimalam.qa.pages.InventoryPage;
-import com.fahimalam.qa.support.DriverFactory;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class CartSteps {
-
-    @When("I add {string} to the cart")
-    public void iAddToTheCart(String item) {
-        new InventoryPage(DriverFactory.get()).addItemToCart(item);
-    }
-
-    @Then("the cart badge shows {int}")
-    public void theCartBadgeShows(int expected) {
-        assertThat(new InventoryPage(DriverFactory.get()).cartCount()).isEqualTo(expected);
-    }
-
-    @Then("the cart contains {string}")
-    public void theCartContains(String name) {
-        assertThat(new CartPage(DriverFactory.get()).hasItem(name)).isTrue();
-    }
-}</code></pre>
-                </div>
-              </div>
-            </details>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3><a href="https://github.com/fahimalamwork/playwright-dotnet-reqnroll" target="_blank" rel="noopener">playwright-dotnet-reqnroll</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>Playwright .NET + C# 12 + ReqnRoll + NUnit — the BDD stack I migrated to from SpecFlow at Hitachi. Ships with an Azure DevOps YAML pipeline alongside a public GitHub Actions matrix.</p>
-            <ul class="project-tags">
-              <li>Playwright .NET</li><li>C#</li><li>ReqnRoll</li><li>NUnit</li><li>Azure DevOps</li>
-            </ul>
-            <details class="project-sample">
-              <summary>View a real scenario from the suite</summary>
-              <div class="project-sample-body">
-                <div class="code-block">
-                  <span class="code-lang">Features/Cart.feature</span>
-<pre><code>Feature: Shopping cart
-
-  Background:
-    Given I am on the login page
-    When I sign in as "standard_user" with password "secret_sauce"
-    Then I see the inventory page
-
-  Scenario: Add multiple items to the cart
-    When I add "Sauce Labs Backpack" to the cart
-    And I add "Sauce Labs Bike Light" to the cart
-    Then the cart badge shows 2
-    When I open the cart
-    Then the cart contains "Sauce Labs Backpack"</code></pre>
-                </div>
-                <div class="code-block">
-                  <span class="code-lang">Steps/CartSteps.cs</span>
-<pre><code>using FluentAssertions;
-using PlaywrightReqnRoll.Drivers;
-using PlaywrightReqnRoll.Pages;
-using Reqnroll;
-
-namespace PlaywrightReqnRoll.Steps;
-
-[Binding]
-public sealed class CartSteps
-{
-    private readonly PlaywrightDriver _driver;
-    public CartSteps(PlaywrightDriver driver) => _driver = driver;
-
-    [When("I add {string} to the cart")]
-    public Task WhenIAddToTheCart(string item) =>
-        new InventoryPage(_driver.Page).AddItemAsync(item);
-
-    [Then("the cart badge shows {int}")]
-    public async Task ThenTheCartBadgeShows(int expected) =>
-        (await new InventoryPage(_driver.Page).CartCountAsync())
-            .Should().Be(expected);
-
-    [Then("the cart contains {string}")]
-    public async Task ThenTheCartContains(string name) =>
-        (await new CartPage(_driver.Page).HasItemAsync(name))
-            .Should().BeTrue();
-}</code></pre>
-                </div>
-              </div>
-            </details>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3><a href="https://github.com/fahimalamwork/flaky-test-detector" target="_blank" rel="noopener">flaky-test-detector</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>CLI that ingests JUnit XML / Playwright JSON across multiple CI runs and ranks tests by a binomial-variance flake score — so a test that fails 10/10 times (broken) isn't conflated with one that fails 5/10 (actually flaky).</p>
-            <ul class="project-tags">
-              <li>TypeScript</li><li>CLI</li><li>CI ops</li><li>Vitest</li>
-            </ul>
-            <details class="project-sample">
-              <summary>View real CLI output</summary>
-              <div class="project-sample-body">
-                <div class="code-block terminal">
-                  <span class="code-lang">$ flaky tests/fixtures/junit-run-*.xml</span>
-<pre><code>Detected 5 flaky tests:
-
-SCORE     FLAKE         P / F      HISTORY       AVG MS     TEST
---------------------------------------------------------------------------------
-<span class="t-red">0.89      █████████░    1/2        F.F           847        checkout.apply-coupon
-0.89      █████████░    2/1        .F.           2200       checkout.place-order
-0.89      █████████░    2/1        .F.           483        login.locked-user</span>
-<span class="t-green">0.00      ░░░░░░░░░░    3/0        ...           1250       checkout.add-to-cart
-0.00      ░░░░░░░░░░    3/0        ...           917        login.standard-user</span></code></pre>
-                </div>
-                <p class="sample-note">Score peaks at 1.0 when a test fails exactly half the time (a real flake) and falls to 0 when a test is consistently passing or consistently failing. Three runs above show <code>apply-coupon</code> failing twice, <code>place-order</code> failing once — both genuine flakes — while <code>add-to-cart</code> stayed solid at 3/3.</p>
-              </div>
-            </details>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3><a href="https://github.com/fahimalamwork/llm-test-case-generator" target="_blank" rel="noopener">llm-test-case-generator</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>Generates test cases from a user story with an LLM, then evaluates the output for hallucinations and acceptance-criteria coverage. Pluggable Stub / OpenAI / Anthropic backends. Built from lessons learned validating an internal AI-powered QA assistant.</p>
-            <ul class="project-tags">
-              <li>TypeScript</li><li>LLM evals</li><li>Zod</li><li>OpenAI</li><li>Anthropic</li>
-            </ul>
-            <details class="project-sample">
-              <summary>View a real evaluation report</summary>
-              <div class="project-sample-body">
-                <div class="code-block terminal">
-                  <span class="code-lang">$ llm-tcg eval generated.json --story shopping-cart.story.md</span>
-<pre><code>──────────────── <span class="t-bold">Evaluation — score <span class="t-green">91</span></span> ────────────────
-Test cases       6
-AC coverage      5 / 5 (100%)
-Hallucinations   1
-Coverage gaps    0
-Format issues    0
-
-<span class="t-yellow t-bold">Possible hallucinations:</span>
-  • <span class="t-cyan">TC-006</span> 'Negative: surface a clear error on bad input'
-    suspect: <span class="t-red">audit_log</span></code></pre>
-                </div>
-                <p class="sample-note">The 91/100 reflects perfect AC coverage (60%) and one flagged hallucination — the model invented an <code>audit_log</code> tag that doesn't appear anywhere in the user story. The eval harness caught it before a human ever opened the file.</p>
-              </div>
-            </details>
-          </article>
-
-          <article class="project-card project-card-wide">
-            <header class="project-head">
-              <h3><a href="https://github.com/fahimalamwork/test-report-dashboard" target="_blank" rel="noopener">test-report-dashboard</a></h3>
-              <span class="project-stars" aria-hidden="true">↗</span>
-            </header>
-            <p>Parses JUnit XML / Playwright JSON across one or many runs and renders a self-contained static HTML dashboard — pass-rate trend, slowest tests, suite breakdown, recent failures — that you can drop into a CI artifact or Slack message.</p>
-            <ul class="project-tags">
-              <li>TypeScript</li><li>Reporting</li><li>Static HTML</li><li>CI artifacts</li>
-            </ul>
-            <details class="project-sample" open>
-              <summary>Live demo — generated from three sample CI runs</summary>
-              <div class="project-sample-body">
-                <p class="sample-note">
-                  This is real output from the tool — three fake JUnit runs fed into the CLI,
-                  rendered to a single self-contained HTML file. Same rendering you'd attach
-                  to a Slack message after a deploy.
-                </p>
-                <div class="dashboard-frame">
-                  <iframe src="demo/dashboard.html" title="Sample test report dashboard" loading="lazy"></iframe>
-                </div>
-                <p class="sample-note">
-                  <a class="btn btn-secondary btn-sm" href="demo/dashboard.html" target="_blank" rel="noopener">Open the dashboard in a new tab ↗</a>
-                </p>
-              </div>
-            </details>
-          </article>
+    <!-- ================= ABOUT ================= -->
+    <section class="section" id="about">
+      <div class="container">
+        <header class="section-head reveal">
+          <div>
+            <span class="section-num">05 / About</span>
+            <h2 class="section-title">A bit more</h2>
+          </div>
+        </header>
+        <div class="about reveal">
+          <p class="about-lead">I sit where customers meet engineering, and I like problems where <em>"it worked"</em> needs a number behind it.</p>
+          <div class="about-body">
+            <p>At <strong>Tranquility</strong> I handle tenant onboarding, cloud data migration and sync, release regression and production triage on a CJIS-sensitive platform. Before that I spent four and a half years at <strong>Hitachi Solutions</strong>, going from SDET to Senior Consultant and building the test automation that let teams release faster.</p>
+            <p>Outside the day job I build and ship: a live freight platform, a web agency, and a run of apps, games and tools. I lean on Claude Code and Cursor agents to automate a lot of the operations work along the way.</p>
+            <p class="about-aside">I'm also a photographer. The same eye that notices a misaligned button tends to notice the light at the end of a long avenue.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="section">
-      <div class="container contact reveal">
-        <h2 class="section-title">Let's talk</h2>
-        <p class="prose">
-          Want to talk about cloud data migration, solutions engineering, or a product
-          you'd like built? Email me. I'm happy to talk shop about AWS, Microsoft Graph,
-          test automation or AI-assisted ops work too.
-        </p>
+    <!-- ================= CONTACT ================= -->
+    <section class="contact" id="contact">
+      <div class="container reveal">
+        <span class="section-num">06 / Contact</span>
+        <h2>Let's build <em>something.</em></h2>
+        <p>Cloud migration, solutions engineering, or a product you want built: I'd like to hear about it. Happy to talk shop about AWS, Microsoft Graph, test automation or AI-assisted ops work too.</p>
+        <a class="contact-mail" href="mailto:fahimalam.work@gmail.com">fahimalam.work@gmail.com <svg class="icon" style="width:28px;height:28px"><use href="#i-arrow"/></svg></a>
         <div class="contact-actions">
-          <a class="btn btn-primary" href="mailto:fahimalam.work@gmail.com">Email me</a>
-          <a class="btn btn-secondary" href="https://www.linkedin.com/in/fahimalamwork/" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="btn btn-secondary" href="https://github.com/fahimalamwork" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn btn-secondary" href="assets/Fahim_Alam_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/fahimalamwork/" target="_blank" rel="noopener"><svg class="icon"><use href="#i-linkedin"/></svg> LinkedIn</a>
+          <a class="btn btn-ghost" href="https://github.com/fahimalamwork" target="_blank" rel="noopener"><svg class="icon"><use href="#i-github"/></svg> GitHub</a>
+          <a class="btn btn-ghost" href="assets/Fahim_Alam_Resume.pdf" target="_blank" rel="noopener"><svg class="icon"><use href="#i-file"/></svg> Résumé (PDF)</a>
         </div>
       </div>
     </section>
@@ -741,12 +538,11 @@ Format issues    0
 
   <footer class="site-footer">
     <div class="container footer-row">
-      <p>© <span id="year">2026</span> Fahim Alam</p>
-      <p><a href="mailto:fahimalam.work@gmail.com">fahimalam.work@gmail.com</a></p>
+      <p>© <span data-year>2026</span> Fahim Alam · Charlotte, NC</p>
+      <p><a href="#top">Back to top ↑</a></p>
     </div>
   </footer>
 
-  <script src="interactive.js" defer></script>
-  <script src="hero-video.js" defer></script>
+  <script src="main.js" defer></script>
 </body>
 </html>

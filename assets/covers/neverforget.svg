@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">
+<rect width="640" height="360" fill="#ffc552"/>
+<g fill="none" stroke="#1b1712" stroke-linecap="round"><path d="M240 110a110 110 0 0 0 0 140" stroke-width="3" opacity=".25"/><path d="M400 110a110 110 0 0 1 0 140" stroke-width="3" opacity=".25"/><path d="M260 125a85 85 0 0 0 0 110" stroke-width="5" opacity=".5"/><path d="M380 125a85 85 0 0 1 0 110" stroke-width="5" opacity=".5"/><path d="M200 80a160 160 0 0 0 0 200" stroke-width="2" opacity=".15"/><path d="M440 80a160 160 0 0 1 0 200" stroke-width="2" opacity=".15"/></g>
+<g transform="translate(320 180)"><path d="M-48 30c0 0 8-10 8-40 0-26 18-46 40-46s40 20 40 46c0 30 8 40 8 40z" fill="#1b1712"/><circle cx="0" cy="-60" r="7" fill="#1b1712"/><path d="M-14 42a14 14 0 0 0 28 0" fill="#1b1712"/></g>
+<g font-family="monospace" font-size="14" fill="#1b1712"><text x="40" y="52">FRI 09:00 · gentle</text><text x="420" y="52" font-weight="700">FRI 16:45 · LOUD</text><text x="40" y="330" opacity=".6">streak 12 wks</text></g>
+</svg>

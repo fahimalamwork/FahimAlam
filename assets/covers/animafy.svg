@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">
+<rect width="640" height="360" fill="#0f2a22"/>
+<g fill="none" stroke="#ffffff" stroke-opacity=".06"><path d="M0 90h640M0 180h640M0 270h640"/></g>
+<g transform="translate(110 54)"><rect width="200" height="260" rx="8" fill="#f4f1e8"/><rect x="20" y="22" width="110" height="12" rx="2" fill="#0f2a22"/><rect x="20" y="46" width="160" height="6" rx="2" fill="#b9b4a5"/><rect x="20" y="60" width="140" height="6" rx="2" fill="#b9b4a5"/><rect x="20" y="74" width="150" height="6" rx="2" fill="#b9b4a5"/>
+<rect x="20" y="100" width="160" height="70" rx="4" fill="#e3ddcc"/><path d="M30 160l28-22 26 12 30-30 26 14 30-26" fill="none" stroke="#1f8a5b" stroke-width="3"/>
+<rect x="20" y="186" width="70" height="20" rx="4" fill="#c8423c"/><rect x="98" y="186" width="82" height="20" rx="4" fill="#ffc552"/><rect x="20" y="216" width="160" height="6" rx="2" fill="#b9b4a5"/><rect x="20" y="230" width="120" height="6" rx="2" fill="#b9b4a5"/></g>
+<g transform="translate(350 70)"><path d="M0 230h220" stroke="#4fd1a5" stroke-opacity=".5"/>
+<rect x="10" y="150" width="28" height="80" fill="#4fd1a5"/><rect x="50" y="110" width="28" height="120" fill="#4fd1a5"/><rect x="90" y="130" width="28" height="100" fill="#4fd1a5"/><rect x="130" y="70" width="28" height="160" fill="#ffc552"/><rect x="170" y="40" width="28" height="190" fill="#4fd1a5" fill-opacity=".45" stroke="#4fd1a5" stroke-dasharray="4 4"/>
+<text x="171" y="30" fill="#4fd1a5" font-family="monospace" font-size="13">Q4*</text></g>
+</svg>

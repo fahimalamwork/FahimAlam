@@ -1,6 +1,6 @@
 # fahimalam.work
 
-A 3D project constellation of 16 things I've built — scroll-free, fully interactive, Three.js on static hosting. GitHub Pages.
+Personal site for Fahim Alam: Solutions Engineer, cloud data migration, QA automation and full-stack products. Static HTML/CSS/JS on GitHub Pages, no build step.
 
 ## Local preview
 
@@ -11,28 +11,30 @@ python3 -m http.server 4000
 
 ## Structure
 
-- `index.html` — minimal shell: canvas, top nav, info and index panels
-- `styles.css` — layout and panel styling
-- `scene.js` — Three.js scene + 16 bespoke project models + raycaster-driven hover/click (ESM, imports `three` from unpkg)
-- `assets/` — headshot and résumé download
-- `.nojekyll` — GitHub Pages serves files as-is
+- `index.html` — homepage: bento hero, selected work, experience, skills, open-source QA tooling, about, contact
+- `work/bandartrade.html`, `work/tenant-migration.html` — case studies
+- `styles.css` — design tokens (light + dark), bento grid, case-study layout
+- `main.js` — theme toggle (remembers choice), local clock, scroll reveals, hero video, screenshot swap-in
+- `assets/covers/*.svg` — illustrated project covers
+- `assets/shots/` — real screenshots of live projects + `manifest.json` (see below)
+- `assets/video/hero.mp4` — hero background video (the other clips in that folder are no longer used)
+- `lab/` — the interactive 3D project constellation
+- `demo/dashboard.html` — live demo for test-report-dashboard
 
-## Editing projects
+## Real project screenshots
 
-The `PROJECTS` array at the top of `scene.js` holds all 16 entries. Each project has:
+Every project tile shows its illustrated cover until a screenshot exists. To capture screenshots of the live sites:
 
-```js
-{
-  id: 'kebab-id',
-  name: 'Display Name',
-  tagline: 'One-line hook shown as the panel eyebrow',
-  description: '2–3 sentence project description.',
-  repo: 'GitHubRepoName',       // becomes github.com/fahimalamwork/<repo>
-  position: [x, y, z],          // where in the constellation
-  build: buildFunction,         // bespoke 3D model
-}
+```bash
+npm i -D playwright && npx playwright install chromium
+node tools/capture-screenshots.mjs            # all sites
+node tools/capture-screenshots.mjs dishcover  # one site
 ```
 
-To add a new project: write a new `buildWhatever()` returning a `THREE.Group`, add an entry to `PROJECTS`, pick an empty-ish spot in the 4×4 grid.
+This writes `assets/shots/<id>.jpg` and updates `assets/shots/manifest.json`. The page picks them up automatically: the `<id>` matches the `data-shot="…"` attribute on the tile. Commit `assets/shots/` afterwards.
 
-To change the GitHub user, edit `GITHUB_USER` at the top of `scene.js`.
+## Editing
+
+- Theme colors: the `:root` tokens at the top of `styles.css` (dark values are repeated for the system preference and for the manual toggle).
+- Fonts: Instrument Serif (display), Geist (body), Geist Mono (labels), loaded from Google Fonts in each page's `<head>`.
+- Add a project: copy a `.work-sm` tile in `index.html`, add a cover SVG in `assets/covers/`, and optionally add it to `SITES` in `tools/capture-screenshots.mjs`.

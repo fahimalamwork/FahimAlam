@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">
+<defs><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e2a3b"/><stop offset=".62" stop-color="#1d5566"/><stop offset=".62" stop-color="#0b3140"/><stop offset="1" stop-color="#06202b"/></linearGradient></defs>
+<rect width="640" height="360" fill="url(#s)"/>
+<circle cx="520" cy="92" r="34" fill="#ffc552" opacity=".9"/>
+<g stroke="#ffd27a" stroke-width="5" fill="none" stroke-linecap="square"><path d="M120 223V60h190"/><path d="M120 92l40-32"/><path d="M262 60v52"/></g>
+<rect x="250" y="112" width="26" height="14" fill="#ffd27a"/>
+<g stroke="#06202b" stroke-width="2">
+<rect x="160" y="183" width="96" height="40" fill="#e8743b"/><rect x="256" y="183" width="96" height="40" fill="#2fa39a"/><rect x="352" y="183" width="96" height="40" fill="#f3ead8"/><rect x="448" y="183" width="96" height="40" fill="#c8423c"/>
+<rect x="208" y="143" width="96" height="40" fill="#f3ead8"/><rect x="304" y="143" width="96" height="40" fill="#e8743b"/><rect x="400" y="143" width="96" height="40" fill="#2fa39a"/>
+<rect x="256" y="103" width="96" height="40" fill="#c8423c"/><rect x="352" y="103" width="96" height="40" fill="#f3ead8"/>
+</g>
+<g stroke="#06202b" stroke-opacity=".35" stroke-width="2">
+<path d="M176 187v32M192 187v32M208 187v32M224 187v32M240 187v32M272 187v32M288 187v32M304 187v32M320 187v32M336 187v32M368 187v32M384 187v32M400 187v32M416 187v32M432 187v32M464 187v32M480 187v32M496 187v32M512 187v32M528 187v32"/>
+<path d="M224 147v32M240 147v32M256 147v32M272 147v32M288 147v32M320 147v32M336 147v32M352 147v32M368 147v32M384 147v32M416 147v32M432 147v32M448 147v32M464 147v32M480 147v32M272 107v32M288 107v32M304 107v32M320 107v32M336 107v32M368 107v32M384 107v32M400 107v32M416 107v32M432 107v32"/>
+</g>
+<path d="M130 223h440l-30 34H160z" fill="#13171d"/><rect x="150" y="232" width="380" height="4" fill="#ffc552" opacity=".7"/>
+<g stroke="#5fa8b6" stroke-opacity=".35" stroke-width="2"><path d="M0 286h120M180 300h180M420 286h220M60 320h160M300 330h240"/></g>
+</svg>

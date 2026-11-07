@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">
+<rect width="640" height="360" fill="#0b1220"/>
+<g fill="none" stroke="#38bdf8"><circle cx="320" cy="180" r="40" stroke-opacity=".7"/><circle cx="320" cy="180" r="90" stroke-opacity=".45"/><circle cx="320" cy="180" r="145" stroke-opacity=".28"/><circle cx="320" cy="180" r="205" stroke-opacity=".16"/><path d="M320 0v360M60 180h520" stroke-opacity=".12"/></g>
+<path d="M320 180L470 60A205 205 0 0 1 525 180z" fill="#38bdf8" fill-opacity=".14"/>
+<circle cx="320" cy="180" r="7" fill="#38bdf8"/>
+<g fill="#ffc552"><circle cx="440" cy="110" r="5"/><circle cx="210" cy="250" r="5"/><circle cx="380" cy="290" r="4"/></g>
+<g fill="#f87171"><circle cx="180" cy="120" r="4"/><circle cx="480" cy="230" r="4"/></g>
+<g fill="none" stroke="#ffc552" stroke-width="2"><path d="M448 102l10-10M202 258l-10 10"/></g>
+<g transform="translate(40 290)" fill="#38bdf8"><rect x="0" y="16" width="4" height="12"/><rect x="8" y="8" width="4" height="20"/><rect x="16" y="0" width="4" height="28"/><rect x="24" y="10" width="4" height="18"/><rect x="32" y="4" width="4" height="24"/><rect x="40" y="14" width="4" height="14"/></g>
+</svg>

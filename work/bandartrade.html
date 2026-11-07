@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BandarTrade case study — Fahim Alam</title>
+  <meta name="description" content="How I built BandarTrade, a live AI-assisted freight quoting platform for customers in Bangladesh." />
+  <meta name="author" content="Fahim Alam" />
+  <meta name="theme-color" content="#f5f3ee" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)" />
+
+  <meta property="og:title" content="BandarTrade case study — Fahim Alam" />
+  <meta property="og:description" content="How I built BandarTrade, a live AI-assisted freight quoting platform for customers in Bangladesh." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="../assets/headshot.jpg" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%2317150f'/%3E%3Ctext x='50' y='72' font-family='Georgia,serif' font-size='66' text-anchor='middle' fill='%23ffc552'%3EF%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" />
+  <link rel="stylesheet" href="../styles.css" />
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body data-root="../">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M16 13H8M16 17H8M10 9H8"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  </svg>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-row">
+      <a href="../" class="brand" aria-label="Fahim Alam, home">
+        <span class="brand-mark" aria-hidden="true">F</span>
+        <span class="brand-name">Fahim Alam</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-links">
+          <a href="../#work">Work</a>
+          <a href="../#experience">Experience</a>
+          <a href="../#skills">Skills</a>
+          <a href="../#about">About</a>
+          <a href="../#contact">Contact</a>
+          <a href="../lab/" class="nav-lab">Lab ↗</a>
+        </div>
+        <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+          <svg class="icon icon-moon"><use href="../#i-moon"/></svg>
+          <svg class="icon icon-sun"><use href="../#i-sun"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="case-hero">
+      <div class="container">
+        <a class="back" href="../#work"><svg class="icon" style="transform:rotate(180deg)"><use href="#i-right"/></svg> All work</a>
+        <span class="section-num">Case study · Founder</span>
+        <h1>BandarTrade: freight quotes from <em>plain sentences</em></h1>
+        <p class="lede">A live AI-assisted freight quoting and port trading platform serving customers in Bangladesh. I built it alone, from two earlier prototypes to production.</p>
+        <dl class="case-meta">
+          <div><dt>Role</dt><dd>Sole founder, engineer</dd></div>
+          <div><dt>Timeline</dt><dd>2026 – present</dd></div>
+          <div><dt>Stack</dt><dd>.NET 8, React, SQL Server</dd></div>
+          <div><dt>Live</dt><dd><a href="https://bandartrade.com" target="_blank" rel="noopener">bandartrade.com ↗</a></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="case-cover" data-shot="bandartrade">
+        <img src="../assets/covers/bandartrade.svg" alt="" />
+      </div>
+    </div>
+
+    <div class="container case-body">
+      <section class="case-section">
+        <h2><span>01</span>Overview</h2>
+        <div class="prose">
+          <p>Freight forwarders get rate requests as loose text: an email, a chat message, a phone note. Turning that into a priced quote means looking up the route, the carrier rate, trucking, and the client's markup, then converting currency. BandarTrade does that step automatically and leaves a human to review and approve.</p>
+          <p>It grew out of two earlier prototypes, <strong>Smart Quoting Engine</strong> and <strong>Vela</strong>, and is now a live platform for freight forwarding and port trade.</p>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <h2><span>02</span>How a quote works</h2>
+        <div class="prose">
+          <blockquote>"2x 40ft containers, Shanghai to Chittagong"</blockquote>
+          <p>An LLM extracts four things from the request: <strong>origin</strong>, <strong>destination</strong>, <strong>container size</strong> and <strong>quantity</strong>. The pricing itself is deterministic: the engine applies carrier rates, trucking costs and the client's markup to produce the quote.</p>
+          <figure class="diagram">
+            <svg viewBox="0 0 900 200" role="img" aria-labelledby="d1t">
+              <title id="d1t">Quote pipeline: request text, LLM extraction, guardrails, pricing, then review and approval</title>
+              <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="d-head"/></marker></defs>
+              <rect class="d-box" x="10" y="60" width="150" height="80" rx="12"/>
+              <text class="d-text" x="85" y="95" text-anchor="middle">Rate request</text>
+              <text class="d-sub" x="85" y="115" text-anchor="middle">free text</text>
+              <rect class="d-box-accent" x="190" y="60" width="160" height="80" rx="12"/>
+              <text class="d-text" x="270" y="95" text-anchor="middle">LLM extraction</text>
+              <text class="d-sub" x="270" y="115" text-anchor="middle">route · size · qty</text>
+              <rect class="d-box" x="380" y="60" width="160" height="80" rx="12"/>
+              <text class="d-text" x="460" y="95" text-anchor="middle">Guardrails</text>
+              <text class="d-sub" x="460" y="115" text-anchor="middle">port + rate checks</text>
+              <rect class="d-box" x="570" y="60" width="150" height="80" rx="12"/>
+              <text class="d-text" x="645" y="95" text-anchor="middle">Pricing</text>
+              <text class="d-sub" x="645" y="115" text-anchor="middle">rates + markup</text>
+              <rect class="d-box-accent" x="750" y="60" width="140" height="80" rx="12"/>
+              <text class="d-text" x="820" y="95" text-anchor="middle">Review</text>
+              <text class="d-sub" x="820" y="115" text-anchor="middle">human approves</text>
+              <path class="d-line" d="M160 100h28" marker-end="url(#ah)"/>
+              <path class="d-line" d="M350 100h28" marker-end="url(#ah)"/>
+              <path class="d-line" d="M540 100h28" marker-end="url(#ah)"/>
+              <path class="d-line" d="M720 100h28" marker-end="url(#ah)"/>
+              <rect class="d-warn" x="320" y="160" width="460" height="32" rx="8"/>
+              <text class="d-sub" x="550" y="181" text-anchor="middle">edge cases: invented ports · missing route rates · USD → BDT</text>
+              <path class="d-line" d="M460 140v18" />
+              <path class="d-line" d="M645 140v18" />
+            </svg>
+            <figcaption>The model only reads the request. Rates, costs and markups come from the database.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <h2><span>03</span>The hard parts</h2>
+        <div class="prose">
+          <p>Language models are good at reading messy requests and bad at admitting they don't know a port. The engine handles three edge cases explicitly:</p>
+          <ul>
+            <li><strong>Hallucinated ports.</strong> The model sometimes returns a port that isn't in the database. The engine handles that case instead of quoting a place that doesn't exist.</li>
+            <li><strong>Missing route rates.</strong> A valid route with no rate on file can't be priced, so the engine handles that case too.</li>
+            <li><strong>Currency.</strong> Rates and customers live in different currencies, so quotes handle USD-to-BDT conversion.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <h2><span>04</span>The product</h2>
+        <div class="prose">
+          <p>Quotes land in a <strong>React review and approval UI</strong>. It has an <strong>English/Bangla toggle</strong> for the people who actually use it, an <strong>audit log</strong>, user management and a chat assistant.</p>
+          <p>I also wrote the platform architecture and specs for where it goes next: supply chain visibility, vendor communication and transaction efficiency.</p>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <h2><span>05</span>Quality</h2>
+        <div class="prose">
+          <p>This is where my QA background earns its keep. Quote logic is covered by <strong>Reqnroll BDD API tests</strong> and <strong>Playwright end-to-end tests</strong>, and a demo build deploys through <strong>GitHub Actions</strong>.</p>
+          <ul class="tags" style="margin-top:8px"><li>.NET 8</li><li>EF Core</li><li>SQL Server</li><li>React</li><li>TypeScript</li><li>OpenAI API</li><li>Playwright</li><li>Reqnroll</li><li>GitHub Actions</li></ul>
+        </div>
+      </section>
+
+      <nav class="case-next" aria-label="Next case study">
+        <span class="section-num" style="margin:0">Next case study</span>
+        <a class="next" href="tenant-migration.html">1.07 TB, zero discrepancies <svg class="icon"><use href="#i-right"/></svg></a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <p>© <span data-year>2026</span> Fahim Alam · Charlotte, NC</p>
+      <p><a href="#main">Back to top ↑</a></p>
+    </div>
+  </footer>
+
+  <script src="../main.js" defer></script>
+</body>
+</html>

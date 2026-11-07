@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">
+<rect width="640" height="360" fill="#c8423c"/>
+<g stroke="#e46a5e" stroke-width="10" fill="none"><path d="M-20 90h700M-20 230h700M140 -20v400M380 -20v400M520 -20v400"/><path d="M0 330L640 20" stroke-width="16"/></g>
+<g transform="translate(250 120)"><path d="M0 60a90 90 0 0 0 180 0z" fill="#fff7ea"/><ellipse cx="90" cy="60" rx="90" ry="14" fill="#f2c26b"/><path d="M40 52c10-14 30-14 40 0M86 50c10-16 34-16 44 0" stroke="#7b3a12" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M60 20c-6-10 6-16 0-28M100 20c-6-10 6-16 0-28" stroke="#fff7ea" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"/></g>
+<g fill="#1b1712"><path d="M120 120c0-17 14-30 30-30s30 13 30 30c0 22-30 48-30 48s-30-26-30-48z"/><path d="M470 180c0-14 11-24 24-24s24 10 24 24c0 18-24 38-24 38s-24-20-24-38z"/><path d="M520 70c0-12 9-20 20-20s20 8 20 20c0 15-20 32-20 32s-20-17-20-32z"/></g>
+<g fill="#ffc552"><circle cx="150" cy="120" r="10"/><circle cx="494" cy="180" r="8"/><circle cx="540" cy="70" r="7"/></g>
+</svg>
