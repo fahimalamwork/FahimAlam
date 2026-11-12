@@ -17,7 +17,7 @@
     try { vid.muted = true; } catch (e) {}
     try { vid.playsInline = true; vid.setAttribute('playsinline', ''); } catch (e) {}
     vid.pause();
-    videos[id] = { el: vid, ready: false, failed: false, duration: 0, lastT: 0 };
+    videos[id] = { el: vid, ready: false, failed: false, duration: 0, lastT: 0, requested: !vid.getAttribute('data-src') };
     sectionEls[id] = sec;
 
     vid.addEventListener('loadedmetadata', function () {
@@ -41,6 +41,18 @@
   });
 
   if (reduceMotion) return;
+
+  // Clips other than the hero carry data-src and are fetched only when their
+  // section (or the one before it) is on screen, so a visit that never scrolls
+  // downloads a single video.
+  function ensureLoaded(id) {
+    var v = videos[id];
+    if (!v || v.requested) return;
+    v.requested = true;
+    v.el.src = v.el.getAttribute('data-src');
+    v.el.preload = 'auto';
+    try { v.el.load(); } catch (e) {}
+  }
 
   function pickActive() {
     // The most-recently-crossed section wins. This correctly handles short
@@ -96,6 +108,10 @@
   }
 
   function updateTarget() {
+    var here = SECTIONS.indexOf(currentSectionId());
+    ensureLoaded(SECTIONS[here]);
+    if (here + 1 < SECTIONS.length) ensureLoaded(SECTIONS[here + 1]);
+
     var next = pickActive();
     activeId = next;
 

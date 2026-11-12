@@ -42,16 +42,19 @@
             <line class="sound-slash" x1="3" y1="21" x2="21" y2="3" />
           </svg>
         </span>
-        <span>Sound · <span class="sound-state">Off</span></span>
+        <span><span class="chip-label">Sound · </span><span class="sound-state">Off</span></span>
+      </button>
+      <button id="layout-btn" class="chip" type="button" aria-pressed="false" aria-label="Switch between grid and ring layout">
+        <span><span class="chip-label">Layout · </span><span class="layout-state">Grid</span></span>
       </button>
       <button id="index-btn" class="chip" type="button">Index · 16</button>
-      <a href="https://github.com/fahimalamwork" target="_blank" rel="noopener" class="chip">GitHub <span class="arr">↗</span></a>
+      <a href="https://github.com/fahimalamwork" target="_blank" rel="noopener" class="chip chip-gh">GitHub <span class="arr">↗</span></a>
     </nav>
   </header>
 
   <aside class="hint" aria-hidden="true">
-    <p><span class="hint-dot"></span> Hover anything</p>
-    <p class="hint-sub">Click to open · Esc to close</p>
+    <p><span class="hint-dot"></span> <span id="hint-main">Hover anything</span></p>
+    <p class="hint-sub">Click to open · Arrows to step · Esc to close</p>
   </aside>
 
   <section id="info-panel" class="panel info-panel" role="dialog" aria-labelledby="panel-name" aria-hidden="true">
@@ -63,6 +66,11 @@
       Open live site <span class="arr">↗</span>
     </a>
     <p class="panel-status" hidden></p>
+    <div class="panel-nav">
+      <button id="panel-prev" class="panel-step" type="button" aria-label="Previous project">←</button>
+      <span class="panel-count">01 / 16</span>
+      <button id="panel-next" class="panel-step" type="button" aria-label="Next project">→</button>
+    </div>
   </section>
 
   <section id="index-panel" class="panel index-panel" role="dialog" aria-labelledby="index-title" aria-hidden="true">

@@ -128,7 +128,7 @@ const PROJECTS = [
 
 /* Deterministic 4x4 grid layout with slight jitter for life */
 const COLS = [-7.3, -2.5, 2.5, 7.3];
-const ROWS = [3.0, 1.0, -1.0, -3.0];
+const ROWS = [3.3, 1.1, -1.1, -3.3];
 PROJECTS.forEach((p, i) => {
   const col = i % 4;
   const row = Math.floor(i / 4);
@@ -143,7 +143,16 @@ PROJECTS.forEach((p, i) => {
     (Math.sin(seed * 1.3) * 0.14),
     (Math.sin(seed * 0.7) * 0.03),
   ];
+  // Projects with a live site show a screenshot of it on the card face.
+  p.shot = p.url ? `../assets/shots/${p.id}.jpg` : null;
 });
+
+/* Ring layout: the cards stand on a circle you can spin by dragging */
+const RING_RADIUS = 7.8;
+const RING_CENTER_Z = -2.2;
+/* Where an opened card flies to */
+const SELECTED_Z = 10;
+const FLIP_SECONDS = 0.9;
 
 function init() {
   const canvas = document.getElementById('scene');
@@ -168,14 +177,19 @@ function init() {
 
   addStars(scene);
 
-  const objects = PROJECTS.map((p) => {
+  const objects = PROJECTS.map((p, i) => {
     const grp = buildCard(p);
     grp.position.fromArray(p.position);
     grp.rotation.set(p.rotation[0], p.rotation[1], p.rotation[2]);
     grp.userData = {
       project: p,
+      order: i,
       basePos: new THREE.Vector3(...p.position),
       baseRot: { x: p.rotation[0], y: p.rotation[1], z: p.rotation[2] },
+      rx: p.rotation[0],
+      ry: p.rotation[1],
+      rz: p.rotation[2],
+      flipStart: -10,
       phase: Math.random() * Math.PI * 2,
       bob: 0.08 + Math.random() * 0.1,
       selectable: true,
@@ -199,47 +213,105 @@ function init() {
 
   const panel = document.getElementById('info-panel');
   const indexPanel = document.getElementById('index-panel');
+  const layoutBtn = document.getElementById('layout-btn');
+  const layoutLabel = layoutBtn.querySelector('.layout-state');
+  const hintMain = document.getElementById('hint-main');
 
   const raycaster = new THREE.Raycaster();
   const mouseN = new THREE.Vector2();
+  const clock = new THREE.Clock();
   let hovered = null;
   let selected = null;
   const parallax = { x: 0, y: 0, tx: 0, ty: 0 };
 
-  function hoverTest(e) {
+  // Narrow portrait screens cannot fit the 4x4 grid, so they always use the ring.
+  const isPortrait = () => window.innerWidth / window.innerHeight < 0.85;
+  let layout = isPortrait() ? 'ring' : 'grid';
+  const ring = { angle: 0, vel: 0 };
+  const drag = { active: false, lastX: 0, moved: 0 };
+
+  function applyLayoutUi() {
+    layoutLabel.textContent = layout === 'ring' ? 'Ring' : 'Grid';
+    layoutBtn.setAttribute('aria-pressed', layout === 'ring' ? 'true' : 'false');
+    layoutBtn.hidden = isPortrait();
+    hintMain.textContent = layout === 'ring' ? 'Drag to spin' : 'Hover anything';
+    document.body.classList.toggle('layout-ring', layout === 'ring');
+  }
+  applyLayoutUi();
+
+  function pickCard(e) {
     const x = (e.clientX / window.innerWidth) * 2 - 1;
     const y = -(e.clientY / window.innerHeight) * 2 + 1;
     mouseN.set(x, y);
-    parallax.tx = x * 0.9;
-    parallax.ty = y * 0.5;
-
-    if (selected) return;
     raycaster.setFromCamera(mouseN, camera);
     const hits = raycaster.intersectObjects(objects, true);
-    let next = null;
     for (const h of hits) {
       const g = h.object.userData?.ownerGroup;
-      if (g && g.userData.selectable) { next = g; break; }
+      if (!g || !g.userData.selectable) continue;
+      // In the ring, cards on the far side face away and are not clickable.
+      if (layout === 'ring' && g !== selected && Math.cos(g.userData.ry) < 0.3) continue;
+      return g;
     }
+    return null;
+  }
+
+  function onPointerMove(e) {
+    parallax.tx = ((e.clientX / window.innerWidth) * 2 - 1) * 0.9;
+    parallax.ty = (-(e.clientY / window.innerHeight) * 2 + 1) * 0.5;
+
+    if (drag.active) {
+      const dx = e.clientX - drag.lastX;
+      drag.lastX = e.clientX;
+      drag.moved += Math.abs(dx);
+      if (layout === 'ring' && !selected) {
+        ring.angle += dx * 0.006;
+        ring.vel = dx * 0.006;
+      }
+    }
+
+    if (selected) return;
+    const next = pickCard(e);
     if (hovered !== next) {
       hovered = next;
-      canvas.style.cursor = hovered ? 'pointer' : '';
+      canvas.style.cursor = hovered ? 'pointer' : (layout === 'ring' ? 'grab' : '');
     }
   }
 
-  function onClick() {
-    if (selected || !hovered) return;
-    openProject(hovered);
+  function onPointerDown(e) {
+    drag.active = true;
+    drag.lastX = e.clientX;
+    drag.moved = 0;
+    try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+  }
+  function onPointerUp(e) {
+    drag.active = false;
+    try { canvas.releasePointerCapture(e.pointerId); } catch (err) {}
+  }
+
+  function onClick(e) {
+    if (drag.moved > 6) return; // that was a spin, not a click
+    const hit = pickCard(e);
+    if (selected) {
+      // Clicking empty space or another card closes the open one.
+      if (hit !== selected) closeProject();
+      return;
+    }
+    if (hit) openProject(hit);
   }
 
   function openProject(grp) {
     selected = grp;
     hovered = null;
     canvas.style.cursor = '';
-    const p = grp.userData.project;
-    panel.querySelector('.panel-name').textContent = p.name;
+    const u = grp.userData;
+    const p = u.project;
+    // Start the flip from the nearest equivalent angle so it never unwinds.
+    u.ry = Math.atan2(Math.sin(u.ry), Math.cos(u.ry));
+    u.flipStart = clock.getElapsedTime();
     panel.querySelector('.panel-tagline').textContent = p.tagline;
+    panel.querySelector('.panel-name').textContent = p.name;
     panel.querySelector('.panel-desc').textContent = p.description;
+    panel.querySelector('.panel-count').textContent = `${p.index} / ${PROJECTS.length}`;
     const link = panel.querySelector('.panel-link');
     const status = panel.querySelector('.panel-status');
     if (p.url) {
@@ -252,9 +324,19 @@ function init() {
       status.hidden = false;
     }
     panel.style.setProperty('--accent', p.palette.panelAccent || p.palette.accent);
+    // Restart the staggered text reveal each time a project opens.
+    panel.classList.remove('open');
+    void panel.offsetWidth;
     panel.classList.add('open');
     panel.setAttribute('aria-hidden', 'false');
     document.body.classList.add('project-open');
+  }
+
+  function stepProject(dir) {
+    if (!selected) return;
+    const n = objects.length;
+    const next = objects[(selected.userData.order + dir + n) % n];
+    openProject(next);
   }
 
   function closeProject() {
@@ -273,14 +355,28 @@ function init() {
   function hideIndex() {
     indexPanel.classList.remove('open');
     indexPanel.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('project-open');
+    if (!selected) document.body.classList.remove('project-open');
   }
 
-  canvas.addEventListener('pointermove', hoverTest);
+  canvas.addEventListener('pointermove', onPointerMove);
+  canvas.addEventListener('pointerdown', onPointerDown);
+  canvas.addEventListener('pointerup', onPointerUp);
+  canvas.addEventListener('pointercancel', onPointerUp);
   canvas.addEventListener('click', onClick);
+  canvas.addEventListener('wheel', (e) => {
+    if (layout !== 'ring' || selected) return;
+    ring.vel += (e.deltaY + e.deltaX) * 0.00035;
+  }, { passive: true });
   document.getElementById('panel-close').addEventListener('click', closeProject);
+  document.getElementById('panel-prev').addEventListener('click', () => stepProject(-1));
+  document.getElementById('panel-next').addEventListener('click', () => stepProject(1));
   document.getElementById('index-close').addEventListener('click', hideIndex);
   document.getElementById('index-btn').addEventListener('click', showIndex);
+  layoutBtn.addEventListener('click', () => {
+    layout = layout === 'ring' ? 'grid' : 'ring';
+    ring.vel = 0;
+    applyLayoutUi();
+  });
 
   // Ambient audio toggle (default off, remember preference)
   const ambient = createAmbient();
@@ -301,7 +397,11 @@ function init() {
     if (obj) openProject(obj);
   });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { closeProject(); hideIndex(); }
+    if (e.key === 'Escape') { closeProject(); hideIndex(); return; }
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    const dir = e.key === 'ArrowRight' ? 1 : -1;
+    if (selected) stepProject(dir);
+    else if (layout === 'ring') ring.vel -= dir * 0.05;
   });
 
   function resize() {
@@ -310,55 +410,117 @@ function init() {
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+    if (isPortrait()) layout = 'ring';
+    applyLayoutUi();
   }
   resize();
   window.addEventListener('resize', resize);
 
-  const clock = new THREE.Clock();
+  // Where the opened card sits: beside the details panel on wide screens,
+  // above it on phones. Sized from the visible area at SELECTED_Z.
+  function selectedTarget() {
+    const w = window.innerWidth;
+    const dist = camera.position.z - SELECTED_Z;
+    const viewH = 2 * dist * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    const viewW = viewH * camera.aspect;
+    if (w <= 720) {
+      return { x: 0, y: viewH * 0.24, scale: Math.min(2, (viewW * 0.88) / CARD_W) };
+    }
+    const panelPx = 420 + 40 + 40; // panel width, its right offset, and a gap
+    const freePx = Math.max(240, w - panelPx);
+    const x = ((freePx / 2) / w - 0.5) * viewW;
+    const scale = Math.min(2.3, ((freePx - 120) / w) * viewW / CARD_W, (viewH * 0.62) / CARD_H);
+    return { x, y: 0, scale };
+  }
+
+  // Easing is scaled by elapsed time so motion takes the same wall-clock time
+  // at any frame rate. `ease(f)` is the per-frame factor f at 60fps.
+  let lastT = 0;
+  let frames = 1;
+  const ease = (f) => 1 - Math.pow(1 - f, frames);
+
   function tick() {
     const t = clock.getElapsedTime();
+    frames = Math.min(30, Math.max(0.25, (t - lastT) * 60));
+    lastT = t;
 
     if (!reduceMotion) {
-      parallax.x += (parallax.tx - parallax.x) * 0.04;
-      parallax.y += (parallax.ty - parallax.y) * 0.04;
+      parallax.x += (parallax.tx - parallax.x) * ease(0.04);
+      parallax.y += (parallax.ty - parallax.y) * ease(0.04);
       camera.position.x = parallax.x;
       camera.position.y = parallax.y;
       camera.lookAt(0, 0, 0);
     }
 
+    if (layout === 'ring') {
+      if (!drag.active) {
+        ring.angle += ring.vel * frames;
+        ring.vel *= Math.pow(0.94, frames);
+        if (!reduceMotion && !selected && !hovered) ring.angle += 0.0012 * frames;
+      }
+    }
+
+    const sel = selected ? selectedTarget() : null;
+    const n = objects.length;
+
     for (const obj of objects) {
       const u = obj.userData;
       const base = u.basePos;
 
-      let tx = base.x, ty = base.y, tz = base.z;
+      let tx, ty, tz, rx, ry, rz = 0;
+      if (layout === 'ring') {
+        const a = (u.order / n) * Math.PI * 2 + ring.angle;
+        tx = Math.sin(a) * RING_RADIUS;
+        ty = Math.sin(u.order * 1.7) * 0.55;
+        tz = RING_CENTER_Z + Math.cos(a) * RING_RADIUS;
+        rx = 0;
+        ry = a;
+      } else {
+        tx = base.x; ty = base.y; tz = base.z;
+        rx = u.baseRot.x;
+        ry = u.baseRot.y;
+        rz = u.baseRot.z;
+        if (obj === hovered) { rx *= 0.3; ry *= 0.3; }
+      }
       if (!reduceMotion) ty += Math.sin(t * 0.5 + u.phase) * u.bob;
 
+      let targetScale = obj === hovered ? 1.14 : 1;
       if (obj === selected) {
-        tx = parallax.x * 1.0;
-        ty = parallax.y * 1.0;
-        tz = 11;
+        tx = sel.x + parallax.x;
+        ty = sel.y + parallax.y;
+        tz = SELECTED_Z;
+        rx = 0;
+        ry = 0;
+        rz = 0;
+        targetScale = sel.scale;
       } else if (selected) {
-        tx = base.x * 1.5;
-        ty = base.y * 1.5;
-        tz = base.z - 8;
+        tx *= 1.5;
+        ty *= 1.5;
+        tz -= 8;
+        targetScale = 0.5;
       }
 
-      obj.position.x += (tx - obj.position.x) * 0.09;
-      obj.position.y += (ty - obj.position.y) * 0.09;
-      obj.position.z += (tz - obj.position.z) * 0.09;
+      const kp = ease(0.09);
+      obj.position.x += (tx - obj.position.x) * kp;
+      obj.position.y += (ty - obj.position.y) * kp;
+      obj.position.z += (tz - obj.position.z) * kp;
+      obj.scale.setScalar(obj.scale.x + (targetScale - obj.scale.x) * ease(0.12));
 
-      let targetScale = 1;
-      if (obj === selected) targetScale = 2.0;
-      else if (obj === hovered) targetScale = 1.14;
-      else if (selected) targetScale = 0.5;
-      const s = obj.scale.x + (targetScale - obj.scale.x) * 0.12;
-      obj.scale.setScalar(s);
+      // Ease toward the target facing along the shortest arc.
+      const dy = Math.atan2(Math.sin(ry - u.ry), Math.cos(ry - u.ry));
+      u.ry += dy * ease(layout === 'ring' && obj !== selected ? 0.2 : 0.08);
+      u.rx += (rx - u.rx) * ease(0.08);
+      u.rz += (rz - u.rz) * ease(0.08);
 
-      // subtle tilt reset + hover tilt-toward-camera
-      const rotYTarget = (obj === hovered) ? u.baseRot.y * 0.3 : u.baseRot.y;
-      const rotXTarget = (obj === hovered) ? u.baseRot.x * 0.3 : u.baseRot.x;
-      obj.rotation.y += (rotYTarget - obj.rotation.y) * 0.07;
-      obj.rotation.x += (rotXTarget - obj.rotation.x) * 0.07;
+      // An opened card does one full turn on its way to the front.
+      let flip = 0;
+      if (!reduceMotion) {
+        const k = Math.min(1, Math.max(0, (t - u.flipStart) / FLIP_SECONDS));
+        flip = (1 - (1 - Math.pow(1 - k, 3))) * -Math.PI * 2;
+      }
+      obj.rotation.x = u.rx;
+      obj.rotation.y = u.ry + flip;
+      obj.rotation.z = u.rz;
     }
 
     renderer.render(scene, camera);
@@ -453,69 +615,109 @@ function buildCardTexture(project) {
   const c = document.createElement('canvas');
   c.width = W; c.height = H;
   const ctx = c.getContext('2d');
-  const pal = project.palette;
 
-  // Background gradient
-  const grad = ctx.createLinearGradient(0, 0, W * 0.6, H);
-  grad.addColorStop(0, pal.bgA);
-  grad.addColorStop(1, pal.bgB);
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, W, H);
-
-  // Soft radial accent in a corner to add depth
-  const r = ctx.createRadialGradient(W * 0.88, H * 0.12, 20, W * 0.88, H * 0.12, W * 0.6);
-  r.addColorStop(0, hexWithAlpha(pal.accent, 0.26));
-  r.addColorStop(1, hexWithAlpha(pal.accent, 0));
-  ctx.fillStyle = r;
-  ctx.fillRect(0, 0, W, H);
-
-  // Grain
-  addGrain(ctx, W, H, 0.03);
-
-  // Signature motif in the lower-right / around the card
-  drawMotif(ctx, project.motif, W, H, pal);
-
-  // Border inset — a thin line at the edge
-  ctx.strokeStyle = hexWithAlpha(pal.ink, 0.1);
-  ctx.lineWidth = 2;
-  ctx.strokeRect(16, 16, W - 32, H - 32);
-
-  // Index number — top-left eyebrow
-  ctx.fillStyle = pal.accent;
-  ctx.font = '600 26px ui-monospace, "SF Mono", Menlo, monospace';
-  ctx.textBaseline = 'top';
-  ctx.fillText(`${project.index} / 16`, 56, 56);
-
-  // Name — big display
-  ctx.fillStyle = pal.ink;
-  const nameSize = fitNameSize(ctx, project.name, W - 112, 110);
-  ctx.font = `200 ${nameSize}px "Inter", system-ui, sans-serif`;
-  ctx.textBaseline = 'alphabetic';
-  ctx.fillText(project.name, 56, H - 220);
-
-  // Tagline — small, mono
-  ctx.fillStyle = hexWithAlpha(pal.ink, 0.72);
-  ctx.font = '400 24px "Inter", system-ui, sans-serif';
-  ctx.fillText(project.tagline, 56, H - 140);
-
-  // Bottom-right GitHub cue
-  ctx.fillStyle = hexWithAlpha(pal.accent, 0.9);
-  ctx.font = '600 20px ui-monospace, "SF Mono", Menlo, monospace';
-  ctx.textAlign = 'right';
-  ctx.fillText(`→  OPEN`, W - 56, H - 60);
-  ctx.textAlign = 'left';
+  drawCardFace(ctx, project, null, W, H);
 
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = 8;
   tex.needsUpdate = true;
+
+  if (project.shot) {
+    const img = new Image();
+    img.onload = () => {
+      drawCardFace(ctx, project, img, W, H);
+      tex.needsUpdate = true;
+    };
+    img.src = project.shot;
+  }
   return tex;
+}
+
+/* Draws a card. With a screenshot the site itself is the face and the text
+ * sits on a dark fade; without one the card keeps its drawn motif. */
+function drawCardFace(ctx, project, img, W, H) {
+  const pal = project.palette;
+  ctx.clearRect(0, 0, W, H);
+  ctx.textAlign = 'left';
+
+  let ink = pal.ink;
+  let accent = pal.accent;
+
+  if (img) {
+    // Cover-fit the screenshot, anchored to its top edge.
+    const scale = Math.max(W / img.width, H / img.height);
+    const dw = img.width * scale;
+    const dh = img.height * scale;
+    ctx.drawImage(img, (W - dw) / 2, 0, dw, dh);
+
+    const top = ctx.createLinearGradient(0, 0, 0, H * 0.26);
+    top.addColorStop(0, 'rgba(8, 7, 16, 0.78)');
+    top.addColorStop(1, 'rgba(8, 7, 16, 0)');
+    ctx.fillStyle = top;
+    ctx.fillRect(0, 0, W, H * 0.26);
+
+    const bottom = ctx.createLinearGradient(0, H * 0.4, 0, H);
+    bottom.addColorStop(0, 'rgba(8, 7, 16, 0)');
+    bottom.addColorStop(0.55, 'rgba(8, 7, 16, 0.86)');
+    bottom.addColorStop(1, 'rgba(8, 7, 16, 0.97)');
+    ctx.fillStyle = bottom;
+    ctx.fillRect(0, H * 0.4, W, H * 0.6);
+
+    ink = '#ffffff';
+    accent = pal.panelAccent || pal.accent;
+  } else {
+    const grad = ctx.createLinearGradient(0, 0, W * 0.6, H);
+    grad.addColorStop(0, pal.bgA);
+    grad.addColorStop(1, pal.bgB);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    const r = ctx.createRadialGradient(W * 0.88, H * 0.12, 20, W * 0.88, H * 0.12, W * 0.6);
+    r.addColorStop(0, hexWithAlpha(pal.accent, 0.26));
+    r.addColorStop(1, hexWithAlpha(pal.accent, 0));
+    ctx.fillStyle = r;
+    ctx.fillRect(0, 0, W, H);
+
+    addGrain(ctx, W, H, 0.03);
+    drawMotif(ctx, project.motif, W, H, pal);
+  }
+
+  // Border inset
+  ctx.strokeStyle = hexWithAlpha(ink, img ? 0.18 : 0.1);
+  ctx.lineWidth = 2;
+  ctx.strokeRect(16, 16, W - 32, H - 32);
+
+  // Index number, top-left
+  ctx.fillStyle = accent;
+  ctx.font = '600 26px ui-monospace, "SF Mono", Menlo, monospace';
+  ctx.textBaseline = 'top';
+  ctx.fillText(`${project.index} / ${PROJECTS.length}`, 56, 56);
+
+  // Name
+  ctx.fillStyle = ink;
+  const nameSize = fitNameSize(ctx, project.name, W - 112, img ? 96 : 110);
+  ctx.font = `${img ? 300 : 200} ${nameSize}px "Inter", system-ui, sans-serif`;
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText(project.name, 56, img ? H - 150 : H - 220);
+
+  // Tagline
+  ctx.fillStyle = hexWithAlpha(ink, img ? 0.82 : 0.72);
+  ctx.font = '400 26px "Inter", system-ui, sans-serif';
+  ctx.fillText(project.tagline, 56, img ? H - 96 : H - 140);
+
+  // Bottom-right cue
+  ctx.fillStyle = hexWithAlpha(accent, 0.9);
+  ctx.font = '600 20px ui-monospace, "SF Mono", Menlo, monospace';
+  ctx.textAlign = 'right';
+  ctx.fillText('→  OPEN', W - 56, H - 48);
+  ctx.textAlign = 'left';
 }
 
 function fitNameSize(ctx, text, maxWidth, startSize) {
   let size = startSize;
   while (size > 30) {
-    ctx.font = `200 ${size}px "Inter", system-ui, sans-serif`;
+    ctx.font = `300 ${size}px "Inter", system-ui, sans-serif`;
     if (ctx.measureText(text).width <= maxWidth) break;
     size -= 4;
   }

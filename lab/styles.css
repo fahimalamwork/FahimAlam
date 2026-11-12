@@ -457,3 +457,74 @@ a { color: inherit; text-decoration: none; }
 }
 
 ::selection { background: var(--accent); color: #0a0b1e; }
+
+/* Scene interaction */
+#scene { touch-action: none; }
+.layout-ring #scene { cursor: grab; }
+.layout-ring #scene:active { cursor: grabbing; }
+.chip[hidden] { display: none; }
+.chip[aria-pressed="true"]#layout-btn { border-color: color-mix(in oklab, var(--accent) 55%, transparent); }
+
+/* Details panel: text arrives in sequence as the card lands */
+.info-panel > :not(.panel-close) {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.info-panel.open > :not(.panel-close) {
+  animation: panel-rise 0.6s cubic-bezier(.2,.7,.2,1) both;
+}
+.info-panel.open > .panel-tagline { animation-delay: 0.30s; }
+.info-panel.open > .panel-name { animation-delay: 0.38s; }
+.info-panel.open > .panel-desc { animation-delay: 0.46s; }
+.info-panel.open > .panel-link,
+.info-panel.open > .panel-status { animation-delay: 0.54s; }
+.info-panel.open > .panel-nav { animation-delay: 0.62s; }
+@keyframes panel-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .info-panel > :not(.panel-close) { opacity: 1; transform: none; }
+  .info-panel.open > :not(.panel-close) { animation: none; }
+}
+
+.panel-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.panel-count {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--ink-faint);
+  margin-right: auto;
+  order: -1;
+}
+.panel-step {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--ink);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.panel-step:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 720px) {
+  .chip-label, .chip-gh { display: none; }
+  .top-actions { gap: 8px; }
+  .panel-desc { margin-bottom: 20px; font-size: 14px; line-height: 1.6; }
+  .panel-nav { margin-top: 18px; padding-top: 14px; }
+}
+.panel-tagline { padding-right: 44px; }

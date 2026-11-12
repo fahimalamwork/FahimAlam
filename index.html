@@ -29,20 +29,20 @@
            poster="assets/video/hero-poster.jpg"
            muted playsinline preload="auto"></video>
     <video class="page-video" data-section="about"
-           src="assets/video/about.mp4"
-           muted playsinline preload="auto"></video>
+           data-src="assets/video/about.mp4"
+           muted playsinline preload="none"></video>
     <video class="page-video" data-section="skills"
-           src="assets/video/skills.mp4"
-           muted playsinline preload="auto"></video>
+           data-src="assets/video/skills.mp4"
+           muted playsinline preload="none"></video>
     <video class="page-video" data-section="experience"
-           src="assets/video/experience.mp4"
-           muted playsinline preload="auto"></video>
+           data-src="assets/video/experience.mp4"
+           muted playsinline preload="none"></video>
     <video class="page-video" data-section="projects"
-           src="assets/video/projects.mp4"
-           muted playsinline preload="auto"></video>
+           data-src="assets/video/projects.mp4"
+           muted playsinline preload="none"></video>
     <video class="page-video" data-section="contact"
-           src="assets/video/contact.mp4"
-           muted playsinline preload="auto"></video>
+           data-src="assets/video/contact.mp4"
+           muted playsinline preload="none"></video>
     <div class="page-vignette"></div>
   </div>
 
@@ -52,7 +52,10 @@
         <span class="brand-mark" aria-hidden="true">F</span>
         <span class="brand-name">Fahim Alam</span>
       </a>
-      <nav aria-label="Primary">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="site-nav" aria-label="Primary">
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#experience">Experience</a>
@@ -104,8 +107,12 @@
     </section>
 
     <section id="about" class="section">
+      <div class="section-intro">
+        <p class="section-intro-num">01 <span>/ 05</span></p>
+        <h2 class="section-intro-title">About</h2>
+        <p class="section-intro-sub">Between Customer Success and Engineering</p>
+      </div>
       <div class="container reveal">
-        <h2 class="section-title">About</h2>
         <div class="prose">
           <p>
             I'm an engineer with nearly five years in enterprise software delivery.
@@ -144,8 +151,12 @@
     </section>
 
     <section id="skills" class="section section-alt">
+      <div class="section-intro">
+        <p class="section-intro-num">02 <span>/ 05</span></p>
+        <h2 class="section-intro-title">Skills</h2>
+        <p class="section-intro-sub">The stack I work in</p>
+      </div>
       <div class="container reveal">
-        <h2 class="section-title">Skills</h2>
         <div class="skills-grid">
           <div class="skill-group">
             <h3>Languages</h3>
@@ -273,9 +284,17 @@
     </section>
 
     <section id="experience" class="section">
+      <div class="section-intro">
+        <p class="section-intro-num">03 <span>/ 05</span></p>
+        <h2 class="section-intro-title">Experience</h2>
+        <p class="section-intro-sub">Tranquility · Hitachi Solutions</p>
+      </div>
       <div class="container reveal">
-        <h2 class="section-title">Experience</h2>
 
+        <div class="timeline-tools">
+          <button class="btn btn-secondary btn-sm" id="tracks-toggle" type="button" aria-pressed="false">Expand all</button>
+        </div>
+        <div class="timeline">
         <article class="role">
           <header class="role-header">
             <div>
@@ -290,34 +309,34 @@
             migration, QA and Customer Success engineering.
           </p>
 
-          <div class="role-track">
-            <h4>Cloud data migration &amp; sync</h4>
+          <details class="role-track" open>
+            <summary><span class="track-name">Cloud data migration &amp; sync</span><span class="track-count">4</span></summary>
             <ul>
               <li>Migrated 12 customer tenants to a new SharePoint tenant using rclone jobs on EC2 with exact file and byte reconciliation; the largest moved 88,290 files (1.07 TB) from 3 sources with zero discrepancies.</li>
               <li>Set up 12+ SharePoint and Google Drive sync integrations on a new cell-based architecture, wiring Microsoft Graph change subscriptions through an Azure Function relay; delta syncs up to 669 GiB and 51K objects finished with 0 errors.</li>
               <li>Traced an outage that stopped syncing for 22 tenants to an expired SharePoint refresh token, and shipped a fix that saves rotated tokens to Secrets Manager.</li>
               <li>Fixed a sync-service startup crash affecting every production cell, restoring syncs fleet-wide.</li>
             </ul>
-          </div>
+          </details>
 
-          <div class="role-track">
-            <h4>Tenant operations &amp; QA</h4>
+          <details class="role-track">
+            <summary><span class="track-name">Tenant operations &amp; QA</span><span class="track-count">4</span></summary>
             <ul>
               <li>Provisioned 25+ agency tenants (police, sheriff's offices, district attorneys, fusion centers) and offboarded 10+, including S3, KMS and integration cleanup.</li>
               <li>Found an apostrophe-in-tenant-name bug that broke HTTP headers and put 46 tenants at risk; reversed an accidental deletion of 933 S3 objects using versioning.</li>
               <li>Run weekly release regression and sign-off, per-tenant Playwright smoke tests, and a Jira Xray onboarding test plan.</li>
               <li>Triaged AI answer-quality reports (wrong citations, hallucinations, wrong-language output) with telemetry, separating model behavior from product bugs.</li>
             </ul>
-          </div>
+          </details>
 
-          <div class="role-track">
-            <h4>Customer Success tooling</h4>
+          <details class="role-track">
+            <summary><span class="track-name">Customer Success tooling</span><span class="track-count">3</span></summary>
             <ul>
               <li>Built an HTML command center for the CSM team combining HubSpot, Jira and Intercom data across 62 customer domains, plus at-risk reports and a staffing model.</li>
               <li>Shipped a browser-only tool that autofills customers' security questionnaires (.docx) from a curated answer library.</li>
               <li>Wrote customer IT setup guides for SharePoint and Google Drive, and 14 Confluence automation pages.</li>
             </ul>
-          </div>
+          </details>
         </article>
 
         <article class="role">
@@ -330,18 +349,18 @@
           </header>
           <p class="role-summary">Promoted from SDET to Senior SDET to Senior Consultant.</p>
 
-          <div class="role-track">
-            <h4>Delivery &amp; QA leadership</h4>
+          <details class="role-track">
+            <summary><span class="track-name">Delivery &amp; QA leadership</span><span class="track-count">4</span></summary>
             <ul>
               <li>Led QA on enterprise Microsoft Dynamics 365 projects, turning committed PBIs, user stories and acceptance criteria into test scenarios and cases.</li>
               <li>Planned sprint QA work in Azure DevOps, sized workload and resourcing, and reported dependencies, timelines and quality risks to project managers and Scrum Masters.</li>
               <li>Integrated automated runs into Azure Pipelines and published JUnit results to ADO Test Plans for central visibility of test outcomes.</li>
               <li>Developed a TypeScript record-and-play framework prototype that captures and replays browser interactions to simplify test creation.</li>
             </ul>
-          </div>
+          </details>
 
-          <div class="role-track">
-            <h4>Health Plans &amp; Providers</h4>
+          <details class="role-track">
+            <summary><span class="track-name">Health Plans &amp; Providers</span><span class="track-count">5</span></summary>
             <ul>
               <li>Led the migration from SpecFlow to Reqnroll, modernizing the BDD framework and improving long-term maintainability.</li>
               <li>Architected a hybrid Playwright and .NET 9 framework using Page Object Model and BDD, with parallel and multi-browser execution.</li>
@@ -349,56 +368,61 @@
               <li>Ran cross-functional defect triage, speeding issue resolution and improving sprint predictability.</li>
               <li>Set up .NET project builds, Git version control and Azure DevOps continuous integration.</li>
             </ul>
-          </div>
+          </details>
 
-          <div class="role-track">
-            <h4>Professional Services: IEHP (Leapwork)</h4>
+          <details class="role-track">
+            <summary><span class="track-name">Professional Services: IEHP (Leapwork)</span><span class="track-count">2</span></summary>
             <ul>
               <li>Built 300+ automated regression tests in Leapwork, cutting manual testing effort by 60% and release cycle time by 30%.</li>
               <li>Integrated the suite into Azure DevOps CI/CD pipelines for nightly regression runs and early defect detection.</li>
             </ul>
-          </div>
+          </details>
 
-          <div class="role-track">
-            <h4>Manufacturing: GlobalFoundries</h4>
+          <details class="role-track">
+            <summary><span class="track-name">Manufacturing: GlobalFoundries</span><span class="track-count">3</span></summary>
             <ul>
               <li>Extended a Cucumber and TestNG framework to support parallel, multi-browser execution.</li>
               <li>Wrote SQL validation scripts to check data transformation output against expected results.</li>
               <li>Shifted to functional testing on the D2P workstream as priorities changed, keeping coverage steady; recognized by the team for the contribution.</li>
             </ul>
-          </div>
+          </details>
 
-          <div class="role-track">
-            <h4>ALTA: QA Lead</h4>
+          <details class="role-track">
+            <summary><span class="track-name">ALTA: QA Lead</span><span class="track-count">2</span></summary>
             <ul>
               <li>Served as QA lead, owning manual and functional test coverage for the project.</li>
               <li>Designed and launched the project's automation framework, setting the foundation for future automation.</li>
             </ul>
-          </div>
+          </details>
 
-          <div class="role-track">
-            <h4>ITA: Dynamics 365 Customer Engagement</h4>
+          <details class="role-track">
+            <summary><span class="track-name">ITA: Dynamics 365 Customer Engagement</span><span class="track-count">2</span></summary>
             <ul>
               <li>Built reusable Customer Engagement automation subflows and automated the full CE suite except two cases awaiting client re-verification.</li>
               <li>Diagnosed dispute-number generation failures and extended automation coverage to public portal scenarios.</li>
             </ul>
-          </div>
+          </details>
 
-          <div class="role-track">
-            <h4>Internal Innovation: AI-Powered QA Assistant</h4>
+          <details class="role-track">
+            <summary><span class="track-name">Internal Innovation: AI-Powered QA Assistant</span><span class="track-count">3</span></summary>
             <ul>
               <li>Validated LLM-generated test cases for accuracy, completeness and fit with acceptance criteria during alpha rollout.</li>
               <li>Documented hallucination patterns, edge cases and formatting errors, feeding fixes back into prompt templates.</li>
               <li>Verified the Azure DevOps extension workflow that links generated test cases to their parent user stories.</li>
             </ul>
-          </div>
+          </details>
         </article>
+        </div>
       </div>
     </section>
 
     <section id="projects" class="section section-alt">
+      <div class="section-intro">
+        <p class="section-intro-num">04 <span>/ 05</span></p>
+        <h2 class="section-intro-title">Projects</h2>
+        <p class="section-intro-sub">Things I've built and shipped</p>
+      </div>
       <div class="container reveal">
-        <h2 class="section-title">Projects</h2>
         <p class="prose section-lede">
           A live freight platform, a web agency and its client sites, and the side
           projects I've shipped along the way. Sixteen of them also float around
@@ -407,6 +431,9 @@
 
         <div class="projects-grid">
           <article class="project-card project-card-wide">
+            <a class="project-shot" href="https://bandartrade.com" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+              <img src="assets/shots/bandartrade.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async" />
+            </a>
             <header class="project-head">
               <h3><a href="https://bandartrade.com" target="_blank" rel="noopener">BandarTrade</a></h3>
               <span class="project-stars" aria-hidden="true">↗</span>
@@ -420,6 +447,9 @@
           </article>
 
           <article class="project-card project-card-wide">
+            <a class="project-shot" href="https://upliftdigitalpartners.com" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+              <img src="assets/shots/uplift.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async" />
+            </a>
             <header class="project-head">
               <h3><a href="https://upliftdigitalpartners.com" target="_blank" rel="noopener">Uplift Digital Partners</a></h3>
               <span class="project-stars" aria-hidden="true">↗</span>
@@ -442,6 +472,9 @@
           </article>
 
           <article class="project-card">
+            <a class="project-shot" href="https://dishcover-two.vercel.app" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+              <img src="assets/shots/dishcover.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async" />
+            </a>
             <header class="project-head">
               <h3><a href="https://dishcover-two.vercel.app" target="_blank" rel="noopener">Dishcover</a></h3>
               <span class="project-stars" aria-hidden="true">↗</span>
@@ -453,6 +486,9 @@
           </article>
 
           <article class="project-card">
+            <a class="project-shot" href="https://animafy-ai.vercel.app" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+              <img src="assets/shots/anima-fy.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async" />
+            </a>
             <header class="project-head">
               <h3><a href="https://animafy-ai.vercel.app" target="_blank" rel="noopener">Anima-Fy</a></h3>
               <span class="project-stars" aria-hidden="true">↗</span>
@@ -464,6 +500,9 @@
           </article>
 
           <article class="project-card">
+            <a class="project-shot" href="https://three-js-brainstorm.vercel.app" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+              <img src="assets/shots/night-walker.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async" />
+            </a>
             <header class="project-head">
               <h3><a href="https://three-js-brainstorm.vercel.app" target="_blank" rel="noopener">Night Walker NYC</a></h3>
               <span class="project-stars" aria-hidden="true">↗</span>
@@ -497,6 +536,9 @@
           </article>
 
           <article class="project-card">
+            <a class="project-shot" href="https://www.nearcoffee.space" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+              <img src="assets/shots/near-coffee.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async" />
+            </a>
             <header class="project-head">
               <h3><a href="https://www.nearcoffee.space" target="_blank" rel="noopener">NearCoffee</a></h3>
               <span class="project-stars" aria-hidden="true">↗</span>
@@ -508,6 +550,9 @@
           </article>
 
           <article class="project-card">
+            <a class="project-shot" href="https://tether-us.vercel.app" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+              <img src="assets/shots/tether.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async" />
+            </a>
             <header class="project-head">
               <h3><a href="https://tether-us.vercel.app" target="_blank" rel="noopener">Tether</a></h3>
               <span class="project-stars" aria-hidden="true">↗</span>
@@ -519,6 +564,9 @@
           </article>
 
           <article class="project-card">
+            <a class="project-shot" href="https://neverforget-timesheet.netlify.app" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+              <img src="assets/shots/never-forget.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async" />
+            </a>
             <header class="project-head">
               <h3><a href="https://neverforget-timesheet.netlify.app" target="_blank" rel="noopener">Never Forget</a></h3>
               <span class="project-stars" aria-hidden="true">↗</span>
@@ -530,6 +578,9 @@
           </article>
 
           <article class="project-card">
+            <a class="project-shot" href="https://livegrid.onrender.com" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+              <img src="assets/shots/livegrid.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async" />
+            </a>
             <header class="project-head">
               <h3><a href="https://livegrid.onrender.com" target="_blank" rel="noopener">LiveGrid</a></h3>
               <span class="project-stars" aria-hidden="true">↗</span>
@@ -555,8 +606,12 @@
     </section>
 
     <section id="contact" class="section">
+      <div class="section-intro">
+        <p class="section-intro-num">05 <span>/ 05</span></p>
+        <h2 class="section-intro-title">Contact</h2>
+        <p class="section-intro-sub">Based in Charlotte, NC</p>
+      </div>
       <div class="container contact reveal">
-        <h2 class="section-title">Let's talk</h2>
         <p class="prose">
           I'm based in Charlotte and always up for a conversation about cloud data
           migration, AI SaaS operations, agent-driven automation, or a project you

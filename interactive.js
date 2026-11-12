@@ -9,6 +9,72 @@
   initReveal();
   if (isFinePointer && !reduceMotion) initCardTilt();
   initTerminalTyping();
+  initNav();
+  initTracks();
+  if (!reduceMotion) initIntros();
+
+  function initNav() {
+    var header = document.querySelector('.site-header');
+    var btn = document.querySelector('.nav-toggle');
+    if (!header || !btn) return;
+    function setOpen(open) {
+      header.classList.toggle('nav-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    btn.addEventListener('click', function () {
+      setOpen(!header.classList.contains('nav-open'));
+    });
+    header.querySelectorAll('nav a').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+
+  function initTracks() {
+    var btn = document.getElementById('tracks-toggle');
+    var tracks = document.querySelectorAll('.role-track');
+    if (!btn || !tracks.length) return;
+    btn.addEventListener('click', function () {
+      var expand = btn.getAttribute('aria-pressed') !== 'true';
+      tracks.forEach(function (d) { d.open = expand; });
+      btn.setAttribute('aria-pressed', expand ? 'true' : 'false');
+      btn.textContent = expand ? 'Collapse all' : 'Expand all';
+    });
+  }
+
+  // Section title screens drift and fade as they pass through the viewport.
+  function initIntros() {
+    var intros = Array.prototype.slice.call(document.querySelectorAll('.section-intro'));
+    if (!intros.length) return;
+    document.documentElement.classList.add('js-intro');
+    var queued = false;
+    function update() {
+      queued = false;
+      var vh = window.innerHeight || 1;
+      for (var i = 0; i < intros.length; i++) {
+        var r = intros[i].getBoundingClientRect();
+        if (r.bottom < -vh || r.top > vh * 2) continue;
+        var t = (r.top + r.height / 2 - vh / 2) / vh;
+        if (t > 1) t = 1;
+        if (t < -1) t = -1;
+        var a = Math.abs(t) * 1.5 - 0.15;
+        if (a < 0) a = 0;
+        if (a > 1) a = 1;
+        intros[i].style.setProperty('--t', t.toFixed(3));
+        intros[i].style.setProperty('--a', a.toFixed(3));
+      }
+    }
+    function queue() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    }
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    update();
+  }
 
   function initReveal() {
     var targets = document.querySelectorAll('.reveal');
