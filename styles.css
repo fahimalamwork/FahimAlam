@@ -698,6 +698,63 @@ body { background: #0b1220; }
 .brand { color: #ffffff; }
 .site-footer { color: rgba(255, 255, 255, 0.55); border-top-color: rgba(255, 255, 255, 0.08); }
 .site-footer a { color: rgba(255, 255, 255, 0.75); }
+
+/* Standalone intro paragraphs (projects lede, contact) sit directly on the video */
+p.prose { color: rgba(255, 255, 255, 0.82); max-width: 70ch; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5); }
+p.prose a, .client-list a { color: #ffd766; font-weight: 600; }
+
+@media (min-width: 960px) {
+  .skills-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.role-summary {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 14.5px;
+  font-style: italic;
+  max-width: 78ch;
+}
+
+.project-card p.project-role {
+  margin-top: -6px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+}
+.project-card p.project-subhead {
+  margin-top: 4px;
+  color: #ffd766;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.project-status {
+  flex-shrink: 0;
+  padding: 2px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.client-list {
+  list-style: none;
+  margin: 0 0 6px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 28px;
+}
+.client-list li {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  line-height: 1.55;
+}
+@media (max-width: 720px) {
+  .client-list { grid-template-columns: 1fr; }
+}
 @media (prefers-reduced-motion: reduce) {
   .page-video { display: none; }
   .page-backdrop {

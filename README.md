@@ -1,38 +1,46 @@
-# fahimalam.work
+# ganjaam.com
 
-A 3D project constellation of 16 things I've built — scroll-free, fully interactive, Three.js on static hosting. GitHub Pages.
+Personal site of Fahim Alam — Solutions Engineer based in Charlotte, NC.
+
+Static HTML/CSS/JS on GitHub Pages, served at [ganjaam.com](https://ganjaam.com). No build step.
 
 ## Local preview
 
+The page backdrop scrubs video on scroll, which needs a server that supports byte-range requests (Python's `http.server` does not):
+
 ```bash
-python3 -m http.server 4000
+npx http-server -p 4000
 # open http://localhost:4000
 ```
 
 ## Structure
 
-- `index.html` — minimal shell: canvas, top nav, info and index panels
-- `styles.css` — layout and panel styling
-- `scene.js` — Three.js scene + 16 bespoke project models + raycaster-driven hover/click (ESM, imports `three` from unpkg)
-- `assets/` — headshot and résumé download
+- `index.html` — main page: hero, about, skills, experience, projects, contact
+- `styles.css` — styles for the main page
+- `hero-video.js` — scrubs each section's backdrop video from scroll position
+- `interactive.js` — project card tilt and scroll reveal
+- `lab/` — the Lab: 16 projects as floating cards in a Three.js scene
+  - `lab/scene.js` — scene, cards and interaction; the `PROJECTS` array at the top holds every card
+  - `lab/audio.js` — optional ambient sound
+- `assets/video/` — one backdrop clip per section (`hero`, `about`, `skills`, `experience`, `projects`, `contact`)
+- `assets/` — headshot and résumé PDF
+- `CNAME` — custom domain for GitHub Pages
 - `.nojekyll` — GitHub Pages serves files as-is
 
-## Editing projects
+## Editing Lab projects
 
-The `PROJECTS` array at the top of `scene.js` holds all 16 entries. Each project has:
+Each entry in `PROJECTS` (`lab/scene.js`) looks like:
 
 ```js
 {
   id: 'kebab-id',
   name: 'Display Name',
-  tagline: 'One-line hook shown as the panel eyebrow',
+  url: 'https://example.com',   // live site; use null plus `status: '…'` when there is no public link
+  tagline: 'One-line hook shown on the card',
   description: '2–3 sentence project description.',
-  repo: 'GitHubRepoName',       // becomes github.com/fahimalamwork/<repo>
-  position: [x, y, z],          // where in the constellation
-  build: buildFunction,         // bespoke 3D model
+  palette: { bgA, bgB, ink, accent, glow },
+  motif: 'orbit',               // shape drawn on the card texture
 }
 ```
 
-To add a new project: write a new `buildWhatever()` returning a `THREE.Group`, add an entry to `PROJECTS`, pick an empty-ish spot in the 4×4 grid.
-
-To change the GitHub user, edit `GITHUB_USER` at the top of `scene.js`.
+The grid is 4×4, so the Lab holds 16 cards.

@@ -1,8 +1,6 @@
 import * as THREE from 'three';
 import { createAmbient } from './audio.js';
 
-const GITHUB_USER = 'fahimalamwork';
-
 const CARD_W = 2.4;
 const CARD_H = 1.5;
 
@@ -15,116 +13,116 @@ const CARD_H = 1.5;
  */
 const PROJECTS = [
   {
-    id: 'open-meteo', name: 'Open-Meteo', repo: 'Open-Meteo',
-    tagline: 'A living 3D globe of real weather',
-    description: "Earth's actual weather rendered as a living, animated low-poly world. Pulls open weather data and visualizes it as waves, cloud bands, and temperature gradients across a stylized globe.",
-    palette: { bgA: '#06234a', bgB: '#1b5fa8', ink: '#ffffff', accent: '#ffd166', glow: 0x4a9bff },
-    motif: 'orbit',
-  },
-  {
-    id: 'near-coffee', name: 'Near Coffee', repo: 'near-coffee-visual',
-    tagline: 'A mountain coffee shop, open in a browser tab',
-    description: "A converted homestead barn below the Tetons, rendered as an atmospheric visual front door for a mountain coffee shop dream.",
-    palette: { bgA: '#2a1810', bgB: '#8c5a2f', ink: '#f5e8d6', accent: '#f0b86e', glow: 0xc07a3a },
-    motif: 'ring',
-  },
-  {
-    id: 'livescanner', name: 'LiveScanner', repo: 'LiveScanner',
-    tagline: 'Air-traffic + emergency feeds, in one place',
-    description: "Stream live air-traffic control audio from LiveATC and emergency/scanner feeds, with quick-switch between frequencies and favorites you can save.",
-    palette: { bgA: '#021a2a', bgB: '#0e4a4a', ink: '#eafff2', accent: '#5aff9a', glow: 0x40ffa0 },
-    motif: 'wave',
-  },
-  {
-    id: 'quotex-ai', name: 'QuotexAI', repo: 'QuotexAi',
-    tagline: 'AI quoting + docs for freight forwarders',
-    description: "An AI-powered quoting and document automation platform for freight forwarders and customs brokers. Ingests inquiries, generates compliant quotes, drafts BLs and invoices.",
-    palette: { bgA: '#0a0f24', bgB: '#2a2050', ink: '#f5f0e4', accent: '#ffd54a', glow: 0x6060ff },
-    motif: 'grid',
-  },
-  {
-    id: 'tether', name: 'Tether', repo: 'Maria',
-    tagline: 'A private space for two',
-    description: "A couples companion PWA — shared modules, private per-user vaults, and a readable couple profile. Built for keeping two people in each other's pocket, especially over distance.",
-    palette: { bgA: '#2a0a2a', bgB: '#7a2a5a', ink: '#fff0e6', accent: '#ffb87c', glow: 0xe07aa0 },
-    motif: 'rings',
-  },
-  {
-    id: 'maria-closet', name: "Maria's Closet", repo: 'MariaCloset',
-    tagline: 'Closet rental, muted jewel + gold',
-    description: "A closet-rental concept with a restrained desi-luxe aesthetic — muted jewel tones, gold accents, and request-to-rent interactions on bespoke garments.",
-    palette: { bgA: '#1a0520', bgB: '#5a1a30', ink: '#f4e2b6', accent: '#d4a054', glow: 0xa4482c },
-    motif: 'arch',
-  },
-  {
-    id: 'okdoc', name: 'OkDoc', repo: 'OkDoc',
-    tagline: 'Doctors near you who actually take your insurance',
-    description: "Answers the question other apps dodge: which doctors near me actually take my insurance? Cross-references provider directories and plan networks to surface real matches.",
-    palette: { bgA: '#f3f6fa', bgB: '#cfe0ea', ink: '#0a1a2a', accent: '#e03848', glow: 0xff8080 },
-    motif: 'cross',
-  },
-  {
-    id: 'dishcover', name: 'Dishcover', repo: 'dishcover',
-    tagline: 'For travelers standing hungry in a new city',
-    description: "A mobile-first PWA for travelers: scan a menu or point at a storefront, get instant translations, allergy flags, and 'what to order here' from locals.",
-    palette: { bgA: '#09263a', bgB: '#2d6a7f', ink: '#fff4df', accent: '#ffb552', glow: 0x3a9fb0 },
-    motif: 'plate',
-  },
-  {
-    id: 'stoopcast', name: 'StoopCast', repo: 'StoopCast',
-    tagline: 'Free-stuff stoop alerts with karma',
-    description: "Real-time alerts for free stuff left on neighborhood stoops. Photo-first posts, karma for the person who dropped it off, map view for the person running to grab it.",
-    palette: { bgA: '#2a1f04', bgB: '#6a4810', ink: '#ffe066', accent: '#ffd54a', glow: 0xffd54a },
-    motif: 'tape',
-  },
-  {
-    id: 'geobinge', name: 'GeoBinge', repo: 'GeoBinge',
-    tagline: 'Where in the world Netflix has your show',
-    description: "Search any movie or TV show and instantly see every country where Netflix (or other services) have it. VPN hop planner included.",
-    palette: { bgA: '#0a0a0f', bgB: '#2a0a12', ink: '#ffe4e6', accent: '#e50914', glow: 0xff2040 },
-    motif: 'map',
-  },
-  {
-    id: 'echo', name: 'Echo', repo: 'Echo',
-    tagline: 'Voice messages locked to GPS coordinates',
-    description: "Drop a 60-second audio memo at a location on the map. The next person who walks past can hear it. A quieter, more intimate location-based network.",
-    palette: { bgA: '#1f0a2a', bgB: '#3a1a4a', ink: '#fff2a0', accent: '#ffd54a', glow: 0xffe066 },
-    motif: 'wave',
-  },
-  {
-    id: 'bearing', name: 'Bearing', repo: 'Bearing',
-    tagline: 'A personal decision engine',
-    description: "Name a hard decision. Weigh it honestly against your own values. Watch the needle settle. Not a shortcut — a mirror.",
-    palette: { bgA: '#20160a', bgB: '#6a4a1a', ink: '#f4e4c2', accent: '#f4b85a', glow: 0xd4a054 },
-    motif: 'needle',
-  },
-  {
-    id: 'autotest', name: 'AutoTest', repo: 'AutoTest',
-    tagline: 'Jira issue → test cases, automatically',
-    description: "A production-leaning MVP that reads a Jira issue and generates relevant test cases with the right templates, acceptance-criteria mapping, and Gherkin where it fits.",
-    palette: { bgA: '#06182e', bgB: '#1b5a4a', ink: '#f4fff6', accent: '#5aff8a', glow: 0x55d070 },
-    motif: 'check',
-  },
-  {
-    id: 'vela', name: 'Vela', repo: 'Vela',
-    tagline: 'SaaS for private logistics around Chittagong',
-    description: "Workflow and visibility tooling for the private logistics ecosystem around Chittagong port. The wedge is operational; the roadmap is long.",
+    id: 'bandartrade', name: 'BandarTrade', url: 'https://bandartrade.com',
+    tagline: 'AI-assisted freight quoting for Bangladesh',
+    description: "A live freight quoting and port trading platform serving customers in Bangladesh. Its quoting engine turns unstructured rate requests like \"2x 40ft containers, Shanghai to Chittagong\" into priced quotes: an LLM extracts the route and container details, then carrier rates, trucking costs and client markups are applied. Built on .NET 8, SQL Server and React.",
     palette: { bgA: '#1a0a0a', bgB: '#5a1a1a', ink: '#f4e2d6', accent: '#ff8a5a', glow: 0xff5a3a },
     motif: 'route',
   },
   {
-    id: 'seams-of-safa', name: 'Seams of Safa', repo: 'Seamsofsafa',
-    tagline: "A storefront for my sister's label",
-    description: "Replacing a Shopify storefront with a custom Next.js build tuned for how my sister actually operates her label day to day.",
+    id: 'uplift', name: 'Uplift Digital Partners', url: 'https://upliftdigitalpartners.com',
+    tagline: 'A web agency for local small businesses',
+    description: "A web agency I co-founded that builds and modernizes websites and apps for local small businesses. The company site runs on GitHub Pages with a custom domain, and includes a conversational booking assistant that sends confirmation emails and one-click Google Calendar invites.",
+    palette: { bgA: '#06234a', bgB: '#1b5fa8', ink: '#ffffff', accent: '#ffd166', glow: 0x4a9bff },
+    motif: 'orbit',
+  },
+  {
+    id: 'dishcover', name: 'Dishcover', url: 'https://dishcover-two.vercel.app',
+    tagline: 'A restaurant answer engine for travelers',
+    description: "A mobile-first PWA that shows 3 to 5 nearby restaurants by mood and budget, each with its most-praised dishes and prices. An LLM extracts top dishes from review text, stored in Supabase by place to keep API costs near zero, with optional Halal, Kosher, vegetarian and vegan filters.",
+    palette: { bgA: '#09263a', bgB: '#2d6a7f', ink: '#fff4df', accent: '#ffb552', glow: 0x3a9fb0 },
+    motif: 'plate',
+  },
+  {
+    id: 'okdoc', name: 'OkDoc', url: null, status: 'In development',
+    tagline: 'Which doctors near me take my insurance?',
+    description: "An in-network doctor finder, starting with Medicare Advantage plans in NYC. It syncs public CMS-mandated provider directory FHIR APIs and the NPI Registry into Postgres through payer adapters, labels every result with its source and freshness, and is built for 12 languages to WCAG 2.2 AA.",
+    palette: { bgA: '#f3f6fa', bgB: '#cfe0ea', ink: '#0a1a2a', accent: '#e03848', glow: 0xff8080 },
+    motif: 'cross',
+  },
+  {
+    id: 'night-walker', name: 'Night Walker NYC', url: 'https://three-js-brainstorm.vercel.app',
+    tagline: 'A cel-shaded browser game set in New York',
+    description: "A comic-style game set in New York neighborhoods, playable on desktop and phone, with walking, biking and driving. Every street, building, crowd, traffic pattern and sound is generated in code, with a day-to-night cycle and subway travel between neighborhoods. Built with Three.js.",
+    palette: { bgA: '#1f0a2a', bgB: '#3a1a4a', ink: '#fff2a0', accent: '#ffd54a', glow: 0xffe066 },
+    motif: 'map',
+  },
+  {
+    id: 'anima-fy', name: 'Anima-Fy', url: 'https://animafy-ai.vercel.app',
+    tagline: 'Audit planning from free SEC EDGAR data',
+    description: "An audit-planning workspace for any U.S. public company. It surfaces auditor's reports, critical audit matters, material weaknesses, restatements and late filings, benchmarks against industry XBRL percentiles, and generates Excel workpapers and an AI planning-memo draft.",
+    palette: { bgA: '#0a0f24', bgB: '#2a2050', ink: '#f5f0e4', accent: '#ffd54a', glow: 0x6060ff },
+    motif: 'check',
+  },
+  {
+    id: 'livegrid', name: 'LiveGrid', url: 'https://livegrid.onrender.com',
+    tagline: 'Real-time football stats and match analytics',
+    description: "A sports analytics web app that tracks professional football statistics, historical scoring records, international player metrics and match analytics, including the data pipelines and interactive front end behind the stats views.",
+    palette: { bgA: '#06182e', bgB: '#1b5a4a', ink: '#f4fff6', accent: '#5aff8a', glow: 0x55d070 },
+    motif: 'grid',
+  },
+  {
+    id: 'tether', name: 'Tether', url: 'https://tether-us.vercel.app',
+    tagline: 'A web app for couples',
+    description: "A web app for couples that I designed, built and launched, owning product, UI/UX, brand identity and front-end state management end to end. Responsive, and in production on Vercel.",
+    palette: { bgA: '#2a0a2a', bgB: '#7a2a5a', ink: '#fff0e6', accent: '#ffb87c', glow: 0xe07aa0 },
+    motif: 'rings',
+  },
+  {
+    id: 'near-coffee', name: 'NearCoffee', url: 'https://www.nearcoffee.space',
+    tagline: 'A barn cafe below the Tetons, in a browser tab',
+    description: "A cafe concept you can walk into from a browser: a converted barn below the Tetons, with lighting that matches the visitor's local time. Built with Vite and deployed on Vercel.",
+    palette: { bgA: '#2a1810', bgB: '#8c5a2f', ink: '#f5e8d6', accent: '#f0b86e', glow: 0xc07a3a },
+    motif: 'ring',
+  },
+  {
+    id: 'livescanner', name: 'LiveScanner', url: null, status: 'Android app, not on the web',
+    tagline: 'Live ATC and scanner feeds for Android Auto',
+    description: "A native Android app that streams 50+ live air-traffic control feeds and police, fire and EMS scanner feeds, sorted by distance. It supports background playback, lock-screen controls, favorites and Android Auto in the car. Built with Kotlin, Jetpack Compose and Media3.",
+    palette: { bgA: '#021a2a', bgB: '#0e4a4a', ink: '#eafff2', accent: '#5aff9a', glow: 0x40ffa0 },
+    motif: 'wave',
+  },
+  {
+    id: 'hololand', name: 'Hololand', url: 'https://hololandbd.com',
+    tagline: 'A clothing brand with a 3D lookbook and AI stylist',
+    description: "The site for a clothing brand in Bangladesh: a GSAP hero, a Three.js 3D lookbook, a shop with WhatsApp checkout, and a bilingual English/Bangla AI stylist, size advisor and gift finder running on Groq through a Cloudflare Worker, with offline fallbacks.",
+    palette: { bgA: '#0a0a0f', bgB: '#2a0a12', ink: '#ffe4e6', accent: '#e50914', glow: 0xff2040 },
+    motif: 'tape',
+  },
+  {
+    id: 'sharif-adornment', name: 'Sharif Adornment', url: 'https://sharifadornment.com',
+    tagline: 'A jewelry boutique in Queens, NY',
+    description: "The site for a jewelry boutique in Queens: searchable collections with filters, a page per piece for SEO and link previews, full-screen zoom, rental details and WhatsApp/Messenger enquiries. Dependency-free HTML, CSS and JavaScript on GitHub Pages.",
+    palette: { bgA: '#20160a', bgB: '#6a4a1a', ink: '#f4e4c2', accent: '#f4b85a', glow: 0xd4a054 },
+    motif: 'ring',
+  },
+  {
+    id: 'maria-closet', name: "Maria's Closet", url: 'https://maria-closet.vercel.app',
+    tagline: 'Rental storefront for South Asian outfits',
+    description: "A rental storefront with a 3D garment carousel, availability checks, rental requests and an owner admin. Built with Next.js, React Three Fiber, Tailwind and Supabase.",
+    palette: { bgA: '#1a0520', bgB: '#5a1a30', ink: '#f4e2b6', accent: '#d4a054', glow: 0xa4482c },
+    motif: 'arch',
+  },
+  {
+    id: 'seams-of-safa', name: 'Seams of Safa', url: 'https://seamsofsafa.vercel.app',
+    tagline: 'Storefront for a clothing label',
+    description: "A storefront for a clothing label, built on Next.js with Sanity CMS, next-intl translations, React Three Fiber, Groq AI and Resend email.",
     palette: { bgA: '#3a0a4a', bgB: '#8a2a90', ink: '#f4e4c2', accent: '#f4b85a', glow: 0xd4a054 },
     motif: 'thread',
   },
   {
-    id: 'mozumder', name: 'Mozumder', repo: 'Mozumder',
-    tagline: 'A handcrafted site for a diversified business',
-    description: "A static site for Mozumder — a modern, handcrafted presence for a diversified family business, written in the kind of HTML that opens in 300ms on any phone.",
-    palette: { bgA: '#ead4a8', bgB: '#8c6d3a', ink: '#1a1206', accent: '#5a3a1a', glow: 0xeadcc2 },
+    id: 'mozumder', name: 'Mozumder', url: 'https://mozumderbd.net',
+    tagline: 'Logistics company site with a 3D network map',
+    description: "A multi-page site for a logistics and transportation company in Chattogram, with a scroll-driven homepage film and a 3D network map.",
+    palette: { bgA: '#ead4a8', bgB: '#8c6d3a', ink: '#1a1206', accent: '#5a3a1a', panelAccent: '#eadcc2', glow: 0xeadcc2 },
     motif: 'serifA',
+  },
+  {
+    id: 'prime-cookie', name: 'Primé Cookie', url: 'https://fahimalamwork.github.io/primecookie/',
+    tagline: 'A bakery site you can take a bite out of',
+    description: "A bakery site built with Vite and Three.js, featuring an interactive \"take a bite\" hero with crumb particles and a waitlist.",
+    palette: { bgA: '#2a1f04', bgB: '#6a4810', ink: '#ffe066', accent: '#ffd54a', glow: 0xffd54a },
+    motif: 'plate',
   },
 ];
 
@@ -242,8 +240,18 @@ function init() {
     panel.querySelector('.panel-name').textContent = p.name;
     panel.querySelector('.panel-tagline').textContent = p.tagline;
     panel.querySelector('.panel-desc').textContent = p.description;
-    panel.querySelector('.panel-github').href = `https://github.com/${GITHUB_USER}/${p.repo}`;
-    panel.style.setProperty('--accent', p.palette.accent);
+    const link = panel.querySelector('.panel-link');
+    const status = panel.querySelector('.panel-status');
+    if (p.url) {
+      link.href = p.url;
+      link.hidden = false;
+      status.hidden = true;
+    } else {
+      link.hidden = true;
+      status.textContent = p.status || 'Not public yet';
+      status.hidden = false;
+    }
+    panel.style.setProperty('--accent', p.palette.panelAccent || p.palette.accent);
     panel.classList.add('open');
     panel.setAttribute('aria-hidden', 'false');
     document.body.classList.add('project-open');

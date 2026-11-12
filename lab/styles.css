@@ -342,6 +342,19 @@ a { color: inherit; text-decoration: none; }
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(255, 213, 74, 0.25);
 }
+.panel-link[hidden], .panel-status[hidden] { display: none; }
+.panel-status {
+  display: inline-block;
+  margin: 0;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
 
 /* Index panel — slides from top-center */
 .index-panel {
