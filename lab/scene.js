@@ -15,7 +15,7 @@ const PROJECTS = [
   {
     id: 'bandartrade', name: 'BandarTrade', url: 'https://bandartrade.com',
     tagline: 'AI-assisted freight quoting for Bangladesh',
-    description: "A live freight quoting and port trading platform serving customers in Bangladesh. Its quoting engine turns unstructured rate requests like \"2x 40ft containers, Shanghai to Chittagong\" into priced quotes: an LLM extracts the route and container details, then carrier rates, trucking costs and client markups are applied. Built on .NET 8, SQL Server and React.",
+    description: "A live freight quoting and port trading platform built for Bangladesh. Its quoting engine turns unstructured rate requests like \"2x 40ft containers, Shanghai to Chittagong\" into priced quotes: an LLM extracts the route and container details, then carrier rates, trucking costs and client markups are applied. Built on .NET 8, SQL Server and React.",
     palette: { bgA: '#1a0a0a', bgB: '#5a1a1a', ink: '#f4e2d6', accent: '#ff8a5a', glow: 0xff5a3a },
     motif: 'route',
   },
