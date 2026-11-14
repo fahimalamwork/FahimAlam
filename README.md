@@ -27,6 +27,7 @@ hero manifest, section rules drawing in on first view, and small hover lifts —
   - `lab/styles.css` — Lab styles
 - `assets/shots/` — one 1200×750 screenshot per live project, named by its Lab `id`; used on the project cards and Lab frames
 - `assets/` — headshot and résumé PDF
+- `assets/og-home.jpg`, `assets/og-lab.jpg` — 1200×630 link-preview cards used by the `og:image` / `twitter:image` tags
 - `CNAME` — custom domain for GitHub Pages
 - `.nojekyll` — GitHub Pages serves files as-is
 
