@@ -2,7 +2,13 @@ import * as THREE from 'three';
 import { createAmbient } from './audio.js';
 
 const CARD_W = 2.4;
-const CARD_H = 1.5;
+/* Card texture: a label strip above a 1200x750 screenshot */
+const TEX_W = 1200;
+const TEX_LABEL = 66;
+const TEX_IMG = 750;
+const TEX_H = TEX_LABEL + TEX_IMG;
+const CARD_H = CARD_W * (TEX_H / TEX_W);
+const GRID_GAP = 0.14;
 
 /* Palette convention per project:
  * palette.bgA / bgB — gradient stops for the card background
@@ -126,33 +132,23 @@ const PROJECTS = [
   },
 ];
 
-/* Deterministic 4x4 grid layout with slight jitter for life */
-const COLS = [-7.3, -2.5, 2.5, 7.3];
-const ROWS = [3.3, 1.1, -1.1, -3.3];
+/* A flat 4x4 wall of cards, like a contact sheet */
 PROJECTS.forEach((p, i) => {
   const col = i % 4;
   const row = Math.floor(i / 4);
-  const seed = i * 1.3;
-  const jx = (Math.sin(seed) * 0.4);
-  const jy = (Math.cos(seed * 1.7) * 0.3);
-  const jz = (Math.sin(seed * 0.9) * 0.6);
-  p.position = [COLS[col] + jx, ROWS[row] + jy, jz];
+  p.position = [(col - 1.5) * (CARD_W + GRID_GAP), (1.5 - row) * (CARD_H + GRID_GAP), 0];
   p.index = String(i + 1).padStart(2, '0');
-  p.rotation = [
-    (Math.cos(seed * 2.1) * 0.08),
-    (Math.sin(seed * 1.3) * 0.14),
-    (Math.sin(seed * 0.7) * 0.03),
-  ];
   // Projects with a live site show a screenshot of it on the card face.
   p.shot = p.url ? `../assets/shots/${p.id}.jpg` : null;
 });
+const GRID_W = 4 * CARD_W + 3 * GRID_GAP;
+const GRID_H = 4 * CARD_H + 3 * GRID_GAP;
 
 /* Ring layout: the cards stand on a circle you can spin by dragging */
 const RING_RADIUS = 7.8;
 const RING_CENTER_Z = -2.2;
 /* Where an opened card flies to */
 const SELECTED_Z = 10;
-const FLIP_SECONDS = 0.9;
 
 function init() {
   const canvas = document.getElementById('scene');
@@ -175,23 +171,15 @@ function init() {
   key.position.set(4, 6, 10);
   scene.add(key);
 
-  addStars(scene);
-
   const objects = PROJECTS.map((p, i) => {
     const grp = buildCard(p);
     grp.position.fromArray(p.position);
-    grp.rotation.set(p.rotation[0], p.rotation[1], p.rotation[2]);
     grp.userData = {
       project: p,
       order: i,
       basePos: new THREE.Vector3(...p.position),
-      baseRot: { x: p.rotation[0], y: p.rotation[1], z: p.rotation[2] },
-      rx: p.rotation[0],
-      ry: p.rotation[1],
-      rz: p.rotation[2],
-      flipStart: -10,
-      phase: Math.random() * Math.PI * 2,
-      bob: 0.08 + Math.random() * 0.1,
+      ry: 0,
+      material: grp.children[0].material,
       selectable: true,
     };
     grp.traverse((n) => { if (n.isMesh) n.userData.ownerGroup = grp; });
@@ -234,7 +222,7 @@ function init() {
     layoutLabel.textContent = layout === 'ring' ? 'Ring' : 'Grid';
     layoutBtn.setAttribute('aria-pressed', layout === 'ring' ? 'true' : 'false');
     layoutBtn.hidden = isPortrait();
-    hintMain.textContent = layout === 'ring' ? 'Drag to spin' : 'Hover anything';
+    hintMain.textContent = layout === 'ring' ? 'Drag to spin' : 'Pick a project';
     document.body.classList.toggle('layout-ring', layout === 'ring');
   }
   applyLayoutUi();
@@ -256,8 +244,8 @@ function init() {
   }
 
   function onPointerMove(e) {
-    parallax.tx = ((e.clientX / window.innerWidth) * 2 - 1) * 0.9;
-    parallax.ty = (-(e.clientY / window.innerHeight) * 2 + 1) * 0.5;
+    parallax.tx = ((e.clientX / window.innerWidth) * 2 - 1) * 0.25;
+    parallax.ty = (-(e.clientY / window.innerHeight) * 2 + 1) * 0.15;
 
     if (drag.active) {
       const dx = e.clientX - drag.lastX;
@@ -305,9 +293,7 @@ function init() {
     canvas.style.cursor = '';
     const u = grp.userData;
     const p = u.project;
-    // Start the flip from the nearest equivalent angle so it never unwinds.
     u.ry = Math.atan2(Math.sin(u.ry), Math.cos(u.ry));
-    u.flipStart = clock.getElapsedTime();
     panel.querySelector('.panel-tagline').textContent = p.tagline;
     panel.querySelector('.panel-name').textContent = p.name;
     panel.querySelector('.panel-desc').textContent = p.description;
@@ -323,7 +309,6 @@ function init() {
       status.textContent = p.status || 'Not public yet';
       status.hidden = false;
     }
-    panel.style.setProperty('--accent', p.palette.panelAccent || p.palette.accent);
     // Restart the staggered text reveal each time a project opens.
     panel.classList.remove('open');
     void panel.offsetWidth;
@@ -416,20 +401,32 @@ function init() {
   resize();
   window.addEventListener('resize', resize);
 
+  // Visible size of the scene at a given depth.
+  function viewAt(z) {
+    const dist = camera.position.z - z;
+    const h = 2 * dist * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    return { w: h * camera.aspect, h };
+  }
+
+  // The wall is scaled to fill the window, leaving room for the top bar.
+  function gridFit() {
+    const v = viewAt(0);
+    const scale = Math.min((v.w * 0.94) / GRID_W, (v.h * 0.8) / GRID_H);
+    return { scale, y: -v.h * 0.035 };
+  }
+
   // Where the opened card sits: beside the details panel on wide screens,
-  // above it on phones. Sized from the visible area at SELECTED_Z.
+  // above it on phones.
   function selectedTarget() {
     const w = window.innerWidth;
-    const dist = camera.position.z - SELECTED_Z;
-    const viewH = 2 * dist * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-    const viewW = viewH * camera.aspect;
+    const v = viewAt(SELECTED_Z);
     if (w <= 720) {
-      return { x: 0, y: viewH * 0.24, scale: Math.min(2, (viewW * 0.88) / CARD_W) };
+      return { x: 0, y: v.h * 0.24, scale: Math.min(2, (v.w * 0.9) / CARD_W) };
     }
-    const panelPx = 420 + 40 + 40; // panel width, its right offset, and a gap
+    const panelPx = 440; // docked details panel
     const freePx = Math.max(240, w - panelPx);
-    const x = ((freePx / 2) / w - 0.5) * viewW;
-    const scale = Math.min(2.3, ((freePx - 120) / w) * viewW / CARD_W, (viewH * 0.62) / CARD_H);
+    const x = ((freePx / 2) / w - 0.5) * v.w;
+    const scale = Math.min(2.4, ((freePx - 96) / w) * v.w / CARD_W, (v.h * 0.7) / CARD_H);
     return { x, y: 0, scale };
   }
 
@@ -452,75 +449,60 @@ function init() {
       camera.lookAt(0, 0, 0);
     }
 
-    if (layout === 'ring') {
-      if (!drag.active) {
-        ring.angle += ring.vel * frames;
-        ring.vel *= Math.pow(0.94, frames);
-        if (!reduceMotion && !selected && !hovered) ring.angle += 0.0012 * frames;
-      }
+    if (layout === 'ring' && !drag.active) {
+      ring.angle += ring.vel * frames;
+      ring.vel *= Math.pow(0.94, frames);
+      if (!reduceMotion && !selected && !hovered) ring.angle += 0.0012 * frames;
     }
 
     const sel = selected ? selectedTarget() : null;
+    const fit = gridFit();
     const n = objects.length;
 
     for (const obj of objects) {
       const u = obj.userData;
-      const base = u.basePos;
 
-      let tx, ty, tz, rx, ry, rz = 0;
+      let tx, ty, tz, ry, targetScale;
       if (layout === 'ring') {
         const a = (u.order / n) * Math.PI * 2 + ring.angle;
         tx = Math.sin(a) * RING_RADIUS;
-        ty = Math.sin(u.order * 1.7) * 0.55;
+        ty = 0;
         tz = RING_CENTER_Z + Math.cos(a) * RING_RADIUS;
-        rx = 0;
         ry = a;
+        targetScale = 1;
       } else {
-        tx = base.x; ty = base.y; tz = base.z;
-        rx = u.baseRot.x;
-        ry = u.baseRot.y;
-        rz = u.baseRot.z;
-        if (obj === hovered) { rx *= 0.3; ry *= 0.3; }
+        tx = u.basePos.x * fit.scale;
+        ty = u.basePos.y * fit.scale + fit.y;
+        tz = 0;
+        ry = 0;
+        targetScale = fit.scale;
       }
-      if (!reduceMotion) ty += Math.sin(t * 0.5 + u.phase) * u.bob;
+      if (obj === hovered) { targetScale *= 1.05; tz += 0.5; }
 
-      let targetScale = obj === hovered ? 1.14 : 1;
+      // Opening a card lifts it off the wall; the rest stay put and fade back.
+      let opacity = 1;
       if (obj === selected) {
         tx = sel.x + parallax.x;
         ty = sel.y + parallax.y;
         tz = SELECTED_Z;
-        rx = 0;
         ry = 0;
-        rz = 0;
         targetScale = sel.scale;
       } else if (selected) {
-        tx *= 1.5;
-        ty *= 1.5;
-        tz -= 8;
-        targetScale = 0.5;
+        opacity = 0.14;
       }
 
-      const kp = ease(0.09);
+      const kp = ease(0.11);
       obj.position.x += (tx - obj.position.x) * kp;
       obj.position.y += (ty - obj.position.y) * kp;
       obj.position.z += (tz - obj.position.z) * kp;
       obj.scale.setScalar(obj.scale.x + (targetScale - obj.scale.x) * ease(0.12));
+      u.material.opacity += (opacity - u.material.opacity) * ease(0.12);
 
       // Ease toward the target facing along the shortest arc.
       const dy = Math.atan2(Math.sin(ry - u.ry), Math.cos(ry - u.ry));
-      u.ry += dy * ease(layout === 'ring' && obj !== selected ? 0.2 : 0.08);
-      u.rx += (rx - u.rx) * ease(0.08);
-      u.rz += (rz - u.rz) * ease(0.08);
-
-      // An opened card does one full turn on its way to the front.
-      let flip = 0;
-      if (!reduceMotion) {
-        const k = Math.min(1, Math.max(0, (t - u.flipStart) / FLIP_SECONDS));
-        flip = (1 - (1 - Math.pow(1 - k, 3))) * -Math.PI * 2;
-      }
-      obj.rotation.x = u.rx;
-      obj.rotation.y = u.ry + flip;
-      obj.rotation.z = u.rz;
+      u.ry += dy * ease(layout === 'ring' && obj !== selected ? 0.2 : 0.1);
+      obj.rotation.y = u.ry;
+      obj.renderOrder = obj === selected ? 2 : (obj === hovered ? 1 : 0);
     }
 
     renderer.render(scene, camera);
@@ -532,91 +514,23 @@ function init() {
 
 /* ---------- helpers ---------- */
 
-function addStars(scene) {
-  const count = 600;
-  const positions = new Float32Array(count * 3);
-  for (let i = 0; i < count; i++) {
-    const r = 40 + Math.random() * 30;
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(2 * Math.random() - 1);
-    positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-    positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-    positions[i * 3 + 2] = r * Math.cos(phi);
-  }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  const mat = new THREE.PointsMaterial({
-    color: 0xffffff, size: 0.08, sizeAttenuation: true,
-    transparent: true, opacity: 0.6, depthWrite: false,
-  });
-  scene.add(new THREE.Points(geo, mat));
-}
-
-/* ---------- card builder ---------- */
-
-const _glowTexCache = { tex: null };
-function getGlowTexture() {
-  if (_glowTexCache.tex) return _glowTexCache.tex;
-  const S = 256;
-  const c = document.createElement('canvas');
-  c.width = S; c.height = S;
-  const ctx = c.getContext('2d');
-  const grad = ctx.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2);
-  grad.addColorStop(0.0, 'rgba(255,255,255,1)');
-  grad.addColorStop(0.3, 'rgba(255,255,255,0.7)');
-  grad.addColorStop(0.75, 'rgba(255,255,255,0.08)');
-  grad.addColorStop(1.0, 'rgba(255,255,255,0)');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, S, S);
-  _glowTexCache.tex = new THREE.CanvasTexture(c);
-  _glowTexCache.tex.colorSpace = THREE.SRGBColorSpace;
-  return _glowTexCache.tex;
-}
-
-
 function buildCard(project) {
   const g = new THREE.Group();
-
-  // Backlight glow — a radial fade so the halo is soft, not a rectangle
-  const glowTex = getGlowTexture();
-  const glowGeo = new THREE.PlaneGeometry(CARD_W * 2.2, CARD_H * 2.2);
-  const glowMat = new THREE.MeshBasicMaterial({
-    color: project.palette.glow,
-    map: glowTex,
+  const mat = new THREE.MeshBasicMaterial({
+    map: buildCardTexture(project),
     transparent: true,
-    opacity: 0.55,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
+    side: THREE.FrontSide,
   });
-  const glow = new THREE.Mesh(glowGeo, glowMat);
-  glow.position.z = -0.15;
-  g.add(glow);
-
-  // Frame — a very thin dark slab behind the panel for depth
-  const frame = new THREE.Mesh(
-    new THREE.BoxGeometry(CARD_W + 0.1, CARD_H + 0.1, 0.06),
-    new THREE.MeshStandardMaterial({ color: 0x0e0a1c, roughness: 0.35, metalness: 0.6 }),
-  );
-  frame.position.z = -0.02;
-  g.add(frame);
-
-  // Main panel — textured plane
-  const tex = buildCardTexture(project);
-  const panelMat = new THREE.MeshBasicMaterial({ map: tex, side: THREE.FrontSide });
-  const panel = new THREE.Mesh(new THREE.PlaneGeometry(CARD_W, CARD_H), panelMat);
-  panel.position.z = 0.02;
-  g.add(panel);
-
+  g.add(new THREE.Mesh(new THREE.PlaneGeometry(CARD_W, CARD_H), mat));
   return g;
 }
 
 function buildCardTexture(project) {
-  const W = 1200, H = 750;
   const c = document.createElement('canvas');
-  c.width = W; c.height = H;
+  c.width = TEX_W; c.height = TEX_H;
   const ctx = c.getContext('2d');
 
-  drawCardFace(ctx, project, null, W, H);
+  drawCardFace(ctx, project, null);
 
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
@@ -626,7 +540,7 @@ function buildCardTexture(project) {
   if (project.shot) {
     const img = new Image();
     img.onload = () => {
-      drawCardFace(ctx, project, img, W, H);
+      drawCardFace(ctx, project, img);
       tex.needsUpdate = true;
     };
     img.src = project.shot;
@@ -634,84 +548,51 @@ function buildCardTexture(project) {
   return tex;
 }
 
-/* Draws a card. With a screenshot the site itself is the face and the text
- * sits on a dark fade; without one the card keeps its drawn motif. */
-function drawCardFace(ctx, project, img, W, H) {
+/* A card is a small label over the project's screenshot, shown as it is.
+ * Projects without a live site get a drawn face in the same frame. */
+function drawCardFace(ctx, project, img) {
+  const W = TEX_W, H = TEX_IMG;
   const pal = project.palette;
-  ctx.clearRect(0, 0, W, H);
+  ctx.clearRect(0, 0, TEX_W, TEX_H);
   ctx.textAlign = 'left';
 
-  let ink = pal.ink;
-  let accent = pal.accent;
+  // Label strip
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = 'rgba(21, 20, 26, 0.45)';
+  ctx.font = '500 28px ui-monospace, "SF Mono", Menlo, monospace';
+  ctx.fillText(project.index, 4, 44);
+  ctx.fillStyle = '#15141a';
+  ctx.font = '500 34px "Inter", system-ui, sans-serif';
+  ctx.fillText(project.name, 58, 45);
 
+  ctx.save();
+  ctx.translate(0, TEX_LABEL);
   if (img) {
-    // Cover-fit the screenshot, anchored to its top edge.
     const scale = Math.max(W / img.width, H / img.height);
-    const dw = img.width * scale;
-    const dh = img.height * scale;
-    ctx.drawImage(img, (W - dw) / 2, 0, dw, dh);
-
-    const top = ctx.createLinearGradient(0, 0, 0, H * 0.26);
-    top.addColorStop(0, 'rgba(8, 7, 16, 0.78)');
-    top.addColorStop(1, 'rgba(8, 7, 16, 0)');
-    ctx.fillStyle = top;
-    ctx.fillRect(0, 0, W, H * 0.26);
-
-    const bottom = ctx.createLinearGradient(0, H * 0.4, 0, H);
-    bottom.addColorStop(0, 'rgba(8, 7, 16, 0)');
-    bottom.addColorStop(0.55, 'rgba(8, 7, 16, 0.86)');
-    bottom.addColorStop(1, 'rgba(8, 7, 16, 0.97)');
-    ctx.fillStyle = bottom;
-    ctx.fillRect(0, H * 0.4, W, H * 0.6);
-
-    ink = '#ffffff';
-    accent = pal.panelAccent || pal.accent;
+    ctx.drawImage(img, (W - img.width * scale) / 2, 0, img.width * scale, img.height * scale);
   } else {
     const grad = ctx.createLinearGradient(0, 0, W * 0.6, H);
     grad.addColorStop(0, pal.bgA);
     grad.addColorStop(1, pal.bgB);
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
-
-    const r = ctx.createRadialGradient(W * 0.88, H * 0.12, 20, W * 0.88, H * 0.12, W * 0.6);
-    r.addColorStop(0, hexWithAlpha(pal.accent, 0.26));
-    r.addColorStop(1, hexWithAlpha(pal.accent, 0));
-    ctx.fillStyle = r;
-    ctx.fillRect(0, 0, W, H);
-
-    addGrain(ctx, W, H, 0.03);
     drawMotif(ctx, project.motif, W, H, pal);
+
+    ctx.fillStyle = pal.ink;
+    const nameSize = fitNameSize(ctx, project.name, W - 112, 110);
+    ctx.font = `300 ${nameSize}px "Inter", system-ui, sans-serif`;
+    ctx.fillText(project.name, 56, H - 150);
+    ctx.fillStyle = hexWithAlpha(pal.ink, 0.75);
+    ctx.font = '400 28px "Inter", system-ui, sans-serif';
+    ctx.fillText(project.tagline, 56, H - 92);
+    ctx.fillStyle = hexWithAlpha(pal.accent, 0.95);
+    ctx.font = '600 22px ui-monospace, "SF Mono", Menlo, monospace';
+    ctx.fillText((project.status || 'Not public yet').toUpperCase(), 56, 80);
   }
-
-  // Border inset
-  ctx.strokeStyle = hexWithAlpha(ink, img ? 0.18 : 0.1);
+  ctx.strokeStyle = 'rgba(21, 20, 26, 0.16)';
   ctx.lineWidth = 2;
-  ctx.strokeRect(16, 16, W - 32, H - 32);
-
-  // Index number, top-left
-  ctx.fillStyle = accent;
-  ctx.font = '600 26px ui-monospace, "SF Mono", Menlo, monospace';
-  ctx.textBaseline = 'top';
-  ctx.fillText(`${project.index} / ${PROJECTS.length}`, 56, 56);
-
-  // Name
-  ctx.fillStyle = ink;
-  const nameSize = fitNameSize(ctx, project.name, W - 112, img ? 96 : 110);
-  ctx.font = `${img ? 300 : 200} ${nameSize}px "Inter", system-ui, sans-serif`;
-  ctx.textBaseline = 'alphabetic';
-  ctx.fillText(project.name, 56, img ? H - 150 : H - 220);
-
-  // Tagline
-  ctx.fillStyle = hexWithAlpha(ink, img ? 0.82 : 0.72);
-  ctx.font = '400 26px "Inter", system-ui, sans-serif';
-  ctx.fillText(project.tagline, 56, img ? H - 96 : H - 140);
-
-  // Bottom-right cue
-  ctx.fillStyle = hexWithAlpha(accent, 0.9);
-  ctx.font = '600 20px ui-monospace, "SF Mono", Menlo, monospace';
-  ctx.textAlign = 'right';
-  ctx.fillText('→  OPEN', W - 56, H - 48);
-  ctx.textAlign = 'left';
+  ctx.strokeRect(1, 1, W - 2, H - 2);
+  ctx.restore();
 }
 
 function fitNameSize(ctx, text, maxWidth, startSize) {
@@ -731,19 +612,6 @@ function hexWithAlpha(hex, alpha) {
   const b = parseInt(h.slice(4, 6), 16);
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
-
-function addGrain(ctx, W, H, intensity) {
-  const img = ctx.getImageData(0, 0, W, H);
-  const d = img.data;
-  for (let i = 0; i < d.length; i += 4) {
-    const n = (Math.random() - 0.5) * 255 * intensity;
-    d[i] = clamp255(d[i] + n);
-    d[i + 1] = clamp255(d[i + 1] + n);
-    d[i + 2] = clamp255(d[i + 2] + n);
-  }
-  ctx.putImageData(img, 0, 0);
-}
-function clamp255(v) { return v < 0 ? 0 : v > 255 ? 255 : v; }
 
 /* motifs are drawn large on the right side of the card */
 function drawMotif(ctx, motif, W, H, pal) {

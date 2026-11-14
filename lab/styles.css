@@ -528,3 +528,64 @@ a { color: inherit; text-decoration: none; }
   .panel-nav { margin-top: 18px; padding-top: 14px; }
 }
 .panel-tagline { padding-right: 44px; }
+
+/* ------------------------------------------------------------------
+   Contact-sheet look: light paper background, plain screenshots,
+   details in a panel docked to the edge instead of a floating box
+   ------------------------------------------------------------------ */
+:root {
+  --paper: #f4f2ed;
+  --ink: #15141a;
+  --ink-soft: rgba(21, 20, 26, 0.74);
+  --ink-faint: rgba(21, 20, 26, 0.46);
+  --accent: #15141a;
+  --panel: #ffffff;
+  --border: rgba(21, 20, 26, 0.14);
+}
+body, .loader { background: var(--paper); }
+.loader-dot, .brand .dot, .hint-dot { background: var(--ink); box-shadow: none; }
+.brand:hover { background: #ffffff; }
+.chip {
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.chip:hover { background: #ffffff; border-color: rgba(21, 20, 26, 0.5); }
+.chip-sound[aria-pressed="true"],
+.chip[aria-pressed="true"]#layout-btn { border-color: rgba(21, 20, 26, 0.6); }
+.panel {
+  background: var(--panel);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 18px 50px rgba(21, 20, 26, 0.12);
+}
+.panel-close:hover, .panel-step:hover { background: rgba(21, 20, 26, 0.05); border-color: rgba(21, 20, 26, 0.5); }
+.index-item:hover { background: rgba(21, 20, 26, 0.04); }
+.panel-tagline { color: var(--ink-faint); }
+.panel-name { font-weight: 500; }
+.panel-link { background: var(--ink); color: #ffffff; }
+.panel-link:hover { background: #000000; box-shadow: none; }
+::selection { background: var(--ink); color: #ffffff; }
+
+@media (min-width: 721px) {
+  .info-panel {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 440px;
+    padding: 48px 40px;
+    border-width: 0 0 0 1px;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    box-shadow: none;
+    transform: translateX(100%);
+  }
+  .info-panel.open { transform: none; }
+  .info-panel .panel-nav { align-self: stretch; }
+  /* Top-bar buttons move clear of the docked panel while it is open */
+  .top { transition: right 0.6s cubic-bezier(.2,.7,.2,1); }
+  .project-open .top:has(~ .info-panel.open) { right: 472px; }
+}
