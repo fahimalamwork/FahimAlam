@@ -6,44 +6,42 @@ Static HTML/CSS/JS on GitHub Pages, served at [ganjaam.com](https://ganjaam.com)
 
 ## Local preview
 
-The page backdrop scrubs video on scroll, which needs a server that supports byte-range requests (Python's `http.server` does not):
-
 ```bash
-npx http-server -p 4000
+python3 -m http.server 4000
 # open http://localhost:4000
 ```
 
+## Design
+
+"Ledger": chalk ground (`#f3f3ef`), graphite ink (`#111111`), one signal-orange accent (`#e5481b`, `#b83a12` for text).
+Space Grotesk for display, Inter for body, JetBrains Mono for labels. Motion is limited to a one-time count-up on the
+hero manifest, section rules drawing in on first view, and small hover lifts — all disabled under `prefers-reduced-motion`.
+
 ## Structure
 
-- `index.html` — main page: hero, about, skills, experience, projects, contact
-- `styles.css` — styles for the main page
-- `hero-video.js` — scrubs each section's backdrop video from scroll position; clips after the hero load only as their section approaches
-- `interactive.js` — mobile menu, section title screens, experience expand/collapse, project card tilt and scroll reveal
-- `lab/` — the Lab: 16 projects as floating cards in a Three.js scene
-  - `lab/scene.js` — scene, cards, grid and ring layouts, and interaction; the `PROJECTS` array at the top holds every card
-  - `lab/audio.js` — optional ambient sound
-- `assets/video/` — one backdrop clip per section (`hero`, `about`, `skills`, `experience`, `projects`, `contact`)
-- `assets/shots/` — one 1200×750 screenshot per live project, named by its Lab `id`; used on the project cards and the Lab card faces
+- `index.html` — main page: hero + migration manifest, about + skills, experience, projects, contact
+- `styles.css` — styles for the main page (tokens at the top)
+- `main.js` — mobile menu, experience expand/collapse all, section-rule reveal, manifest count-up
+- `lab/` — the Lab: all 16 projects as a contact sheet with filters and a detail loupe
+  - `lab/lab.js` — the `PROJECTS` array at the top holds every frame; rendering, filters, arrow-key stepping, `#id` deep links
+  - `lab/styles.css` — Lab styles
+- `assets/shots/` — one 1200×750 screenshot per live project, named by its Lab `id`; used on the project cards and Lab frames
 - `assets/` — headshot and résumé PDF
 - `CNAME` — custom domain for GitHub Pages
 - `.nojekyll` — GitHub Pages serves files as-is
 
 ## Editing Lab projects
 
-Each entry in `PROJECTS` (`lab/scene.js`) looks like:
+Each entry in `PROJECTS` (`lab/lab.js`) looks like:
 
 ```js
 {
   id: 'kebab-id',
   name: 'Display Name',
+  kind: 'product',              // product | client | play | dev — drives the filters
   url: 'https://example.com',   // live site; use null plus `status: '…'` when there is no public link
-  tagline: 'One-line hook shown on the card',
+  shot: true,                   // shows assets/shots/<id>.jpg; omit to show the status placeholder
+  tagline: 'One-line hook',
   description: '2–3 sentence project description.',
-  palette: { bgA, bgB, ink, accent, glow },
-  motif: 'orbit',               // shape drawn on the card texture
 }
 ```
-
-A project with a `url` shows `assets/shots/<id>.jpg` on its card; one without keeps the drawn motif.
-
-The grid is 4×4, so the Lab holds 16 cards.
