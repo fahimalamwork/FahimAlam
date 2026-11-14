@@ -159,7 +159,7 @@ p { margin: 0; }
 
 /* Projects */
 .projects-intro { margin-top: 16px; color: var(--body); max-width: 620px; }
-.underline-link { font: 13px var(--mono); border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+.underline-link { display: inline-block; font: 13px var(--mono); border-bottom: 1px solid var(--ink); padding: 12px 0 2px; }
 .featured { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 24px; margin-top: 40px; }
 .card { background: var(--sheet); border: 1px solid var(--rule); display: flex; flex-direction: column; transition: transform .15s ease, border-color .15s ease; }
 .card:hover { transform: translateY(-1px); border-color: var(--ink); }
@@ -238,6 +238,7 @@ p { margin: 0; }
   .hero-grid { gap: 36px; }
   .hero-actions .btn { flex: 1 1 100%; }
   .section-inner { padding-bottom: 56px; }
+  #experience .section-head { align-items: center; }
   .section-title { font-size: 30px; }
   .about-side img { width: 160px; height: 190px; }
   .job h3 { font-size: 22px; }

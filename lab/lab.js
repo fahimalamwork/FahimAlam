@@ -99,7 +99,14 @@ const frameButtons = PROJECTS.map((p, i) => {
       el('span', { class: 'name', text: p.name }),
     ]),
   ]);
-  btn.addEventListener('click', () => select(i));
+  btn.addEventListener('click', () => {
+    select(i);
+    // On phones the loupe sits below the sheet; bring it into view so the tap visibly does something.
+    if (window.matchMedia('(max-width: 760px)').matches) {
+      const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelector('.loupe').scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+    }
+  });
   btn.addEventListener('dblclick', () => { if (p.url) window.open(p.url, '_blank', 'noopener'); });
   $('frames').appendChild(el('li', {}, [btn]));
   return btn;
