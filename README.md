@@ -22,7 +22,7 @@ hero manifest, section rules drawing in on first view, and small hover lifts —
 - `index.html` — main page: hero + migration manifest, about + skills, experience, projects, contact
 - `styles.css` — styles for the main page (tokens at the top)
 - `main.js` — mobile menu, experience expand/collapse all, section-rule reveal, manifest count-up
-- `lab/` — the Lab: all 16 projects as a contact sheet with filters and a detail loupe
+- `lab/` — the Lab: all 15 projects as a contact sheet with filters and a detail loupe
   - `lab/lab.js` — the `PROJECTS` array at the top holds every frame; rendering, filters, arrow-key stepping, `#id` deep links
   - `lab/styles.css` — Lab styles
 - `assets/shots/` — one 1200×750 screenshot per live project, named by its Lab `id`; used on the project cards and Lab frames
