@@ -46,18 +46,28 @@
 
   <main class="layout">
     <section class="sheet" aria-label="Projects">
-      <div class="sheet-head mono"><span>FA · LAB · ROLL 01</span><span class="hint">← → STEP · ENTER OPEN</span></div>
+      <div class="sheet-head mono"><span>FA · LAB · ROLL 01 · <span id="sheet-count">15 FRAMES</span></span><span class="hint">← → STEP · ENTER OPEN</span></div>
       <ol class="frames" id="frames"></ol>
     </section>
 
     <aside class="loupe" aria-label="Selected project" aria-live="polite">
-      <div class="loupe-head mono"><span>LOUPE</span><span id="loupe-count">01 / 15</span></div>
+      <div class="loupe-head mono">
+        <span class="loupe-label">LOUPE</span><span class="loupe-swipe">SWIPE ← → FOR MORE</span>
+        <span class="loupe-head-end"><span id="loupe-count">01 / 15</span>
+          <button type="button" class="loupe-close" id="loupe-close" aria-label="Close project details">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg>
+          </button>
+        </span>
+      </div>
       <div class="loupe-media" id="loupe-media"></div>
       <div class="loupe-body">
         <span class="mono kind" id="loupe-kind"></span>
         <h2 id="loupe-name"></h2>
         <p class="tagline" id="loupe-tagline"></p>
         <p class="desc" id="loupe-desc"></p>
+        <p class="mono meta-line" id="loupe-role" hidden></p>
+        <p class="mono meta-line" id="loupe-stack" hidden></p>
+        <p class="mono note" id="loupe-note" hidden></p>
         <div class="loupe-actions">
           <button type="button" class="step" id="prev" aria-label="Previous project">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>
@@ -72,6 +82,7 @@
         </div>
       </div>
     </aside>
+    <div class="scrim" id="scrim" hidden></div>
   </main>
 
   <script src="lab.js" defer></script>

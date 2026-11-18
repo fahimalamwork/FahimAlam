@@ -56,7 +56,6 @@ p { margin: 0; }
   font: inherit; color: inherit; text-align: left; background: none; border: 0; padding: 0; width: 100%; cursor: pointer;
   outline: 2px solid transparent; outline-offset: 3px; transition: opacity .2s ease, outline-color .15s ease;
 }
-.frame.is-dim { opacity: .18; }
 .frame[aria-current="true"] { outline-color: var(--signal); }
 .frame:hover img, .frame:hover .blank { filter: brightness(1.12); }
 .frame img, .frame .blank { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: var(--well); }
@@ -65,18 +64,38 @@ p { margin: 0; }
   border: 1px dashed var(--rule-2); font: 11px var(--mono); color: var(--muted); letter-spacing: .06em;
 }
 .frame-cap { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; font: 11px var(--mono); color: var(--muted); }
-.frame-cap .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.frame-cap .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink); }
+.frame-tag {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+  margin-top: 4px; font-size: 12px; line-height: 1.4; color: var(--muted);
+}
+.frames li { position: relative; }
+.frames li[hidden] { display: none; }
+.frame-open {
+  position: absolute; top: 6px; right: 6px; width: 32px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--ink); color: var(--ground); opacity: 0; transition: opacity .15s ease;
+}
+.frame-open:focus-visible { opacity: 1; }
+@media (hover: hover) { .frames li:hover .frame-open { opacity: 1; } }
+@media (hover: none) { .frame-open { display: none; } }
 .frame[aria-current="true"] .no { color: var(--signal); }
 
 /* Loupe */
 .loupe { flex: 1 1 380px; min-width: 0; border: 1px solid var(--rule); position: sticky; top: 24px; }
-.loupe-head { display: flex; justify-content: space-between; padding: 12px 16px; font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--rule); }
+.loupe-head { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--rule); }
 .loupe-media img, .loupe-media .blank { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border: 0; border-bottom: 1px solid var(--rule); background: var(--well); }
 .loupe-body { padding: 24px; display: flex; flex-direction: column; gap: 14px; }
 .kind { font-size: 12px; color: var(--signal); }
 .loupe h2 { font-size: 36px; letter-spacing: -.025em; line-height: 1.05; }
 .tagline { font-size: 17px; }
 .desc { color: var(--muted); }
+.meta-line { font-size: 12px; line-height: 1.6; color: var(--muted); padding-top: 12px; border-top: 1px dashed var(--rule-2); }
+.meta-line:not([hidden]) + .meta-line { padding-top: 0; border-top: 0; margin-top: -8px; }
+#loupe-role { color: var(--ink); }
+.note { font-size: 12px; line-height: 1.6; color: var(--signal); }
+.loupe-swipe, .loupe-close, .scrim { display: none; }
+.loupe-head-end { display: inline-flex; align-items: center; gap: 8px; }
 .loupe-actions { display: flex; gap: 8px; margin-top: 10px; }
 .step {
   width: 48px; height: 48px; flex: 0 0 48px; background: none; border: 1px solid var(--rule-2); color: var(--ink);
@@ -99,8 +118,26 @@ p { margin: 0; }
   .sheet { padding: 14px; }
   .frames { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 10px; }
   .hint { display: none; }
-  .loupe { position: static; }
   .loupe h2 { font-size: 28px; }
+  /* The loupe becomes a sheet that slides up over the contact sheet */
+  .loupe {
+    position: fixed; left: 0; right: 0; bottom: 0; top: auto; z-index: 20;
+    max-height: 88vh; max-height: 88svh; overflow-y: auto; overscroll-behavior: contain;
+    background: var(--ground); border-width: 1px 0 0; border-color: var(--rule-2);
+    transform: translateY(104%); visibility: hidden; transition: transform .25s ease, visibility 0s .25s;
+  }
+  .loupe.is-open { transform: none; visibility: visible; transition: transform .25s ease; }
+  .loupe-head { position: sticky; top: 0; z-index: 1; background: var(--ground); padding: 4px 4px 4px 16px; }
+  .loupe-label { display: none; }
+  .loupe-swipe { display: inline; }
+  .loupe-close {
+    display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+    background: none; border: 1px solid var(--rule-2); color: var(--ink); cursor: pointer;
+  }
+  .loupe-body { padding: 18px 16px 24px; }
+  .scrim { display: block; position: fixed; inset: 0; z-index: 19; background: rgba(0, 0, 0, .6); }
+  .scrim[hidden] { display: none; }
+  body.sheet-open { overflow: hidden; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
